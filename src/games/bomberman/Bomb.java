@@ -1,4 +1,7 @@
 package games.bomberman;
+import java.util.ArrayList;
+import java.util.List;
+
 import games.bomberman.board.Board;
 
 public class Bomb {
@@ -100,7 +103,7 @@ public class Bomb {
 		}
 		//////////////////////////////////////
 		//recherche de joueurs a frapper
-		Player[] pl=World.getPlayers();
+		List<Player> pl= World.getPlayers();
 		for(Player p:pl) {
 			float xpl=p.getX();
 			float ypl=p.getY();

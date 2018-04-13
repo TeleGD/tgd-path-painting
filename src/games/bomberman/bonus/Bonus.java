@@ -1,9 +1,11 @@
-package games.bomberman;
+package games.bomberman.bonus;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.state.StateBasedGame;
+
+import games.bomberman.Player;
 
 public abstract class Bonus {
 	private int caseX, caseY;

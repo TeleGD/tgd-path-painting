@@ -5,8 +5,8 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.state.StateBasedGame;
 
-import games.bomberman.Bonus;
 import games.bomberman.Player;
+import games.bomberman.bonus.Bonus;
 
 public abstract class Case {
 
