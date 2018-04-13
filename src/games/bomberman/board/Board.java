@@ -121,7 +121,7 @@ public class Board {
 	public ArrayList<Case> getAllCases(){
 		ArrayList<Case> result=new ArrayList<Case>();
 		for (int i=0;i<cases.length;i++) {
-			for(int j=0;j<cases.length;j++) {
+			for(int j=0;j<cases[0].length;j++) {
 				result.add(cases[i][j]);
 			}
 		}
