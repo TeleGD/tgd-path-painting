@@ -113,6 +113,10 @@ public class Bomb {
 					
 			}
 		}
+		///////////////////////////////////////
+		// autre moyen : obtenir coords cellule bombe puis portee dans toutes directions
+		
+		
 		
 		
 	}
