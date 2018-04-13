@@ -165,7 +165,18 @@ public class World extends AppWorld {
 		int i=(int) (Math.random()*freeCases.size());
 		
 		//Generate the bonus
-		freeCases.get(i).setBonus(new Accelerate(freeCases.get(i).getJ(),freeCases.get(i).getI(),10));
+		int k= (int)(Math.random()*3);
+		switch (k) {
+		case 0:
+			freeCases.get(i).setBonus(new Accelerate(freeCases.get(i).getJ(),freeCases.get(i).getI(),10));
+			break;
+		case 1:
+			freeCases.get(i).setBonus(new Life(freeCases.get(i).getJ(),freeCases.get(i).getI()));
+			break;
+		case 2:
+			freeCases.get(i).setBonus(new Reverse(freeCases.get(i).getJ(),freeCases.get(i).getI()));
+			break;
+		}
 	}
 	
 }
