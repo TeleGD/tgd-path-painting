@@ -35,6 +35,7 @@ public class World extends AppWorld {
 
 	private static List<Player> players;
 	private static List<Bonus> bonus;
+	private static List<Bomb> bombs;
 
 	public World (int ID) {
 		this.ID = ID;
@@ -63,6 +64,7 @@ public class World extends AppWorld {
 		AppGame appGame = (AppGame) game;
 		int n = appGame.appPlayers.size ();
 		World.players = new ArrayList<Player>();
+		World.bombs = new ArrayList<Bomb>();
 		for (int i = 0; i < n; i++) {
 			World.players.add(new Player (appGame.appPlayers.get (i)));
 		};
@@ -109,9 +111,13 @@ public class World extends AppWorld {
 		}
 		if (appInput.isKeyPressed (AppInput.KEY_ESCAPE)) {
 			appGame.enterState (AppGame.PAGES_GAMES, new FadeOutTransition (), new FadeInTransition ());
-		}*/
+		}*/		
 		for (Player p : players) {
 			p.update(container, game, delta);
+		}
+		
+		for (Bomb b : bombs) {
+			b.update(delta);
 		}
 		
 		for(int i=0 ; i<players.size() ; i++) {
@@ -134,6 +140,10 @@ public class World extends AppWorld {
 	public void render (GameContainer container, StateBasedGame game, Graphics context) {
 		board.render(container, game, context);
 
+//		for (Bomb b : bombs) {
+//			b.render();
+//		}
+		
 		for (Player p : this.players) {
 			p.render(container, game, context);
 		}
@@ -177,6 +187,10 @@ public class World extends AppWorld {
 			freeCases.get(i).setBonus(new Reverse(freeCases.get(i).getJ(),freeCases.get(i).getI()));
 			break;
 		}
+	}
+	
+	public static void addBomb(int numJoueur,int xp,int yp,int porteep,int tpsRestantp) {
+		bombs.add(new Bomb(numJoueur, xp, yp, porteep, tpsRestantp));
 	}
 	
 }

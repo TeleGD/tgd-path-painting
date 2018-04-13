@@ -27,7 +27,7 @@ public class Player {
 	
 	private int life = 3;
 	
-	private boolean moveLeft,moveRight,moveUp,moveDown=false;
+	private boolean moveLeft,moveRight,moveUp,moveDown, dropTheBomb=false;
 
 	// Caractéristiques modifiables par bonus/malus :
 	private float speed = 1;
@@ -57,6 +57,8 @@ public class Player {
 		moveRight = input.isControlPressed(AppInput.BUTTON_RIGHT,controllerID);
 		moveUp = input.isControlPressed(AppInput.BUTTON_UP,controllerID);
 		moveDown = input.isControlPressed(AppInput.BUTTON_DOWN,controllerID);
+		dropTheBomb = input.isControlPressed(AppInput.BUTTON_A, controllerID);
+		mayDropBomb();
 		callMove();
 		updateXY();
 	}
@@ -93,8 +95,7 @@ public class Player {
 			if (World.getBoard().getCase(newI,newJ).isPassable()) {
 				move(deltaI,deltaJ);
 			}
-		}
-		
+		}	
 	}
 	
 	public void move(int deltaI, int deltaJ) {
@@ -104,9 +105,26 @@ public class Player {
 	}
 	
 	public void updateXY() {
-		//TODO : Faire mieux
-		x = j * 50;
-		y = i * 50;
+		int[] XY = convertInXY(i,j);
+		x = XY[0];
+		y = XY[1];
+	}
+	
+	public int[] convertInXY(int i, int j) {
+		int sizeCase = (int) World.getBoard().getCaseSize();
+		return new int[] {j * sizeCase, i * sizeCase};
+	}
+	
+	public void mayDropBomb() {
+		if (dropTheBomb) {
+			dropBomb();
+			dropTheBomb =false;
+		}
+	}
+	
+	public void dropBomb() {
+		int[] XY = convertInXY(i,j);
+		World.addBomb(controllerID, XY[0], XY[1], 2, 3);
 	}
 
 	public int getLife() {
