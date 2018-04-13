@@ -173,11 +173,11 @@ public class Player {
 		return this.name;
 	}
 	
-	public double getX() {
+	public float getX() {
 		return x;
 	}
 
-	public double getY() {
+	public float getY() {
 		return y;
 	}
 
