@@ -46,6 +46,7 @@ public class World extends AppWorld {
 		this.height = container.getHeight ();
 		board=new Board(13,25);
 		bonus = new ArrayList<Bonus>();
+		bonus.add(new Accelerate(10,10,10));
 	}
 
 	@Override
@@ -108,15 +109,16 @@ public class World extends AppWorld {
 
 	@Override
 	public void render (GameContainer container, StateBasedGame game, Graphics context) {
+		board.render(container, game, context);
+
 		for (Player p : this.players) {
 			p.render(container, game, context);
 		}
 		
-		for(Bonus b : this.bonus){
-			b.render(container, game, context);
+		for (Bonus b : this.bonus) {
+			if (!b.isActivated())
+				b.render(container, game, context);
 		}
-
-		board.render(container, game, context);
 	}
 
 	
