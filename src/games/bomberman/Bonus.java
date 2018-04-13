@@ -27,4 +27,5 @@ public abstract class Bonus {
 	}
 
 	public abstract boolean isActivated();
+	public abstract void activate(Player player) ;
 }

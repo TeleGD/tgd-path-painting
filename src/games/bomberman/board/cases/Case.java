@@ -5,12 +5,16 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.state.StateBasedGame;
 
+import games.bomberman.Bonus;
+import games.bomberman.Player;
+
 public abstract class Case {
 
 	protected boolean passable;
 	private Image img;
 	private int i,j;
 	private float size=50;
+	private Bonus bonus;
 	
 	public Case(int i,int j,Image img,boolean passable) {
 		this.i=i;
@@ -21,9 +25,26 @@ public abstract class Case {
 	
 	public void render (GameContainer container, StateBasedGame game, Graphics context) {
 		context.drawImage(img, j*50, i*50);
+		if(bonus!=null) {
+			bonus.render(container, game, context);
+		}
 	}
 	
+	public void getBonusAction(Player p) {
+		bonus.activate(p);
+	}
+	
+	
+	public Bonus getBonus() {
+		return bonus;
+	}
+
+	public void setBonus(Bonus bonus) {
+		this.bonus = bonus;
+	}
+
 	public void update (GameContainer container, StateBasedGame game, int delta) {
+		
 	}
 	
 	

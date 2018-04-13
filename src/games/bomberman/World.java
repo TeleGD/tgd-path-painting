@@ -14,6 +14,8 @@ import app.AppInput;
 import app.AppPlayer;
 import app.AppWorld;
 import games.bomberman.board.Board;
+import games.bomberman.board.cases.Case;
+import games.bomberman.board.cases.Ground;
 
 public class World extends AppWorld {
 
@@ -24,6 +26,7 @@ public class World extends AppWorld {
 	public final static String DIRECTORY_MUSICS="musics"+File.separator+GAME_FOLDER_NAME+File.separator;
 	public final static String DIRECTORY_IMAGES="images"+File.separator+"bomberman"+File.separator;
 	private static Board board;
+	private static long time; //used to test stuff, don't bother
 	
 	private int width;
 	private int height;
@@ -64,6 +67,7 @@ public class World extends AppWorld {
 		AppInput appInput = (AppInput) container.getInput ();
 		appInput.clearKeyPressedRecord ();
 		appInput.clearControlPressedRecord ();
+		time = System.currentTimeMillis();
 	}
 
 	public static void removeBonus(Bonus b) {
@@ -104,6 +108,10 @@ public class World extends AppWorld {
 		for(Bonus d : this.bonus){
 			d.update(container, game, delta);
 		}
+		if(System.currentTimeMillis()-time>=5000 && System.currentTimeMillis()-time<=5020) {
+			generateBonus();
+			time=System.currentTimeMillis();
+		}
 		
 	}
 
@@ -129,4 +137,20 @@ public class World extends AppWorld {
 	public static Player[] getPlayers() {
 		return players;
 	}
+	
+	private void generateBonus() {
+		//Find the ground
+		ArrayList<Case> freeCases=new ArrayList<Case>() ;
+		for(Case c:board.getAllCases()) {
+			if(c instanceof Ground) {
+				freeCases.add(c);
+			}
+		}
+		
+		int i=(int) (Math.random()*freeCases.size());
+		
+		//Generate the bonus
+		freeCases.get(i).setBonus(new Accelerate(freeCases.get(i).getJ(),freeCases.get(i).getI(),10));
+	}
+	
 }

@@ -2,6 +2,8 @@ package games.bomberman.board;
 
 import games.bomberman.board.cases.Case;
 
+import java.util.ArrayList;
+
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
@@ -97,5 +99,15 @@ public class Board {
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public ArrayList<Case> getAllCases(){
+		ArrayList<Case> result=new ArrayList<Case>();
+		for (int i=0;i<cases.length;i++) {
+			for(int j=0;j<cases.length;j++) {
+				result.add(cases[i][j]);
+			}
+		}
+		return result;
 	}
 }
