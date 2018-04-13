@@ -11,30 +11,35 @@ import games.bomberman.bonus.Bonus;
 public abstract class Case {
 
 	protected boolean passable;
-	private Image img;
-	private int i,j;
-	private float size=50;
-	private Bonus bonus;
-	
+	protected Image img;
+	protected int i,j;
+	protected float size=50;
+	protected Bonus bonus;
+
 	public Case(int i,int j,Image img,boolean passable) {
 		this.i=i;
 		this.j=j;
 		this.img=img;
 		this.passable=passable;
 	}
-	
+
 	public void render (GameContainer container, StateBasedGame game, Graphics context) {
 		context.drawImage(img, j*50, i*50);
 		if(bonus!=null) {
 			bonus.render(container, game, context);
 		}
 	}
-	
+
 	public void getBonusAction(Player p) {
+		if(bonus!=null);
 		bonus.activate(p);
+		bonus=null;
 	}
-	
-	
+
+	public void getAction(Player p) {
+		getBonusAction(p);
+	}
+
 	public Bonus getBonus() {
 		return bonus;
 	}
@@ -44,10 +49,10 @@ public abstract class Case {
 	}
 
 	public void update (GameContainer container, StateBasedGame game, int delta) {
-		
+
 	}
-	
-	
+
+
 	public boolean isPassable() {
 		return passable;
 	}
@@ -88,6 +93,6 @@ public abstract class Case {
 		this.size = size;
 	}
 
-	
-	
+
+
 }

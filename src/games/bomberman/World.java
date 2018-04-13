@@ -51,12 +51,6 @@ public class World extends AppWorld {
 		this.width = container.getWidth ();
 		this.height = container.getHeight ();
 		board=new Board(13,25);
-		bonus = new ArrayList<Bonus>();
-		bonus.add(new Accelerate(10,10,10));
-		bonus.add(new Life(3,5));
-		bonus.add(new Reverse(5,5));
-		bonus.add(new Cooldown(5,3));
-		bonus.add(new Shield(7,7));
 	}
 
 	@Override
@@ -126,10 +120,7 @@ public class World extends AppWorld {
 			}
 		}
 		
-		for(Bonus d : this.bonus){
-			d.update(container, game, delta);
-		}
-		if(System.currentTimeMillis()-time>=5000 && System.currentTimeMillis()-time<=5020) {
+		if(System.currentTimeMillis()-time>=500 && System.currentTimeMillis()-time<=5020) {
 			generateBonus();
 			time=System.currentTimeMillis();
 		}
@@ -146,11 +137,6 @@ public class World extends AppWorld {
 		
 		for (Player p : this.players) {
 			p.render(container, game, context);
-		}
-		
-		for (Bonus b : this.bonus) {
-			if (!b.isActivated())
-				b.render(container, game, context);
 		}
 	}
 
@@ -175,7 +161,7 @@ public class World extends AppWorld {
 		int i=(int) (Math.random()*freeCases.size());
 		
 		//Generate the bonus
-		int k= (int)(Math.random()*3);
+		int k= (int)(Math.random()*7);
 		switch (k) {
 		case 0:
 			freeCases.get(i).setBonus(new Accelerate(freeCases.get(i).getJ(),freeCases.get(i).getI(),10));
@@ -185,6 +171,18 @@ public class World extends AppWorld {
 			break;
 		case 2:
 			freeCases.get(i).setBonus(new Reverse(freeCases.get(i).getJ(),freeCases.get(i).getI()));
+			break;
+		case 3:
+			freeCases.get(i).setBonus(new Capacity(freeCases.get(i).getJ(),freeCases.get(i).getI()));
+			break;
+		case 4:
+			freeCases.get(i).setBonus(new Shield(freeCases.get(i).getJ(),freeCases.get(i).getI()));
+			break;
+		case 5:
+			freeCases.get(i).setBonus(new Teleport(freeCases.get(i).getJ(),freeCases.get(i).getI()));
+			break;
+		case 6:
+			freeCases.get(i).setBonus(new Cooldown(freeCases.get(i).getJ(),freeCases.get(i).getI()));
 			break;
 		}
 	}
