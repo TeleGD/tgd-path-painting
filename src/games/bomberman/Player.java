@@ -58,41 +58,43 @@ public class Player {
 		moveUp = input.isControlPressed(AppInput.BUTTON_UP,controllerID);
 		moveDown = input.isControlPressed(AppInput.BUTTON_DOWN,controllerID);
 		callMove();
+		updateXY();
+	}
+	
+
+	public void render(GameContainer container, StateBasedGame game, Graphics context) {
+		context.setColor(fillColor);
+		context.fillRect(x, y, height, width);
 	}
 	
 	public void callMove() throws SlickException{
 		if(moveUp && !moveDown){ //haut
-			move(0,1);
+			move(0,-1);
 			moveUp = false;
 		}
 		if(moveDown && !moveUp){ //bas
-			move(0,-1);
+			move(0,1);
 			moveDown = false;
 		}
 		if(moveLeft && !moveRight){ //gauche
-			move(1,0);
+			move(-1,0);
 			moveLeft = false;
 		}
 		if(moveRight && !moveLeft){ //droite
-			move(-1,0);
+			move(1,0);
 			moveRight = false;
 		}
 	}
 	
 	public void move(int deltaI, int deltaJ) {
-		i += deltaI;
-		j += deltaJ;
+		i += deltaI * reversed;
+		j += deltaJ * reversed;
 	}
 	
 	public void updateXY() {
 		//TODO : Faire mieux
 		x = i * 50;
 		y = j * 50;
-	}
-
-	public void render(GameContainer container, StateBasedGame game, Graphics context) {
-		context.setColor(fillColor);
-		context.fillRect(x, y, height, width);
 	}
 
 	public int getLife() {

@@ -5,6 +5,7 @@ import java.util.*;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
@@ -14,6 +15,7 @@ import app.AppInput;
 import app.AppPlayer;
 import app.AppWorld;
 import games.bomberman.board.Board;
+import games.bomberman.bonus.*;
 
 public class World extends AppWorld {
 
@@ -28,7 +30,7 @@ public class World extends AppWorld {
 	private int width;
 	private int height;
 
-	private static Player [] players;
+	private static List<Player> players;
 	private static List<Bonus> bonus;
 
 	public World (int ID) {
@@ -47,15 +49,17 @@ public class World extends AppWorld {
 		board=new Board(13,25);
 		bonus = new ArrayList<Bonus>();
 		bonus.add(new Accelerate(10,10,10));
+		bonus.add(new Life(3,5));
+		bonus.add(new Reverse(5,5));
 	}
 
 	@Override
 	public void play (GameContainer container, StateBasedGame game) {
 		AppGame appGame = (AppGame) game;
 		int n = appGame.appPlayers.size ();
-		this.players = new Player [n];
+		World.players = new ArrayList<Player>();
 		for (int i = 0; i < n; i++) {
-			this.players [i] = new Player (appGame.appPlayers.get (i));
+			World.players.add(new Player (appGame.appPlayers.get (i)));
 		};
 	}
 
@@ -74,7 +78,7 @@ public class World extends AppWorld {
 	public void leave (GameContainer container, StateBasedGame game) {}
 
 	@Override
-	public void update (GameContainer container, StateBasedGame game, int delta) {
+	public void update (GameContainer container, StateBasedGame game, int delta) throws SlickException {
 		/*AppInput appInput = (AppInput) container.getInput ();
 		AppGame appGame = (AppGame) game;
 		for (Player player: this.players) {
@@ -100,6 +104,15 @@ public class World extends AppWorld {
 		if (appInput.isKeyPressed (AppInput.KEY_ESCAPE)) {
 			appGame.enterState (AppGame.PAGES_GAMES, new FadeOutTransition (), new FadeInTransition ());
 		}*/
+		for (Player p : players) {
+			p.update(container, game, delta);
+		}
+		
+		for(int i=0 ; i<players.size() ; i++) {
+			if (players.get(i).getLife() <= 0) {
+				players.remove(i);
+			}
+		}
 		
 		for(Bonus d : this.bonus){
 			d.update(container, game, delta);
@@ -126,7 +139,7 @@ public class World extends AppWorld {
 		return board;
 	}
 	
-	public static Player[] getPlayers() {
+	public static List<Player> getPlayers() {
 		return players;
 	}
 }
