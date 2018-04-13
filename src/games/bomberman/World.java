@@ -1,5 +1,7 @@
 package games.bomberman;
 
+import java.io.File;
+
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.state.StateBasedGame;
@@ -15,6 +17,11 @@ public class World extends AppWorld {
 
 	private int ID;
 
+	public final static String GAME_FOLDER_NAME="bomberman";
+	public final static String DIRECTORY_SOUNDS="musics"+File.separator+GAME_FOLDER_NAME+File.separator;
+	public final static String DIRECTORY_MUSICS="musics"+File.separator+GAME_FOLDER_NAME+File.separator;
+	public final static String DIRECTORY_IMAGES="images"+File.separator+GAME_FOLDER_NAME+File.separator;
+	
 	private int width;
 	private int height;
 
