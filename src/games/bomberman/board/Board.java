@@ -54,13 +54,15 @@ public class Board {
 					}
 				}
 			}
-			/*if(i%2==0) {
-						cases[i][j]=new Ground(i,j);
-					}else if(j%2==0) {
-						cases[i][j]=new Ground(i,j);
-					}else {
-						cases[i][j]=new Wall(i,j);
-					}*/
+			//For each Board created their is a pair of tp cases
+			int i,j,k,l;
+			i= (int) (Math.random()*imax);
+			j= (int) (Math.random()*jmax);
+			k= (int) (Math.random()*imax);
+			l= (int) (Math.random()*jmax);
+			cases[i][j]=new TP(i,j,cases[k][l]);
+			cases[k][l]=new TP(k,l,cases[i][j]);
+			
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}
@@ -96,6 +98,14 @@ public class Board {
 		for(Case[] c:cases) {
 			for(Case ca:c) {
 				ca.render(container, game, context);
+			}
+		}
+	}
+	
+	public void update (GameContainer container, StateBasedGame game, int delta) throws SlickException {
+		for(Case[] c:cases) {
+			for(Case ca:c) {
+				ca.update(container, game, delta);
 			}
 		}
 	}
