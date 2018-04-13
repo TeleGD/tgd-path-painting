@@ -25,4 +25,6 @@ public abstract class Bonus {
 	public void render (GameContainer container, StateBasedGame game, Graphics context) {
 		context.drawImage(sprite, caseX*50, caseY*50);
 	}
+
+	public abstract boolean isActivated();
 }
