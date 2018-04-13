@@ -50,14 +50,6 @@ public class World extends AppWorld {
 		this.width = container.getWidth ();
 		this.height = container.getHeight ();
 		board=new Board(13,25);
-		bonus = new ArrayList<Bonus>();
-		bonus.add(new Accelerate(10,10,10));
-		bonus.add(new Life(3,5));
-		bonus.add(new Reverse(5,5));
-		bonus.add(new Cooldown(5,3));
-		bonus.add(new Shield(7,7));
-		bonus.add(new Teleport(5,7));
-		bonus.add(new Capacity(9,7));
 	}
 
 	@Override
@@ -122,9 +114,6 @@ public class World extends AppWorld {
 			}
 		}
 		
-		for(Bonus d : this.bonus){
-			d.update(container, game, delta);
-		}
 		if(System.currentTimeMillis()-time>=5000 && System.currentTimeMillis()-time<=5020) {
 			generateBonus();
 			time=System.currentTimeMillis();
@@ -138,11 +127,6 @@ public class World extends AppWorld {
 
 		for (Player p : this.players) {
 			p.render(container, game, context);
-		}
-		
-		for (Bonus b : this.bonus) {
-			if (!b.isActivated())
-				b.render(container, game, context);
 		}
 	}
 
