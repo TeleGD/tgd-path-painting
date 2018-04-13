@@ -92,6 +92,10 @@ public class World extends AppWorld {
 	}
 
 	@Override
-	public void render (GameContainer container, StateBasedGame game, Graphics context) {}
+	public void render (GameContainer container, StateBasedGame game, Graphics context) {
+		for (Player p : this.players) {
+			p.render(container, game, context);
+		}
+	}
 
 }
