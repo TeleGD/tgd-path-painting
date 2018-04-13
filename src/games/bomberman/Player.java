@@ -68,33 +68,45 @@ public class Player {
 	}
 	
 	public void callMove() throws SlickException{
+		int deltaJ = 0, deltaI = 0;
 		if(moveUp && !moveDown){ //haut
-			move(0,-1);
+			deltaI = -1;
 			moveUp = false;
 		}
 		if(moveDown && !moveUp){ //bas
-			move(0,1);
+			deltaI = 1;
 			moveDown = false;
 		}
 		if(moveLeft && !moveRight){ //gauche
-			move(-1,0);
+			deltaJ = -1;
 			moveLeft = false;
 		}
 		if(moveRight && !moveLeft){ //droite
-			move(1,0);
+			deltaJ = 1;
 			moveRight = false;
 		}
+		
+		int newI = i + deltaI*reversed;
+		int newJ = j + deltaJ*reversed;
+		Integer[] size = World.getBoard().getDim();
+		if (newI >= 0 && newI < size[0] && newJ >= 0 && newJ < size[1]) {
+			if (World.getBoard().getCase(newI,newJ).isPassable()) {
+				move(deltaI,deltaJ);
+			}
+		}
+		
 	}
 	
 	public void move(int deltaI, int deltaJ) {
+		
 		i += deltaI * reversed;
 		j += deltaJ * reversed;
 	}
 	
 	public void updateXY() {
 		//TODO : Faire mieux
-		x = i * 50;
-		y = j * 50;
+		x = j * 50;
+		y = i * 50;
 	}
 
 	public int getLife() {
@@ -115,16 +127,8 @@ public class Player {
 		return height;
 	}
 
-	public void setHeight(int height) {
-		this.height = height;
-	}
-
 	public int getWidth() {
 		return width;
-	}
-
-	public void setWidth(int width) {
-		this.width = width;
 	}
 
 	public float getSpeed() {
@@ -191,4 +195,11 @@ public class Player {
 		return j;
 	}
 
+	public void setI(int i) {
+		this.i = i;
+	}
+
+	public void setJ(int j) {
+		this.j = j;
+	}
 }
