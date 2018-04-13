@@ -1,4 +1,4 @@
-package games.bomberman;
+package games.bomberman.bonus;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
