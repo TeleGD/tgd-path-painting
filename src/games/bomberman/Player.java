@@ -1,9 +1,11 @@
 package games.bomberman;
 
+import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.state.StateBasedGame;
 
 import app.AppPlayer;
@@ -24,10 +26,12 @@ public class Player {
 	
 	private int height = 50;
 	private int width = 50;
+	private Animation animations[] = new Animation[8];
 	
 	private int life = 3;
 	
-	private boolean moveLeft,moveRight,moveUp,moveDown=false;
+	private boolean move,moveLeft,moveRight,moveUp,moveDown=false;
+	private int direction;
 
 	// Caractéristiques modifiables par bonus/malus :
 	private float speed = 1;
@@ -49,6 +53,32 @@ public class Player {
 		this.name = name;
 		// Fin des trucs de Tristan
 		
+		direction = 2;
+		
+		SpriteSheet perso;
+		try {
+			perso = new SpriteSheet("images/bomberman/personnage.png",50,50);
+			animations[0] = loadAnimation(perso,0,1,0);
+			animations[1] = loadAnimation(perso,0,1,1);
+			animations[2] = loadAnimation(perso,0,1,2);
+			animations[3] = loadAnimation(perso,0,1,3);
+			animations[4] = loadAnimation(perso,1,9,0);
+			animations[5] = loadAnimation(perso,1,9,1);
+			animations[6] = loadAnimation(perso,1,9,2);
+			animations[7] = loadAnimation(perso,1,9,3);
+		} catch (SlickException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	private Animation loadAnimation(SpriteSheet spriteSheet, int startX, int endX, int y) {
+		Animation animation = new Animation();
+		for (int x = startX;x<endX; x++) {
+			animation.addFrame(spriteSheet.getSprite(x, y), 100);
+		}
+		return animation;
 	}
 	
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
@@ -57,14 +87,22 @@ public class Player {
 		moveRight = input.isControlPressed(AppInput.BUTTON_RIGHT,controllerID);
 		moveUp = input.isControlPressed(AppInput.BUTTON_UP,controllerID);
 		moveDown = input.isControlPressed(AppInput.BUTTON_DOWN,controllerID);
+		if (moveLeft) { direction = 1;}
+		if (moveRight) { direction = 3;}
+		if (moveUp) { direction = 0;}
+		if (moveDown) { direction = 2;}
+		if (moveUp || moveDown || moveRight || moveLeft) {move=true;}
+		else {move = false;}
 		callMove();
 		updateXY();
+		
 	}
 	
 
 	public void render(GameContainer container, StateBasedGame game, Graphics context) {
-		context.setColor(fillColor);
-		context.fillRect(x, y, height, width);
+		//context.setColor(fillColor);
+		//context.fillRect(x, y, height, width);
+		context.drawAnimation(animations[direction + (move ? 4 : 0)], x, y);
 	}
 	
 	public void callMove() throws SlickException{
