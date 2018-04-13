@@ -28,7 +28,7 @@ public class World extends AppWorld {
 	private int width;
 	private int height;
 
-	private Player [] players;
+	private static Player [] players;
 	private static List<Bonus> bonus;
 
 	public World (int ID) {
@@ -44,7 +44,7 @@ public class World extends AppWorld {
 	public void init (GameContainer container, StateBasedGame game) {
 		this.width = container.getWidth ();
 		this.height = container.getHeight ();
-		board=new Board();
+		board=new Board(13,25);
 		bonus = new ArrayList<Bonus>();
 		bonus.add(new Accelerate(10,10,10));
 	}
@@ -110,7 +110,7 @@ public class World extends AppWorld {
 	@Override
 	public void render (GameContainer container, StateBasedGame game, Graphics context) {
 		board.render(container, game, context);
-		
+
 		for (Player p : this.players) {
 			p.render(container, game, context);
 		}
@@ -119,12 +119,14 @@ public class World extends AppWorld {
 			if (!b.isActivated())
 				b.render(container, game, context);
 		}
-
-		
 	}
 
 	
 	public static Board getBoard() {
 		return board;
+	}
+	
+	public static Player[] getPlayers() {
+		return players;
 	}
 }

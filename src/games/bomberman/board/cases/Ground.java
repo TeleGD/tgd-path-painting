@@ -9,8 +9,5 @@ public class Ground extends Case{
 		super(i, j, new Image("images/bomberman/Ground.png"), true);
 	}
 
-	@Override
-	public void destruct() {
-	}
 
 }
