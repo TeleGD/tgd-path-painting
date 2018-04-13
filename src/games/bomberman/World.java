@@ -108,6 +108,7 @@ public class World extends AppWorld {
 
 	@Override
 	public void render (GameContainer container, StateBasedGame game, Graphics context) {
+		board.render(container, game, context);
 		for (Player p : this.players) {
 			p.render(container, game, context);
 		}
@@ -116,7 +117,7 @@ public class World extends AppWorld {
 			b.render(container, game, context);
 		}
 
-		board.render(container, game, context);
+		
 	}
 
 	
