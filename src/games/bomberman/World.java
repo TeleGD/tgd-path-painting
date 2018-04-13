@@ -15,6 +15,7 @@ import app.AppInput;
 import app.AppPlayer;
 import app.AppWorld;
 import games.bomberman.board.Board;
+import games.bomberman.bonus.*;
 
 public class World extends AppWorld {
 
@@ -48,6 +49,7 @@ public class World extends AppWorld {
 		board=new Board(13,25);
 		bonus = new ArrayList<Bonus>();
 		bonus.add(new Accelerate(10,10,10));
+		bonus.add(new Life(3,5));
 	}
 
 	@Override
