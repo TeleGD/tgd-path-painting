@@ -84,6 +84,10 @@ public class Board {
 	public Case getCase(int i, int j) {
 		return cases[i][j];
 	}
+	
+	public Case[][] getCases(){
+		return cases;
+	}
 
 	public void render (GameContainer container, StateBasedGame game, Graphics context) {
 		for(Case[] c:cases) {
