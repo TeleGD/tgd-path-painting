@@ -16,13 +16,18 @@ public class Board {
 		
 	}
 	
-	
+	/*
+	 * 0: min x
+	 * 1: max x
+	 * 2: min y
+	 * 3: max y
+	 */
 	public float[] getlimits() {
 		float[] result= new float[4];
 		result[0]=0;
 		result[1]=cases.length*caseSize;
 		result[2]=0;
 		result[3]=cases[0].length*caseSize;
-		return null;
+		return result;
 	}
 }
