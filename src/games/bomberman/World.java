@@ -27,7 +27,7 @@ public class World extends AppWorld {
 	private int width;
 	private int height;
 
-	private Player [] players;
+	private static Player [] players;
 
 	public World (int ID) {
 		this.ID = ID;
@@ -42,7 +42,7 @@ public class World extends AppWorld {
 	public void init (GameContainer container, StateBasedGame game) {
 		this.width = container.getWidth ();
 		this.height = container.getHeight ();
-		board=new Board();
+		board=new Board(21,21);
 	}
 
 	@Override
@@ -107,5 +107,9 @@ public class World extends AppWorld {
 	
 	public static Board getBoard() {
 		return board;
+	}
+	
+	public static Player[] getPlayers() {
+		return players;
 	}
 }
