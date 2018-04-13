@@ -54,6 +54,7 @@ public class World extends AppWorld {
 		bonus.add(new Accelerate(10,10,10));
 		bonus.add(new Life(3,5));
 		bonus.add(new Reverse(5,5));
+		bonus.add(new Cooldown(5,3));
 	}
 
 	@Override
