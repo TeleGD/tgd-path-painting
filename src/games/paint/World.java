@@ -1,5 +1,7 @@
 package games.paint;
 
+import java.io.File;
+
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
@@ -10,6 +12,11 @@ import app.AppWorld;
 public class World extends AppWorld {
 	
 	private final int id;
+	
+	public final static String GAME_FOLDER_NAME="paint";
+	public final static String DIRECTORY_SOUNDS="musics"+File.separator+GAME_FOLDER_NAME+File.separator;
+	public final static String DIRECTORY_MUSICS="musics"+File.separator+GAME_FOLDER_NAME+File.separator;
+	public final static String DIRECTORY_IMAGES="images"+File.separator+GAME_FOLDER_NAME+File.separator;
 	
 	public World(int id) {
 		this.id=id;

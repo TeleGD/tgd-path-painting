@@ -31,11 +31,27 @@ public class Games extends AppMenu {
 		this.setTitle ("Menu des jeux");
 		this.setSubtitle ("Sans sous-titre");
 		this.setMenu (Arrays.asList (new MenuItem [] {
-			new MenuItem (AppGame.TITLES [AppGame.GAMES_TEST_WORLD]) {
+			new MenuItem (AppGame.TITLES [AppGame.GAMES_BOMBERMAN_WORLD]) {
 				public void itemSelected () {
 					Players players = (Players) game.getState (AppGame.PAGES_PLAYERS);
 					players.setPreviousID (AppGame.PAGES_GAMES);
-					players.setNextID (AppGame.GAMES_TEST_WORLD);
+					players.setNextID (AppGame.GAMES_BOMBERMAN_WORLD);
+					game.enterState (AppGame.PAGES_PLAYERS);
+				}
+			},
+			new MenuItem (AppGame.TITLES [AppGame.GAMES_LABYRINTHE_WORLD]) {
+				public void itemSelected () {
+					Players players = (Players) game.getState (AppGame.PAGES_PLAYERS);
+					players.setPreviousID (AppGame.PAGES_GAMES);
+					players.setNextID (AppGame.GAMES_LABYRINTHE_WORLD);
+					game.enterState (AppGame.PAGES_PLAYERS);
+				}
+			},
+			new MenuItem (AppGame.TITLES [AppGame.GAMES_PAINT_WORLD]) {
+				public void itemSelected () {
+					Players players = (Players) game.getState (AppGame.PAGES_PLAYERS);
+					players.setPreviousID (AppGame.PAGES_GAMES);
+					players.setNextID (AppGame.GAMES_PAINT_WORLD);
 					game.enterState (AppGame.PAGES_PLAYERS);
 				}
 			},
