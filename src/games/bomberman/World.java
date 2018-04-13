@@ -56,6 +56,8 @@ public class World extends AppWorld {
 		bonus.add(new Reverse(5,5));
 		bonus.add(new Cooldown(5,3));
 		bonus.add(new Shield(7,7));
+		bonus.add(new Teleport(5,7));
+		bonus.add(new Capacity(9,7));
 	}
 
 	@Override
