@@ -12,6 +12,7 @@ import app.AppGame;
 import app.AppInput;
 import app.AppPlayer;
 import app.AppWorld;
+import games.bomberman.board.Board;
 
 public class World extends AppWorld {
 
@@ -21,6 +22,7 @@ public class World extends AppWorld {
 	public final static String DIRECTORY_SOUNDS="musics"+File.separator+GAME_FOLDER_NAME+File.separator;
 	public final static String DIRECTORY_MUSICS="musics"+File.separator+GAME_FOLDER_NAME+File.separator;
 	public final static String DIRECTORY_IMAGES="images"+File.separator+GAME_FOLDER_NAME+File.separator;
+	private Board board;
 	
 	private int width;
 	private int height;
@@ -40,6 +42,7 @@ public class World extends AppWorld {
 	public void init (GameContainer container, StateBasedGame game) {
 		this.width = container.getWidth ();
 		this.height = container.getHeight ();
+		board=new Board();
 	}
 
 	@Override
@@ -64,7 +67,7 @@ public class World extends AppWorld {
 
 	@Override
 	public void update (GameContainer container, StateBasedGame game, int delta) {
-		AppInput appInput = (AppInput) container.getInput ();
+		/*AppInput appInput = (AppInput) container.getInput ();
 		AppGame appGame = (AppGame) game;
 		for (Player player: this.players) {
 			String name = player.getName ();
@@ -88,7 +91,9 @@ public class World extends AppWorld {
 		}
 		if (appInput.isKeyPressed (AppInput.KEY_ESCAPE)) {
 			appGame.enterState (AppGame.PAGES_GAMES, new FadeOutTransition (), new FadeInTransition ());
-		}
+		}*/
+		
+		
 	}
 
 	@Override
@@ -98,4 +103,8 @@ public class World extends AppWorld {
 		}
 	}
 
+	
+	public Board getBoard() {
+		return board;
+	}
 }
