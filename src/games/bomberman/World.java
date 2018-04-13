@@ -115,6 +115,8 @@ public class World extends AppWorld {
 		for(Bonus b : this.bonus){
 			b.render(container, game, context);
 		}
+
+		board.render(container, game, context);
 	}
 
 	
