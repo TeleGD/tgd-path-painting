@@ -89,6 +89,9 @@ public class Board {
 		return cases;
 	}
 
+	public Integer[] getDim() {
+		return new Integer[] {cases.length,cases[0].length};
+	}
 	public void render (GameContainer container, StateBasedGame game, Graphics context) {
 		for(Case[] c:cases) {
 			for(Case ca:c) {
