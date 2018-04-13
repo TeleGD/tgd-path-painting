@@ -20,14 +20,12 @@ public abstract class Case {
 	}
 	
 	public void render (GameContainer container, StateBasedGame game, Graphics context) {
-		context.drawImage(img, i*50, j*50);
+		context.drawImage(img, j*50, i*50);
 	}
 	
 	public void update (GameContainer container, StateBasedGame game, int delta) {
 	}
 	
-	
-	public abstract void destruct();
 	
 	public boolean isPassable() {
 		return passable;

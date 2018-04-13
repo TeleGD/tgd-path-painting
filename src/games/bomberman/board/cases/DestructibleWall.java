@@ -1,16 +1,12 @@
 package games.bomberman.board.cases;
 
 import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
 
 public class DestructibleWall extends Case{
 
-	public DestructibleWall(int i, int j, Image img) {
-		super(i, j, img, false);
-	}
-
-	@Override
-	public void destruct() {
-		this=new Ground(this.getI(),this.getJ());	
+	public DestructibleWall(int i, int j) throws SlickException {
+		super(i, j, new Image("images/bomberman/Rocher.png"), false);
 	}
 
 }

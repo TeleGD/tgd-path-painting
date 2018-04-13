@@ -44,7 +44,7 @@ public class World extends AppWorld {
 	public void init (GameContainer container, StateBasedGame game) {
 		this.width = container.getWidth ();
 		this.height = container.getHeight ();
-		board=new Board(21,21);
+		board=new Board(13,25);
 		bonus = new ArrayList<Bonus>();
 	}
 
