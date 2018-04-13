@@ -11,10 +11,10 @@ import games.bomberman.bonus.Bonus;
 public abstract class Case {
 
 	protected boolean passable;
-	private Image img;
-	private int i,j;
-	private float size=50;
-	private Bonus bonus;
+	protected Image img;
+	protected int i,j;
+	protected float size=50;
+	protected Bonus bonus;
 	
 	public Case(int i,int j,Image img,boolean passable) {
 		this.i=i;
@@ -34,6 +34,9 @@ public abstract class Case {
 		bonus.activate(p);
 	}
 	
+	public void getAction(Player p) {
+		getBonusAction(p);
+	}
 	
 	public Bonus getBonus() {
 		return bonus;
