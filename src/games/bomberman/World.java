@@ -49,6 +49,7 @@ public class World extends AppWorld {
 		bonus = new ArrayList<Bonus>();
 		bonus.add(new Accelerate(10,10,10));
 		bonus.add(new Life(3,5));
+		bonus.add(new Reverse(5,5));
 	}
 
 	@Override
