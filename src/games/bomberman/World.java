@@ -1,6 +1,7 @@
 package games.bomberman;
 
 import java.io.File;
+import java.util.*;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -21,13 +22,14 @@ public class World extends AppWorld {
 	public final static String GAME_FOLDER_NAME="bomberman";
 	public final static String DIRECTORY_SOUNDS="musics"+File.separator+GAME_FOLDER_NAME+File.separator;
 	public final static String DIRECTORY_MUSICS="musics"+File.separator+GAME_FOLDER_NAME+File.separator;
-	public final static String DIRECTORY_IMAGES="images"+File.separator+GAME_FOLDER_NAME+File.separator;
+	public final static String DIRECTORY_IMAGES="images"+File.separator+"bomberman"+File.separator;
 	private static Board board;
 	
 	private int width;
 	private int height;
 
 	private Player [] players;
+	private static List<Bonus> bonus;
 
 	public World (int ID) {
 		this.ID = ID;
@@ -43,6 +45,7 @@ public class World extends AppWorld {
 		this.width = container.getWidth ();
 		this.height = container.getHeight ();
 		board=new Board();
+		bonus = new ArrayList<Bonus>();
 	}
 
 	@Override
@@ -62,6 +65,10 @@ public class World extends AppWorld {
 		appInput.clearControlPressedRecord ();
 	}
 
+	public static void removeBonus(Bonus b) {
+		bonus.remove(b);
+	}
+	
 	@Override
 	public void leave (GameContainer container, StateBasedGame game) {}
 
@@ -93,6 +100,9 @@ public class World extends AppWorld {
 			appGame.enterState (AppGame.PAGES_GAMES, new FadeOutTransition (), new FadeInTransition ());
 		}*/
 		
+		for(Bonus d : this.bonus){
+			d.update(container, game, delta);
+		}
 		
 	}
 
@@ -100,6 +110,10 @@ public class World extends AppWorld {
 	public void render (GameContainer container, StateBasedGame game, Graphics context) {
 		for (Player p : this.players) {
 			p.render(container, game, context);
+		}
+		
+		for(Bonus b : this.bonus){
+			b.render(container, game, context);
 		}
 	}
 
