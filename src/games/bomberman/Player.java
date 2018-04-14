@@ -40,6 +40,8 @@ public class Player {
 	
 	// Caractéristiques modifiables par bonus/malus :
 	private float speed = 1;
+	private int cooldownMoveMax = 400; // Temps entre chanque déplacement
+	private int cooldownMove = -1;
 	private int reversed = 1; // =1 : controles normaux, =-1 : controles inversés
 	private int bombCapacity = 3; // Nombre de bombe posable en même temps
 	private int dropCoolDown = 2000; // 2sec entre chaque bombe posée
@@ -64,6 +66,7 @@ public class Player {
 		this.controllerID = controllerID;
 		this.name = name;
 		// Fin des trucs de Tristan
+		
 		tpable = true;
 		invincible=false;
 		clignotement =200;
@@ -152,12 +155,20 @@ public class Player {
 	}
 	
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
+		
 		AppInput input = (AppInput) container.getInput();
-		moveLeft = input.isControlPressed(AppInput.BUTTON_LEFT,controllerID);
-		moveRight = input.isControlPressed(AppInput.BUTTON_RIGHT,controllerID);
-		moveUp = input.isControlPressed(AppInput.BUTTON_UP,controllerID);
-		moveDown = input.isControlPressed(AppInput.BUTTON_DOWN,controllerID);
-		dropTheBomb = input.isControlPressed(AppInput.BUTTON_A, controllerID);
+		
+		if (cooldownMove <= 0) {
+			moveLeft = input.isControlPressed(AppInput.BUTTON_LEFT,controllerID);
+			moveRight = input.isControlPressed(AppInput.BUTTON_RIGHT,controllerID);
+			moveUp = input.isControlPressed(AppInput.BUTTON_UP,controllerID);
+			moveDown = input.isControlPressed(AppInput.BUTTON_DOWN,controllerID);
+			dropTheBomb = input.isControlPressed(AppInput.BUTTON_A, controllerID);
+		} else {
+			cooldownMove -= delta;
+
+		}
+		
 		
 		if (invincible) {
 			invincibilite-=delta;
@@ -252,6 +263,9 @@ public class Player {
 					tpable = true;
 				
 				move(deltaI,deltaJ);
+				if (deltaI != 0 || deltaJ != 0) {
+					cooldownMove = (int) (cooldownMoveMax / speed);
+				}
 			}
 		}	
 	}
