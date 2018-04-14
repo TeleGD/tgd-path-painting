@@ -161,23 +161,36 @@ public class Bomb {
 	public void BombExplose() {
 		for (int dir=0;dir<4;dir++) {
 			boolean stop = false;
-			int i = 0;
-			while (i<portee && !stop) {
-				int c = x - (int) (i*Math.pow(-1,dir/2)*((dir%2==0) ? 1 : 2));
-				int l = y - (int)(i*Math.pow(-1, (dir-1)/2)*((dir%2==1) ? 1 : 0));
-				System.out.println(c+" "+l);
+			int d = 0;
+			while (d<portee && !stop) {
+				int c=i,l=j;
+				switch (dir) {
+				case 0 :
+					l-=d;
+					break;
+				case 1 :
+					c+=d;
+					break;
+				case 2 :
+					l+=d;
+					break;
+				case 3 :
+					c-=d;
+				}
+				
+				System.out.println(l+" "+c +"     "+d+" "+dir);
 				if ( c<0 || l<0 || c>24 || l>12 ) {
-					arret[dir] = i;
+					arret[dir] = d;
 					stop = true;
 				} else {
 					Case ca = World.getBoard().getCase(c, l);
 					if (ca instanceof DestructibleWall) {
 						World.getBoard().destruct(c, l);
-						arret[dir] = i;
+						arret[dir] = d;
 						stop = true;
 					}
 					if (ca instanceof Wall) {
-						arret[dir] = i;
+						arret[dir] = d;
 						stop = true;
 					}
 					for (Player p : World.getPlayers()) {
@@ -186,7 +199,7 @@ public class Bomb {
 						}
 					}
 				}
-				i++;
+				d++;
 			}
 		}
 		detruite = true;
