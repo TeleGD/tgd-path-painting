@@ -53,6 +53,9 @@ public abstract class Player {
 	}
 	
 	public void move(GameContainer container) {
+		if (controlerID == 0) {
+			return;
+		}
 		AppInput input = (AppInput) container.getInput();
 		moveLeft = input.isControlPressed(AppInput.BUTTON_LEFT,controlerID);
 		moveRight = input.isControlPressed(AppInput.BUTTON_RIGHT,controlerID);

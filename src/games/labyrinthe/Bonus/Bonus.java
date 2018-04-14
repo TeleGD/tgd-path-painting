@@ -27,7 +27,7 @@ public abstract class Bonus {
 	
 	public void render(GameContainer container, StateBasedGame game, Graphics context) {
 		if(!picked) {
-			context.drawImage(img,?,?)
+			//context.drawImage(img,?,?)
 		}
 	}
 	

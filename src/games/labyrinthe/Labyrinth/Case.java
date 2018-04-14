@@ -23,6 +23,10 @@ public abstract class Case {
 			this.img=img;
 			this.size = size;
 		}
+		
+		public boolean isEquals(Case c) {
+			return (c.i==this.i && c.j == this.j);
+		}
 
 
 		public void render (GameContainer container, StateBasedGame game, Graphics context) {

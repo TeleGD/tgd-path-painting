@@ -12,7 +12,7 @@ public class WallCase extends Case {
 	
 	static {
 		try {
-			image = new Image(World.DIRECTORY_IMAGES+"/Ground.png");
+			image = new Image(World.DIRECTORY_IMAGES+"/Wall.png");
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}

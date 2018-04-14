@@ -32,7 +32,7 @@ public class World extends AppWorld {
 	public void play(GameContainer container, StateBasedGame game) {
 		AppGame appGame = (AppGame) game;
 		int n = appGame.appPlayers.size ();
-		board = new Board(this,10,10);
+		board = new Board(this,14,14);
 		players = new ArrayList<Player>();
 		players.add(new VictimPlayer(this, appGame.appPlayers.get(0)));
 		for (int i = 1; i < n; i++) {

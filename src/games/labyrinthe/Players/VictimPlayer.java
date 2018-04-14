@@ -10,6 +10,8 @@ public class VictimPlayer extends Player {
 	
 	public VictimPlayer(World w,AppPlayer aplayer) {
 		super(w,aplayer);
+		invulnerable = false;
+		immaterial = false;
 	}
 
 }
