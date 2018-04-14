@@ -34,7 +34,8 @@ public class World extends AppWorld {
 	
 	private int width;
 	private int height;
-
+	private LesTrucsQuiVontSAfficherACoteDuPlateau gui;
+	
 	private static List<Player> players;
 	private static List<Bomb> bombs;
 	
@@ -75,6 +76,7 @@ public class World extends AppWorld {
 		for (int i = 0; i < n; i++) {
 			World.players.add(new Player (appGame.appPlayers.get (i)));
 		}
+		gui = new LesTrucsQuiVontSAfficherACoteDuPlateau(this, (int) (board.getCaseSize()*board.cases.length));
 	}
 
 	@Override
@@ -86,7 +88,7 @@ public class World extends AppWorld {
 		
 		//music.loop(1, (float) 0.5);
 	}
-	
+
 	@Override
 	public void leave (GameContainer container, StateBasedGame game) {}
 
@@ -116,7 +118,7 @@ public class World extends AppWorld {
 		}
 		if (appInput.isKeyPressed (AppInput.KEY_ESCAPE)) {
 			appGame.enterState (AppGame.PAGES_GAMES, new FadeOutTransition (), new FadeInTransition ());
-		}*/		
+		}*/
 		for (Player p : players) {
 			p.update(container, game, delta);
 		}
@@ -143,14 +145,14 @@ public class World extends AppWorld {
 			generateBonus();
 			time=System.currentTimeMillis();
 		}
-		
 		board.update(container, game, delta);
+		gui.update(container, game, delta);
 	}
 
 	@Override
 	public void render (GameContainer container, StateBasedGame game, Graphics context) {
 		board.render(container, game, context);
-
+		gui.render(container, game, context);
 		for (Bomb b : bombs) {
 			b.render(container,game,context);
 		}
@@ -229,6 +231,15 @@ public class World extends AppWorld {
 		
 		bombs.add(new Bomb(numJoueur, i, j, porteep, tpsRestantp));
 		board.getCase(i, j).setBomb(bombs.get(bombs.size()-1));
+	}
+	
+	
+	public int getWidth() {
+		return width;
+	}
+
+	public int getHeight() {
+		return height;
 	}
 	
 }
