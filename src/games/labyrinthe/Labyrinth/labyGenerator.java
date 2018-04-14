@@ -9,7 +9,8 @@ public class labyGenerator {
 	 private Case[][] lab; 
 	 private int n;
 	 private int m;
-
+//MAIS CEST QUOI CE BOULOT
+	 //CEST DE LA MERDE PUTAIN!!!!
 	 Random r = new Random();
 	 
 	 public labyGenerator (int n,int m){
