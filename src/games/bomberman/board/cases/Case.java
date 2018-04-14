@@ -53,9 +53,9 @@ public abstract class Case {
 	public void update (GameContainer container, StateBasedGame game, int delta) {
 		if (bonus!=null) {
 			bonus.update(container, game, delta);
-		}
-		if (bonus.isDeleted()) {
-			bonus = null;
+			if (bonus.isDeleted()) {
+				bonus = null;
+			}
 		}
 	}
 

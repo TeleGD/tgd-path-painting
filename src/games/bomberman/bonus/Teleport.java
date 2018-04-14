@@ -36,8 +36,8 @@ public class Teleport extends Bonus{
 		int i, j;
 		
 		do {
-			i = (int)Math.random()*World.getBoard().getDim()[0];
-			j = (int)Math.random()*World.getBoard().getDim()[1];
+			i = (int)(Math.random()*World.getBoard().getDim()[0]);
+			j = (int)(Math.random()*World.getBoard().getDim()[1]);
 		} while(!World.getBoard().getCase(i, j).isPassable());
 		
 		player.setI(i);
