@@ -52,7 +52,7 @@ public class Cooldown extends Bonus{
 	}
 	
 	public void desactivate() {
-		player.setDropCoolDown(2000);
+		player.setDropCoolDown(1000);
 		deleted = true;
 	}
 	
