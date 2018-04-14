@@ -19,8 +19,8 @@ public class Player {
 	private String name;
 	
 	//Position du joueur :
-	private float x = 50;	// Abcisse réelle du joueur
-	private float y = 50;	// Ordonnée réelle du joueur
+	private float x;	// Abcisse réelle du joueur
+	private float y;	// Ordonnée réelle du joueur
 	private int i;		// Position du joueur dans la matrice
 	private int j;
 	
@@ -52,6 +52,24 @@ public class Player {
 		this.controllerID = controllerID;
 		this.name = name;
 		// Fin des trucs de Tristan
+		
+		// Attribution des positions de départ en fonction du n° de joueur
+		Integer[] size = World.getBoard().getDim();
+		switch(controllerID) {
+			case 0 : i = 0;
+				j = 0;
+				break;
+			case 1 : i = size[0]-1;
+				j = size[1] -1;
+				break;
+			case 2 : i = 0;
+					j = size[1] -1;
+					break;
+			case 3 : i = size[0] -1;
+					j = 0;
+					break;
+		}
+		updateXY(); // initialisation de x et y selon les i et j de départ
 		
 		direction = 2;
 		
@@ -163,7 +181,7 @@ public class Player {
 	}
 	
 	public void dropBomb() {
-		World.addBomb(controllerID, i, j, 2, 3000);
+		World.addBomb(controllerID, i, j, 100, 3000);
 	}
 
 	public int getLife() {

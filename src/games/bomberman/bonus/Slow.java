@@ -4,6 +4,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.Sound;
 import org.newdawn.slick.state.StateBasedGame;
 
 import games.bomberman.Player;
@@ -13,6 +14,7 @@ public class Slow extends Bonus{
 	private boolean activated, deleted;
 	private Player player;
 	private long initTime;
+	private Sound sound;
 	
 	public Slow(int caseX, int caseY) {
 		super(caseX, caseY);
@@ -29,8 +31,15 @@ public class Slow extends Bonus{
 	}
 	
 	public void activate(Player player) {
+		try {
+			sound = new Sound("musics/bonus/gary.ogg");
+		} catch (SlickException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		sound.play();
 		this.activated = true;
-		
+
 		for (Player p : World.getPlayers()) {
 			if (!p.equals(player)) {
 				p.setSpeed(p.getSpeed()*0.75f);

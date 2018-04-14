@@ -68,6 +68,10 @@ public class Bomb {
 		context.drawImage(sprite, x, y);
 	}
 	
+//	public void BombExplose() {
+//		
+//	}
+	
 	public void BombExplose()
 	{
 		
