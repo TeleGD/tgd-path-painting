@@ -14,6 +14,7 @@ public class Bomb {
 
 	private int x;
 	private int y;
+	private int i, j;
 	private int portee;
 	private int tpsRestant;
 	private int numJoueur;
@@ -21,10 +22,13 @@ public class Bomb {
 	private boolean detruite = false;
 	
 	
-	public Bomb(int numJoueur,int xp,int yp,int porteep,int tpsRestantp) {
+	public Bomb(int numJoueur,int i,int j,int porteep,int tpsRestantp) {
 		
-		x=xp;
-		y=yp;
+		this.i = i;
+		this.j = j;
+		int[] XY = convertInXY(i,j);
+		x = XY[0];
+		y = XY[1];
 		portee=porteep;
 		tpsRestant=tpsRestantp;
 		try {
@@ -34,6 +38,11 @@ public class Bomb {
 			e.printStackTrace();
 		}
 		
+	}
+	
+	public int[] convertInXY(int i, int j) {
+		int sizeCase = (int) World.getBoard().getCaseSize();
+		return new int[] {j * sizeCase, i * sizeCase};
 	}
 	
 	public int getNumJoueur() {
