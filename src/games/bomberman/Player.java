@@ -4,6 +4,7 @@ import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.state.StateBasedGame;
@@ -41,7 +42,9 @@ public class Player {
 	private int tempDI, tempDJ;
 	
 	// Caractéristiques modifiables par bonus/malus :
-	private float speed = 0.5f;
+	private float speed = 1;
+	private int cooldownMoveMax = 400; // Temps entre chanque déplacement
+	private int cooldownMove = -1;
 	private int reversed = 1; // =1 : controles normaux, =-1 : controles inversés
 	private int bombCapacity = 3; // Nombre de bombe posable en même temps
 	private int dropCoolDown = 1000; // 1sec entre chaque bombe posée
@@ -53,6 +56,7 @@ public class Player {
 	private int range = 1; // Portée des bombes en cases
 	private int invincibilite=1500;
 	private boolean invincible;
+	private Image imgBouclier;
 
 
 	public Player (AppPlayer appPlayer) {
@@ -65,9 +69,16 @@ public class Player {
 		this.controllerID = controllerID;
 		this.name = name;
 		// Fin des trucs de Tristan
+		
 		tpable = true;
 		invincible=false;
 		clignotement =200;
+		try {
+			imgBouclier = new Image ("images/bomberman/bouclier.png");
+		} catch (SlickException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		
 		// Attribution des positions de départ en fonction du n° de joueur
 		Integer[] size = World.getBoard().getDim();
@@ -151,22 +162,32 @@ public class Player {
 	}
 	
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
+		
 		AppInput input = (AppInput) container.getInput();
-		moveLeft = input.isControlPressed(AppInput.BUTTON_LEFT,controllerID);
-		moveRight = input.isControlPressed(AppInput.BUTTON_RIGHT,controllerID);
-		moveUp = input.isControlPressed(AppInput.BUTTON_UP,controllerID);
-		moveDown = input.isControlPressed(AppInput.BUTTON_DOWN,controllerID);
-		dropTheBomb = input.isControlPressed(AppInput.BUTTON_A, controllerID);
+		
+		if (cooldownMove <= 0) {
+			moveLeft = input.isControlPressed(AppInput.BUTTON_LEFT,controllerID);
+			moveRight = input.isControlPressed(AppInput.BUTTON_RIGHT,controllerID);
+			moveUp = input.isControlPressed(AppInput.BUTTON_UP,controllerID);
+			moveDown = input.isControlPressed(AppInput.BUTTON_DOWN,controllerID);
+			dropTheBomb = input.isControlPressed(AppInput.BUTTON_A, controllerID);
+		} else {
+			cooldownMove -= delta;
+
+		}
+		
 		
 		if (invincible) {
 			invincibilite-=delta;
 			if (invincibilite<0) {
 				invincible=false;
 				clignotement = 200;
+				System.out.println("fin");
 			}
 			clignotement-=delta;
 			if (clignotement<0) {
 				clignotement=200;
+				System.out.println("change");
 			}
 			
 		}
@@ -212,6 +233,9 @@ public class Player {
 			}
 		}
 
+		if (bouclier) {
+			context.drawImage(imgBouclier, x, y);
+		}
 	}
 	
 	public void callMove(int delta) throws SlickException{
@@ -246,6 +270,9 @@ public class Player {
 					tpable = true;
 				
 				move(deltaI,deltaJ);
+				if (deltaI != 0 || deltaJ != 0) {
+					cooldownMove = (int) (cooldownMoveMax / speed);
+				}
 			}
 		}	
 		updateNextXY();

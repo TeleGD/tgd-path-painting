@@ -1,13 +1,17 @@
 package games.labyrinthe;
 
 import java.io.File;
+import java.util.ArrayList;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
+import app.AppGame;
 import app.AppWorld;
+import games.labyrinthe.Labyrinth.*;
+import games.labyrinthe.Players.*;
 
 public class World extends AppWorld {
 	
@@ -18,26 +22,42 @@ public class World extends AppWorld {
 	public final static String DIRECTORY_MUSICS="musics"+File.separator+GAME_FOLDER_NAME+File.separator;
 	public final static String DIRECTORY_IMAGES="images"+File.separator+GAME_FOLDER_NAME+File.separator;
 	
+	public Board board;
+	public ArrayList<Player> players;
+	
 	public World(int id) {
 		this.id=id;
 	}
 	
+	public void play(GameContainer container, StateBasedGame game) {
+		AppGame appGame = (AppGame) game;
+		int n = appGame.appPlayers.size ();
+		board = new Board();
+		players = new ArrayList<Player>();
+		players.add(new VictimPlayer(this, appGame.appPlayers.get(0)));
+		for (int i = 1; i < n; i++) {
+			players.add(new HunterPlayer(this, appGame.appPlayers.get(i)));
+		}
+	}
+	
 	@Override
-	public void init(GameContainer arg0, StateBasedGame arg1) throws SlickException {
-		// TODO Auto-generated method stub
-		
+	public void init(GameContainer container, StateBasedGame game) {
 	}
 
 	@Override
-	public void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2) throws SlickException {
-		// TODO Auto-generated method stub
-		
+	public void render(GameContainer container, StateBasedGame game, Graphics context) {
+		board.render(container, game, context);
+		for (Player p : players) {
+			p.render(container, game, context);
+		}
 	}
 
 	@Override
-	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) throws SlickException {
-		// TODO Auto-generated method stub
-		
+	public void update(GameContainer container, StateBasedGame game, int delta) {
+		board.update(container, game, delta);
+		for (Player p : players) {
+			p.update(container, game, delta);
+		}
 	}
 
 	@Override
