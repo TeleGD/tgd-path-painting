@@ -6,6 +6,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.Sound;
 import org.newdawn.slick.state.StateBasedGame;
 
 import games.bomberman.Player;
@@ -15,6 +16,7 @@ import games.bomberman.board.cases.Ground;
 
 public class Teleport extends Bonus{
 	private boolean activated, deleted;
+	private Sound sound;
 	
 	public Teleport(int caseX, int caseY) {
 		super(caseX, caseY);
@@ -28,10 +30,20 @@ public class Teleport extends Bonus{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		try {
+			sound = new Sound("musics/bonus/tp.ogg");
+		} catch (SlickException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public void activate(Player player) {
 		if(!activated) {
+			
+			sound.play(1, (float) 0.4);
+			
 			this.activated = true;
 		
 			int i, j;
