@@ -22,7 +22,7 @@ public class Bomb {
 	private int tpsRestant;
 	private int numJoueur;
 	private Image sprite;
-	private int arret[] = {0,0,0,0};
+	private int arret[]= {0,0,0,0};
 	private boolean detruite = false;
 	
 	
@@ -34,6 +34,7 @@ public class Bomb {
 		x = XY[0];
 		y = XY[1];
 		portee=porteep;
+		for (int k=0;k<3;k++) {arret[k]=portee;}
 		tpsRestant=tpsRestantp;
 		try {
 			sprite = new Image("images/bomberman/bombe.png");
@@ -163,7 +164,7 @@ public class Bomb {
 			boolean stop = false;
 			int d = 0;
 			while (d<portee && !stop) {
-				int c=i,l=j;
+				int l=i,c=j;
 				switch (dir) {
 				case 0 :
 					l-=d;
@@ -177,15 +178,14 @@ public class Bomb {
 				case 3 :
 					c-=d;
 				}
-				
-				System.out.println(l+" "+c +"     "+d+" "+dir);
+				System.out.println(l+" "+c);
 				if ( c<0 || l<0 || c>24 || l>12 ) {
 					arret[dir] = d;
 					stop = true;
 				} else {
-					Case ca = World.getBoard().getCase(c, l);
+					Case ca = World.getBoard().getCase(l, c);
 					if (ca instanceof DestructibleWall) {
-						World.getBoard().destruct(c, l);
+						World.getBoard().destruct(l, c);
 						arret[dir] = d;
 						stop = true;
 					}
@@ -194,14 +194,19 @@ public class Bomb {
 						stop = true;
 					}
 					for (Player p : World.getPlayers()) {
-						if (p.getX()==c && p.getY()==l) {
+						if (p.getI()==l && p.getJ()==c) {
 							p.takeDamage();
+							System.out.println("prend damage");
 						}
 					}
 				}
 				d++;
 			}
 		}
+		for (int x : arret) {
+			//System.out.println(x);
+		}
+		
 		detruite = true;
 	}
 	
