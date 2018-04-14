@@ -36,7 +36,7 @@ public class Bomb {
 		int[] XY = convertInXY(i,j);
 		x = XY[0];
 		y = XY[1];
-		portee=porteep;
+		portee=porteep+1;
 		for (int k=0;k<4;k++) {arret[k]=portee;}
 		tpsRestant=tpsRestantp;
 		try {
