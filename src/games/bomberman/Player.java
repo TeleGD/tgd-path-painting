@@ -216,7 +216,7 @@ public class Player {
 		//context.fillRect(x, y, height, width);
 
 		if (!invincible) {
-			if (speed >= 1.25f) 
+			if (speed >= 3) 
 				context.drawAnimation(animationsFast[direction + (move ? 4 : 0)], x, y);
 			else if (speed <= 0.75f)
 				context.drawAnimation(animationsSlow[direction + (move ? 4 : 0)], x, y);
@@ -224,7 +224,7 @@ public class Player {
 				context.drawAnimation(animations[direction + (move ? 4 : 0)], x, y);
 		} else {
 			if (clignotement < 100) {
-				if (speed >= 1.25f) 
+				if (speed >= 3) 
 					context.drawAnimation(animationsFast[direction + (move ? 4 : 0)], x, y);
 				else if (speed <= 0.75f)
 					context.drawAnimation(animationsSlow[direction + (move ? 4 : 0)], x, y);
@@ -292,13 +292,13 @@ public class Player {
 	   }
 	   if(isMovingUD) {
 		   if(tempDI==1) {
-			   y = (y < tempNY) ? y+delta*speed : tempNY;
+			   y = (y < tempNY) ? y+delta*speed/2 : tempNY;
 			   if (y>=tempNY) {
 				   isMovingUD = false;	
 				   y = tempNY;
 			   }  
 		   } else if(tempDI==-1) {
-			   y = (y > tempNY) ? y-delta*speed : tempNY;
+			   y = (y > tempNY) ? y-delta*speed/2 : tempNY;
 			   if (y<=tempNY) {
 				   y = tempNY;
 				   isMovingUD = false;
@@ -313,13 +313,13 @@ public class Player {
 	   }
 	   if(isMovingRL) {
 		   if(tempDJ==1) {
-			   x = (x < tempNX) ? x+delta*speed : tempNX;
+			   x = (x < tempNX) ? x+delta*speed/2 : tempNX;
 			   if (x>=tempNX) {
 				   x = tempNX;
 				   isMovingRL = false;
 			   }	   
 		   } else if(tempDJ==-1) {
-			   x = (x > tempNX) ? x-delta*speed : tempNX;
+			   x = (x > tempNX) ? x-delta*speed/2 : tempNX;
 			   if (x<=tempNX) {
 				   x = tempNX;
 				   isMovingRL = false;

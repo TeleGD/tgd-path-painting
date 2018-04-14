@@ -11,14 +11,12 @@ import org.newdawn.slick.state.StateBasedGame;
 import games.bomberman.Player;
 import games.bomberman.World;
 
-public class Accelerate extends Bonus{
+public class DefinitiveAccelerate extends Bonus{
 	private boolean activated, deleted;
-	private Player player;
-	private long initTime;
 	
 	private Sound sound;
 	
-	public Accelerate(int caseX, int caseY) {
+	public DefinitiveAccelerate(int caseX, int caseY) {
 		super(caseX, caseY);
 		this.activated = false;
 		this.deleted = false;
@@ -31,7 +29,7 @@ public class Accelerate extends Bonus{
 		}
 		
 		try {
-			Image sprite = new Image(World.DIRECTORY_IMAGES+"bonus_accelerate.png");
+			Image sprite = new Image(World.DIRECTORY_IMAGES+"bonus_defAccelerate.png");
 			super.setSprite(sprite);
 		} catch (SlickException e) {
 			// TODO Auto-generated catch block
@@ -43,19 +41,12 @@ public class Accelerate extends Bonus{
 		if (!isActivated()) {
 			this.activated = true;
 
-			player.setSpeed(player.getSpeed()*10f);
-
-			initTime = System.currentTimeMillis();
-		
-			this.player = player;
-
+			player.setSpeed(player.getSpeed()*1.10f);
+			
+			this.deleted = true;
+			
 			sound.play(1, (float) 0.4);
 		}
-	}
-	
-	public void desactivate() {
-		this.deleted = true;
-		this.player.setSpeed(player.getSpeed()*0.1f);
 	}
 	
 	public boolean isDeleted() {
@@ -67,9 +58,7 @@ public class Accelerate extends Bonus{
 	}
 	
 	public void update (GameContainer container, StateBasedGame game, int delta) {
-		if (activated && (System.currentTimeMillis() - initTime > 7000)) {
-			this.desactivate();
-		}
+		
 	}	
 	
 	public void render (GameContainer container, StateBasedGame game, Graphics context) {
