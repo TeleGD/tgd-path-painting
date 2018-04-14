@@ -29,7 +29,7 @@ public class Life extends Bonus{
 		}
 
 		try {
-			sound = new Sound("musics/bonus/tataa.ogg");
+			sound = new Sound("musics/bonus/extra_life.ogg");
 		} catch (SlickException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

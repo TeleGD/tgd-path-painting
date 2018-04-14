@@ -14,7 +14,8 @@ public class Range extends Bonus{
 	
 	private boolean activated, deleted;
 	private int rand;
-	//private Sound sound;
+	private Sound sound0;
+	private Sound sound1;
 	
 	public Range(int caseX, int caseY) {
 		super(caseX, caseY);
@@ -30,12 +31,19 @@ public class Range extends Bonus{
 			e.printStackTrace();
 		}
 
-		/*try {
-			sound = new Sound("musics/bonus/.ogg");
+		try {
+			sound0 = new Sound("musics/bonus/charger.ogg");
 		} catch (SlickException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}*/
+		}
+		
+		try {
+			sound1 = new Sound("musics/bonus/bemol.ogg");
+		} catch (SlickException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public void activate(Player player) {
@@ -44,8 +52,10 @@ public class Range extends Bonus{
 			
 			if (rand == 0) {
 				player.addRange(1);
+				sound0.play(1, (float) 1);
 			} else {
 				player.addRange(-1);
+				sound1.play(1, (float) 0.4);
 			}
 			
 			

@@ -59,7 +59,7 @@ public class World extends AppWorld {
 		this.height = container.getHeight ();
 		board=new Board(13,25);
 		
-		//music = new Music("musics/main_music/amazon_rain_2.ogg");
+		music = new Music("musics/main_music/amazon_rain_2.ogg");
 		poseBombe = new Sound("musics/bomb/pose_bombe_3.ogg");
 		theEnd = new Sound("musics/bomb/criWilhelm.ogg");
 	
@@ -86,7 +86,7 @@ public class World extends AppWorld {
 		appInput.clearControlPressedRecord ();
 		time = System.currentTimeMillis();
 		
-		//music.loop(1, (float) 0.5);
+		music.loop(1, (float) 0.5);
 	}
 
 	@Override
