@@ -40,7 +40,7 @@ public abstract class Player {
 	public Player(World w,AppPlayer aplayer) {
 		controlerID=aplayer.getControllerID();
 		world=w;
-		//bd=w.board;
+		bd=w.board;
 		
 	}
 	
@@ -48,8 +48,8 @@ public abstract class Player {
 		//if(direction==)
 	}
 	
-	public void update() {
-		
+	public void update(GameContainer container, StateBasedGame game, int delta) {
+		this.move(container);
 	}
 	
 	public void move(GameContainer container) {
@@ -60,8 +60,16 @@ public abstract class Player {
 		moveDown = input.isControlPressed(AppInput.BUTTON_DOWN,controlerID);
 		
 		if(moveLeft) {
-			//if()
+			if(bd.movePlayer(posX-1,posY)) {
+				posX--;
+			}
 		}
+		if(moveRight) {
+			if(bd.movePlayer(posX+1,posY)) {
+				posX++;
+			}
+		}
+		
 	}
 	
 }
