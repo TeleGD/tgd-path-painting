@@ -9,6 +9,9 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
 import games.bomberman.board.Board;
+import games.bomberman.board.cases.Case;
+import games.bomberman.board.cases.DestructibleWall;
+import games.bomberman.board.cases.Wall;
 
 public class Bomb {
 
@@ -19,6 +22,7 @@ public class Bomb {
 	private int tpsRestant;
 	private int numJoueur;
 	private Image sprite;
+	private int arret[] = {0,0,0,0};
 	private boolean detruite = false;
 	
 	
@@ -58,7 +62,7 @@ public class Bomb {
 	}
 
 	public void update(int delta) {
-		tpsRestant-=1*delta;
+		tpsRestant-=delta;
 		if(tpsRestant<=0) {
 			this.BombExplose();
 		}
@@ -68,7 +72,7 @@ public class Bomb {
 		context.drawImage(sprite, x, y);
 	}
 	
-	public void BombExplose()
+/*	public void BombExplose()
 	{
 		
 		float[] tab=World.getBoard().getlimits();//renvoie limite basse et droite
@@ -152,7 +156,41 @@ public class Bomb {
 		detruite = true;
 		
 	}
+	*/
 	
+	public void BombExplose() {
+		for (int dir=0;dir<4;dir++) {
+			boolean stop = false;
+			int i = 0;
+			while (i<portee && !stop) {
+				int c = x - (int) (i*Math.pow(-1,dir/2)*((dir%2==0) ? 1 : 2));
+				int l = y - (int)(i*Math.pow(-1, (dir-1)/2)*((dir%2==1) ? 1 : 0));
+				System.out.println(c+" "+l);
+				if ( c<0 || l<0 || c>24 || l>12 ) {
+					arret[dir] = i;
+					stop = true;
+				} else {
+					Case ca = World.getBoard().getCase(c, l);
+					if (ca instanceof DestructibleWall) {
+						World.getBoard().destruct(c, l);
+						arret[dir] = i;
+						stop = true;
+					}
+					if (ca instanceof Wall) {
+						arret[dir] = i;
+						stop = true;
+					}
+					for (Player p : World.getPlayers()) {
+						if (p.getX()==c && p.getY()==l) {
+							p.takeDamage();
+						}
+					}
+				}
+				i++;
+			}
+		}
+		detruite = true;
+	}
 	
 	
 }
