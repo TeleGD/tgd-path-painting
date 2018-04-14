@@ -5,7 +5,9 @@ import java.util.*;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.Sound;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
@@ -36,6 +38,12 @@ public class World extends AppWorld {
 	private static List<Player> players;
 	private static List<Bonus> bonus;
 	private static List<Bomb> bombs;
+	
+	private Music music;
+	private Sound poseBombe;
+	private Sound explose;
+	private Sound pickBonus;
+	
 
 	public World (int ID) {
 		this.ID = ID;
@@ -47,10 +55,12 @@ public class World extends AppWorld {
 	}
 
 	@Override
-	public void init (GameContainer container, StateBasedGame game) {
+	public void init (GameContainer container, StateBasedGame game) throws SlickException {
 		this.width = container.getWidth ();
 		this.height = container.getHeight ();
 		board=new Board(13,25);
+		music = new Music("musics/main_music/amazon_rain_2.ogg");
+	
 	}
 
 	@Override
@@ -70,6 +80,7 @@ public class World extends AppWorld {
 		appInput.clearKeyPressedRecord ();
 		appInput.clearControlPressedRecord ();
 		time = System.currentTimeMillis();
+		music.loop();
 	}
 
 	public static void removeBonus(Bonus b) {
