@@ -41,10 +41,13 @@ public class Player {
 	private int bombCapacity = 3; // Nombre de bombe posable en même temps
 	private int dropCoolDown = 2000; // 2sec entre chaque bombe posée
 	private int cooldownBomb = 0; // temps restant pour poser la prochaine bombe : est initialité à cooldownTime à chaque bombe posée
+	private int clignotement;
 	private boolean bombDropped =false;
 	private boolean bouclier = false; 
 	private boolean tpable; //pour la case de TP	
 	private int range = 1; // Portée des bombes en cases
+	private int invincibilite=1500;
+	private boolean invincible;
 
 
 	public Player (AppPlayer appPlayer) {
@@ -58,6 +61,8 @@ public class Player {
 		this.name = name;
 		// Fin des trucs de Tristan
 		tpable = true;
+		invincible=false;
+		clignotement =200;
 		
 		// Attribution des positions de départ en fonction du n° de joueur
 		Integer[] size = World.getBoard().getDim();
@@ -113,6 +118,19 @@ public class Player {
 		moveDown = input.isControlPressed(AppInput.BUTTON_DOWN,controllerID);
 		dropTheBomb = input.isControlPressed(AppInput.BUTTON_A, controllerID);
 		
+		if (invincible) {
+			invincibilite-=delta;
+			if (invincibilite<0) {
+				invincible=false;
+				clignotement = 200;
+			}
+			clignotement-=delta;
+			if (clignotement<0) {
+				clignotement=200;
+			}
+			
+		}
+		
 		if (moveUp || moveDown || moveRight || moveLeft) {move=true;}
 		else {move = false;}
 		
@@ -135,7 +153,11 @@ public class Player {
 	public void render(GameContainer container, StateBasedGame game, Graphics context) {
 		//context.setColor(fillColor);
 		//context.fillRect(x, y, height, width);
-		context.drawAnimation(animations[direction + (move ? 4 : 0)], x, y);
+		if (!invincible) {
+			context.drawAnimation(animations[direction + (move ? 4 : 0)], x, y);
+		} else {
+			if (clignotement < 100) {context.drawAnimation(animations[direction + (move ? 4 : 0)], x, y);}
+		}
 	}
 	
 	public void callMove() throws SlickException{
@@ -231,10 +253,13 @@ public class Player {
 	}
 	
 	public void takeDamage() {
-		if (!bouclier) {
-			addLife(-1);
-		} else {
+		if (bouclier) {
 			bouclier = false;
+		} else {
+			if (!invincible) {
+				addLife(-1);
+				invincible = true;
+			}
 		}
 	}
 
