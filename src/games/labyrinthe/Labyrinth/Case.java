@@ -17,7 +17,6 @@ public abstract class Case {
 		
 		protected boolean passable;
 		protected Image img;
-		protected float size=50;
 		
 		public Case(int i,int j, int height, int width, Image img) {
 			this.i=i;
