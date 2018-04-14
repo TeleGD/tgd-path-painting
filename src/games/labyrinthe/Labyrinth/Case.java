@@ -26,7 +26,7 @@ public abstract class Case {
 
 
 		public void render (GameContainer container, StateBasedGame game, Graphics context) {
-			context.drawImage(img, j*size, i*size);
+			context.drawImage(img, j*size, i*size,(j+1)*size,(i+1)*size,0,0,img.getWidth()-1,img.getHeight()-1);
 		}
 		
 		public int getSize() {
