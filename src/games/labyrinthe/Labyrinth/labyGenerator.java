@@ -9,7 +9,7 @@ import org.newdawn.slick.SlickException;
 import games.labyrinthe.Labyrinth.Case;
 
 public class labyGenerator {
-	private ArrayList<ArrayList<Case>> lab; 
+	 private ArrayList<ArrayList<Case>> lab; 
 	 private int n;
 	 private int m;
 
@@ -27,6 +27,7 @@ public class labyGenerator {
 			 this.m = m+1;
 		 }
 		 this.lab = new ArrayList<ArrayList<Case>>();
+		 
 	 }
 	 
 	 public int getNbCol() {
@@ -44,6 +45,7 @@ public class labyGenerator {
 		 		WallCase c = new WallCase(i,j,50,50,false);
 		 		lig.add(c); 
 		 	}
+		 	this.lab.add(lig);
 		 }
 	 }
 	 
