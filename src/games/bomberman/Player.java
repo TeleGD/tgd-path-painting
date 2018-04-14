@@ -109,16 +109,13 @@ public class Player {
 		moveDown = input.isControlPressed(AppInput.BUTTON_DOWN,controllerID);
 		dropTheBomb = input.isControlPressed(AppInput.BUTTON_A, controllerID);
 		
-		if (moveLeft) { direction = 1;}
-		if (moveRight) { direction = 3;}
-		if (moveUp) { direction = 0;}
-		if (moveDown) { direction = 2;}
 		if (moveUp || moveDown || moveRight || moveLeft) {move=true;}
 		else {move = false;}
 		
 		mayDropBomb();
 		callMove();
-		fluidMove(delta);
+//		fluidMove(delta);
+		updateXY();
 		updateNextXY();
 		World.getBoard().getCase(i, j).getAction(this);
 		
@@ -135,18 +132,22 @@ public class Player {
 		int deltaJ = 0, deltaI = 0;
 		if(moveUp && !moveDown && !moveRight && ! moveLeft){ //haut
 			deltaI = -1;
+			direction = 0;
 			moveUp = false;
 		}
 		if(moveDown && !moveUp && !moveRight && ! moveLeft){ //bas
 			deltaI = 1;
+			direction = 2;
 			moveDown = false;
 		}
 		if(moveLeft && !moveRight && !moveUp && !moveDown){ //gauche
 			deltaJ = -1;
+			direction = 1;
 			moveLeft = false;
 		}
 		if(moveRight && !moveLeft && !moveUp && !moveDown){ //droite
 			deltaJ = 1;
+			direction = 3;
 			moveRight = false;
 		}
 		
@@ -167,14 +168,14 @@ public class Player {
 		j += deltaJ * reversed;
 	}
     
-    public void fluidMove(int delta) {
-    	switch(direction) {
-	    	case 0 : y = (y > nextY) ? y-delta*speed : nextY; break;
-	    	case 1 : x = (x > nextX) ? x-delta*speed : nextX; break;
-	    	case 2 : y = (y < nextY) ? y+delta*speed : nextY; break;
-	    	case 3 : x = (x < nextX) ? x+delta*speed : nextX; break;
-    	}
-    }
+//    public void fluidMove(int delta) {
+//    	switch(direction) {
+//	    	case 0 : y = (y > nextY) ? y-delta*speed : nextY; break;
+//	    	case 1 : x = (x > nextX) ? x-delta*speed : nextX; break;
+//	    	case 2 : y = (y < nextY) ? y+delta*speed : nextY; break;
+//	    	case 3 : x = (x < nextX) ? x+delta*speed : nextX; break;
+//    	}
+//    }
 	
 	public void updateXY() {
 		int[] XY = convertInXY(i,j);
