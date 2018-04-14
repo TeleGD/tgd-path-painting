@@ -40,6 +40,9 @@ public class Player {
 	private int reversed = 1; // =1 : controles normaux, =-1 : controles inversés
 	private int dropCoolDown = 5; // temps entre chaque pose de bombe
 	private int bombCapacity = 3; // Nombre de bombe posable en même temps
+	private int cooldownTime = 2000; // 2sec entre chaque bombe posée
+	private int cooldownBomb = 0; // temps restant pour poser la prochaine bombe : est initialité à cooldownTime à chaque bombe posée
+	private boolean bombDropped =false;
 	private boolean bouclier = false; 
 	private boolean tpable; //pour la case de TP	
 	private int range = 1; // Portée des bombes en cases
@@ -113,6 +116,13 @@ public class Player {
 		
 		if (moveUp || moveDown || moveRight || moveLeft) {move=true;}
 		else {move = false;}
+		
+		if (bombDropped) {
+			cooldownBomb -= delta;
+			if (cooldownBomb <= 0) {
+				bombDropped = false;
+			}
+		}
 		
 		World.getBoard().getCase(i, j).getAction(this);
 		mayDropBomb();
@@ -197,9 +207,11 @@ public class Player {
 	}
 	
 	public void mayDropBomb() {
-		if (dropTheBomb) {
+		if (dropTheBomb && !bombDropped) {
 			dropBomb();
 			dropTheBomb =false;
+			cooldownBomb = cooldownTime;
+			bombDropped = true;
 		}
 	}
 	
@@ -222,6 +234,8 @@ public class Player {
 	public void takeDamage() {
 		if (!bouclier) {
 			addLife(-1);
+		} else {
+			bouclier = false;
 		}
 	}
 

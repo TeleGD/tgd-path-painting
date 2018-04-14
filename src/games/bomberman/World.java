@@ -138,7 +138,7 @@ public class World extends AppWorld {
 			}
 		}
 		
-		if(System.currentTimeMillis()-time>=2500 && System.currentTimeMillis()-time<=7520) {
+		if(System.currentTimeMillis()-time>=2000 && System.currentTimeMillis()-time<=7020) {
 			generateBonus();
 			time=System.currentTimeMillis();
 		}
@@ -191,7 +191,7 @@ public class World extends AppWorld {
 		int i=(int) (Math.random()*freeCases.size());
 		
 		//Generate the bonus
-		int k= (int)(Math.random()*8);
+		int k= (int)(Math.random()*9);
 		switch (k) {
 		case 0:
 			freeCases.get(i).setBonus(new Accelerate(freeCases.get(i).getJ(),freeCases.get(i).getI()));
@@ -216,6 +216,9 @@ public class World extends AppWorld {
 			break;
 		case 7:
 			freeCases.get(i).setBonus(new Slow(freeCases.get(i).getJ(),freeCases.get(i).getI()));
+			break;
+		case 8:
+			freeCases.get(i).setBonus(new Range(freeCases.get(i).getJ(),freeCases.get(i).getI()));
 			break;
 		}
 	}
