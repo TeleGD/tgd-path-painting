@@ -37,7 +37,7 @@ public class Shield extends Bonus{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		sound.play();
+		if (!isActivated()) sound.play(1, (float) 0.4);
 		this.activated = true;
 		
 		player.setBouclier(true);

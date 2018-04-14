@@ -22,6 +22,18 @@ public class Accelerate extends Bonus{
 		super(caseX, caseY);
 		this.activated = false;
 		this.deleted = false;
+		try {
+			music1 = new Music("musics/bonus/latin.ogg");
+		} catch (SlickException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		try {
+			music2 = new Music("musics/main_music/amazon_rain_2.ogg");
+		} catch (SlickException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		
 		try {
 			Image sprite = new Image(World.DIRECTORY_IMAGES+"bonus_accelerate.png");
@@ -33,13 +45,7 @@ public class Accelerate extends Bonus{
 	}
 	
 	public void activate(Player player) {
-		try {
-			music1 = new Music("musics/bonus/latin.ogg");
-		} catch (SlickException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		music1.loop();
+		if (!isActivated()) music1.loop();
 		this.speed = player.getSpeed();
 		this.activated = true;
 		
@@ -51,13 +57,6 @@ public class Accelerate extends Bonus{
 	}
 	
 	public void desactivate() {
-		try {
-			music2 = new Music("musics/main_music/amazon_rain_2.ogg");
-		} catch (SlickException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		music2.loop();
 		this.player.setSpeed(this.speed);
 		this.deleted = true;
 	}
@@ -72,6 +71,7 @@ public class Accelerate extends Bonus{
 	
 	public void update (GameContainer container, StateBasedGame game, int delta) {
 		if (activated && (System.currentTimeMillis() - initTime > 30000)) {
+			music2.loop();
 			this.desactivate();
 		}
 		
