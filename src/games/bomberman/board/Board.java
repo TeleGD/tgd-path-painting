@@ -127,4 +127,9 @@ public class Board {
 		}
 		return result;
 	}
+
+	public float getCaseSize() {
+		return caseSize;
+	}
+	
 }

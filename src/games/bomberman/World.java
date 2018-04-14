@@ -5,7 +5,9 @@ import java.util.*;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.Sound;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
@@ -35,6 +37,13 @@ public class World extends AppWorld {
 
 	private static List<Player> players;
 	private static List<Bonus> bonus;
+	private static List<Bomb> bombs;
+	
+	private Music music;
+	private Sound poseBombe;
+	private Sound explose;
+	private Sound pickBonus;
+	
 
 	public World (int ID) {
 		this.ID = ID;
@@ -46,10 +55,12 @@ public class World extends AppWorld {
 	}
 
 	@Override
-	public void init (GameContainer container, StateBasedGame game) {
+	public void init (GameContainer container, StateBasedGame game) throws SlickException {
 		this.width = container.getWidth ();
 		this.height = container.getHeight ();
 		board=new Board(13,25);
+		music = new Music("musics/main_music/amazon_rain_2.ogg");
+	
 	}
 
 	@Override
@@ -57,6 +68,7 @@ public class World extends AppWorld {
 		AppGame appGame = (AppGame) game;
 		int n = appGame.appPlayers.size ();
 		World.players = new ArrayList<Player>();
+		World.bombs = new ArrayList<Bomb>();
 		for (int i = 0; i < n; i++) {
 			World.players.add(new Player (appGame.appPlayers.get (i)));
 		};
@@ -68,6 +80,7 @@ public class World extends AppWorld {
 		appInput.clearKeyPressedRecord ();
 		appInput.clearControlPressedRecord ();
 		time = System.currentTimeMillis();
+		music.loop();
 	}
 
 	public static void removeBonus(Bonus b) {
@@ -103,9 +116,13 @@ public class World extends AppWorld {
 		}
 		if (appInput.isKeyPressed (AppInput.KEY_ESCAPE)) {
 			appGame.enterState (AppGame.PAGES_GAMES, new FadeOutTransition (), new FadeInTransition ());
-		}*/
+		}*/		
 		for (Player p : players) {
 			p.update(container, game, delta);
+		}
+		
+		for (Bomb b : bombs) {
+			b.update(delta);
 		}
 		
 		for(int i=0 ; i<players.size() ; i++) {
@@ -125,6 +142,10 @@ public class World extends AppWorld {
 	public void render (GameContainer container, StateBasedGame game, Graphics context) {
 		board.render(container, game, context);
 
+//		for (Bomb b : bombs) {
+//			b.render();
+//		}
+		
 		for (Player p : this.players) {
 			p.render(container, game, context);
 		}
@@ -178,6 +199,10 @@ public class World extends AppWorld {
 			freeCases.get(i).setBonus(new Slow(freeCases.get(i).getJ(),freeCases.get(i).getI()));
 			break;
 		}
+	}
+	
+	public static void addBomb(int numJoueur,int xp,int yp,int porteep,int tpsRestantp) {
+		bombs.add(new Bomb(numJoueur, xp, yp, porteep, tpsRestantp));
 	}
 	
 }
