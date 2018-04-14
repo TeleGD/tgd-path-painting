@@ -22,6 +22,7 @@ public class Player {
 	//Position du joueur :
 	private float x;	// Abcisse réelle du joueur
 	private float y;	// Ordonnée réelle du joueur
+	private float nextX, nextY;
 	private int i, oldI;		// Position du joueur dans la matrice
 	private int j, oldJ;
 	
@@ -108,17 +109,15 @@ public class Player {
 		moveDown = input.isControlPressed(AppInput.BUTTON_DOWN,controllerID);
 		dropTheBomb = input.isControlPressed(AppInput.BUTTON_A, controllerID);
 		
-		if (moveLeft) { direction = 1;}
-		if (moveRight) { direction = 3;}
-		if (moveUp) { direction = 0;}
-		if (moveDown) { direction = 2;}
 		if (moveUp || moveDown || moveRight || moveLeft) {move=true;}
 		else {move = false;}
+		
 		mayDropBomb();
 		callMove();
+//		fluidMove(delta);
 		updateXY();
+		updateNextXY();
 		World.getBoard().getCase(i, j).getAction(this);
-		
 	}
 	
 
@@ -130,20 +129,24 @@ public class Player {
 	
 	public void callMove() throws SlickException{
 		int deltaJ = 0, deltaI = 0;
-		if(moveUp && !moveDown){ //haut
+		if(moveUp && !moveDown && !moveRight && ! moveLeft){ //haut
 			deltaI = -1;
+			direction = 0;
 			moveUp = false;
 		}
-		if(moveDown && !moveUp){ //bas
+		if(moveDown && !moveUp && !moveRight && ! moveLeft){ //bas
 			deltaI = 1;
+			direction = 2;
 			moveDown = false;
 		}
-		if(moveLeft && !moveRight){ //gauche
+		if(moveLeft && !moveRight && !moveUp && !moveDown){ //gauche
 			deltaJ = -1;
+			direction = 1;
 			moveLeft = false;
 		}
-		if(moveRight && !moveLeft){ //droite
+		if(moveRight && !moveLeft && !moveUp && !moveDown){ //droite
 			deltaJ = 1;
+			direction = 3;
 			moveRight = false;
 		}
 		
@@ -163,11 +166,26 @@ public class Player {
 		i += deltaI * reversed;
 		j += deltaJ * reversed;
 	}
+    
+//    public void fluidMove(int delta) {
+//    	switch(direction) {
+//	    	case 0 : y = (y > nextY) ? y-delta*speed : nextY; break;
+//	    	case 1 : x = (x > nextX) ? x-delta*speed : nextX; break;
+//	    	case 2 : y = (y < nextY) ? y+delta*speed : nextY; break;
+//	    	case 3 : x = (x < nextX) ? x+delta*speed : nextX; break;
+//    	}
+//    }
 	
 	public void updateXY() {
 		int[] XY = convertInXY(i,j);
 		x = XY[0];
 		y = XY[1];
+	}
+    
+	public void updateNextXY() {
+		int[] XY = convertInXY(i,j);
+		nextX = XY[0];
+		nextY = XY[1];
 	}
 	
 	public int[] convertInXY(int i, int j) {
@@ -183,7 +201,7 @@ public class Player {
 	}
 	
 	public void dropBomb() {
-		World.addBomb(controllerID, i, j, 100, 3000);
+		World.addBomb(controllerID, i, j, 2, 3000);
 	}
 
 	public int getLife() {
@@ -280,6 +298,13 @@ public class Player {
 	public void setJ(int j) {
 		oldJ = this.j;
 		this.j = j;
+	}
+	
+	public void setIJ(int i, int j) {
+		this.i =i;
+		this.j = j;
+		updateXY();
+		updateNextXY();
 	}
 	
 	public int getOldI() {
