@@ -31,24 +31,27 @@ public class Slow extends Bonus{
 	}
 	
 	public void activate(Player player) {
-		try {
-			sound = new Sound("musics/bonus/gary.ogg");
-		} catch (SlickException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		sound.play();
-		this.activated = true;
-
-		for (Player p : World.getPlayers()) {
-			if (!p.equals(player)) {
-				p.setSpeed(p.getSpeed()*0.75f);
+		if (!activated) {
+			this.activated = true;
+		
+			try {
+				sound = new Sound("musics/bonus/gary.ogg");
+			} catch (SlickException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
+			sound.play();
+
+			for (Player p : World.getPlayers()) {
+				if (!p.equals(player)) {
+					p.setSpeed(p.getSpeed()*0.75f);
+				}
+			}
+		
+			initTime = System.currentTimeMillis();
+		
+			this.player = player;
 		}
-		
-		initTime = System.currentTimeMillis();
-		
-		this.player = player;
 	}
 	
 	public void desactivate() {

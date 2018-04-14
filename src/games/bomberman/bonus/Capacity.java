@@ -30,18 +30,21 @@ public class Capacity extends Bonus{
 	}
 	
 	public void activate(Player player) {
-		try {
-			sound = new Sound("musics/bonus/tataa.ogg");
-		} catch (SlickException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		if (!activated) {
+			this.activated = true;
+			
+			try {
+				sound = new Sound("musics/bonus/tataa.ogg");
+			} catch (SlickException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			sound.play();
+		
+			player.setBombCapacity(player.getBombCapacity()+1);
+		
+			deleted = true;
 		}
-		sound.play();
-		this.activated = true;
-		
-		player.setBombCapacity(player.getBombCapacity()+1);
-		
-		deleted = true;
 	}
 	
 	public boolean isDeleted() {

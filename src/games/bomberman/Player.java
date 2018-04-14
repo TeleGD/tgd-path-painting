@@ -9,6 +9,7 @@ import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.state.StateBasedGame;
 
 import app.AppPlayer;
+import games.bomberman.board.cases.TP;
 import app.AppInput;
 
 public class Player {
@@ -22,8 +23,8 @@ public class Player {
 	private float x;	// Abcisse réelle du joueur
 	private float y;	// Ordonnée réelle du joueur
 	private float nextX, nextY;
-	private int i;		// Position du joueur dans la matrice
-	private int j;
+	private int i, oldI;		// Position du joueur dans la matrice
+	private int j, oldJ;
 	
 	private int height = 50;
 	private int width = 50;
@@ -132,19 +133,19 @@ public class Player {
 	
 	public void callMove() throws SlickException{
 		int deltaJ = 0, deltaI = 0;
-		if(moveUp && !moveDown){ //haut
+		if(moveUp && !moveDown && !moveRight && ! moveLeft){ //haut
 			deltaI = -1;
 			moveUp = false;
 		}
-		if(moveDown && !moveUp){ //bas
+		if(moveDown && !moveUp && !moveRight && ! moveLeft){ //bas
 			deltaI = 1;
 			moveDown = false;
 		}
-		if(moveLeft && !moveRight){ //gauche
+		if(moveLeft && !moveRight && !moveUp && !moveDown){ //gauche
 			deltaJ = -1;
 			moveLeft = false;
 		}
-		if(moveRight && !moveLeft){ //droite
+		if(moveRight && !moveLeft && !moveUp && !moveDown){ //droite
 			deltaJ = 1;
 			moveRight = false;
 		}
@@ -160,7 +161,8 @@ public class Player {
 	}
 	
 	public void move(int deltaI, int deltaJ) {
-		
+		oldI = i;
+		oldJ = j;
 		i += deltaI * reversed;
 		j += deltaJ * reversed;
 	}
@@ -289,10 +291,12 @@ public class Player {
 	}
 
 	public void setI(int i) {
+		oldI = this.i;
 		this.i = i;
 	}
 
 	public void setJ(int j) {
+		oldJ = this.j;
 		this.j = j;
 	}
 	
@@ -301,5 +305,13 @@ public class Player {
 		this.j = j;
 		updateXY();
 		updateNextXY();
+	}
+	
+	public int getOldI() {
+		return oldI;
+	}
+	
+	public int getOldJ() {
+		return oldJ;
 	}
 }
