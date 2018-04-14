@@ -11,13 +11,14 @@ import games.bomberman.World;
 
 public class Accelerate extends Bonus{
 	private float speed;
-	private boolean activated;
+	private boolean activated, deleted;
 	private Player player;
 	private long initTime;
 	
 	public Accelerate(int caseX, int caseY) {
 		super(caseX, caseY);
 		this.activated = false;
+		this.deleted = false;
 		
 		try {
 			Image sprite = new Image(World.DIRECTORY_IMAGES+"bonus_accelerate.png");
@@ -41,7 +42,11 @@ public class Accelerate extends Bonus{
 	
 	public void desactivate() {
 		this.player.setSpeed(this.speed);
-		World.removeBonus(this);
+		this.deleted = true;
+	}
+	
+	public boolean isDeleted() {
+		return deleted;
 	}
 	
 	public boolean isActivated() {

@@ -10,11 +10,12 @@ import games.bomberman.Player;
 import games.bomberman.World;
 
 public class Capacity extends Bonus{
-	private boolean activated;
+	private boolean activated, deleted;
 	
 	public Capacity(int caseX, int caseY) {
 		super(caseX, caseY);
 		this.activated = false;
+		this.deleted = false;
 		
 		try {
 			Image sprite = new Image(World.DIRECTORY_IMAGES+"bonus_capacity.png");
@@ -30,9 +31,12 @@ public class Capacity extends Bonus{
 		
 		player.setBombCapacity(player.getBombCapacity()+1);
 		
-		World.removeBonus(this);
+		deleted = true;
 	}
 	
+	public boolean isDeleted() {
+		return this.deleted;
+	}
 	public boolean isActivated() {
 		return this.activated;
 	}

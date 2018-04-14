@@ -10,13 +10,14 @@ import games.bomberman.Player;
 import games.bomberman.World;
 
 public class Reverse extends Bonus{
-	private boolean activated;
+	private boolean activated, deleted;
 	private Player player;
 	private long initTime;
 	
 	public Reverse(int caseX, int caseY) {
 		super(caseX, caseY);
 		this.activated = false;
+		this.deleted = false;
 		
 		try {
 			Image sprite = new Image(World.DIRECTORY_IMAGES+"bonus_reverse.png");
@@ -38,11 +39,15 @@ public class Reverse extends Bonus{
 	
 	public void desactivate() {
 		this.player.setReversed(1);
-		World.removeBonus(this);
+		this.deleted = false;
 	}
 	
 	public boolean isActivated() {
 		return this.activated;
+	}
+	
+	public boolean isDeleted() {
+		return this.deleted;
 	}
 	
 	public void update (GameContainer container, StateBasedGame game, int delta) {
