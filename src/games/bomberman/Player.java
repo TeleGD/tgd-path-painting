@@ -181,7 +181,7 @@ public class Player {
 	}
 	
 	public void dropBomb() {
-		World.addBomb(controllerID, i, j, 100, 3000);
+		World.addBomb(controllerID, i, j, 2, 3000);
 	}
 
 	public int getLife() {
