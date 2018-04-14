@@ -118,7 +118,6 @@ public class Player {
 		callMove();
 		updateXY();
 		World.getBoard().getCase(i, j).getAction(this);
-		
 	}
 	
 
