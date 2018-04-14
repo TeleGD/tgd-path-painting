@@ -207,8 +207,8 @@ public class World extends AppWorld {
 		}
 	}
 	
-	public static void addBomb(int numJoueur,int xp,int yp,int porteep,int tpsRestantp) {
-		bombs.add(new Bomb(numJoueur, xp, yp, porteep, tpsRestantp));
+	public static void addBomb(int numJoueur,int i, int j,int porteep,int tpsRestantp) {
+		bombs.add(new Bomb(numJoueur, i, j, porteep, tpsRestantp));
 	}
 	
 }

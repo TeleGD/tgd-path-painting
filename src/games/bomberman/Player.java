@@ -162,8 +162,7 @@ public class Player {
 	}
 	
 	public void dropBomb() {
-		int[] XY = convertInXY(i,j);
-		World.addBomb(controllerID, XY[0], XY[1], 2, 3000);
+		World.addBomb(controllerID, i, j, 2, 3000);
 	}
 
 	public int getLife() {
