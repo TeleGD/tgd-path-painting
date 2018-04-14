@@ -141,10 +141,10 @@ public class World extends AppWorld {
 			}
 		}
 		
-		if(System.currentTimeMillis()-time>=2000 && System.currentTimeMillis()-time<=7020) {
-			generateBonus();
-			time=System.currentTimeMillis();
-		}
+//		if(System.currentTimeMillis()-time>=2000 && System.currentTimeMillis()-time<=7020) {
+//			generateBonus();
+//			time=System.currentTimeMillis();
+//		}
 		board.update(container, game, delta);
 		gui.update(container, game, delta);
 	}

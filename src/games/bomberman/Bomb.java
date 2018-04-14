@@ -13,6 +13,15 @@ import games.bomberman.board.Board;
 import games.bomberman.board.cases.Case;
 import games.bomberman.board.cases.DestructibleWall;
 import games.bomberman.board.cases.Wall;
+import games.bomberman.bonus.Accelerate;
+import games.bomberman.bonus.Capacity;
+import games.bomberman.bonus.Cooldown;
+import games.bomberman.bonus.Life;
+import games.bomberman.bonus.Range;
+import games.bomberman.bonus.Reverse;
+import games.bomberman.bonus.Shield;
+import games.bomberman.bonus.Slow;
+import games.bomberman.bonus.Teleport;
 
 public class Bomb {
 
@@ -249,6 +258,38 @@ public class Bomb {
 					Case ca = World.getBoard().getCase(l, c);
 					if (ca instanceof DestructibleWall) {
 						World.getBoard().destruct(l, c);
+						if (Math.random()<0.33) {
+							int k= (int)(Math.random()*9);
+							switch (k) {
+							case 0:
+								World.getBoard().getCase(l, c).setBonus(new Accelerate(World.getBoard().getCase(l, c).getJ(),World.getBoard().getCase(l, c).getI()));
+								break;
+							case 1:
+								World.getBoard().getCase(l, c).setBonus(new Life(World.getBoard().getCase(l, c).getJ(),World.getBoard().getCase(l, c).getI()));
+								break;
+							case 2:
+								World.getBoard().getCase(l, c).setBonus(new Reverse(World.getBoard().getCase(l, c).getJ(),World.getBoard().getCase(l, c).getI()));
+								break;
+							case 3:
+								World.getBoard().getCase(l, c).setBonus(new Capacity(World.getBoard().getCase(l, c).getJ(),World.getBoard().getCase(l, c).getI()));
+								break;
+							case 4:
+								World.getBoard().getCase(l, c).setBonus(new Shield(World.getBoard().getCase(l, c).getJ(),World.getBoard().getCase(l, c).getI()));
+								break;
+							case 5:
+								World.getBoard().getCase(l, c).setBonus(new Teleport(World.getBoard().getCase(l, c).getJ(),World.getBoard().getCase(l, c).getI()));
+								break;
+							case 6:
+								World.getBoard().getCase(l, c).setBonus(new Cooldown(World.getBoard().getCase(l, c).getJ(),World.getBoard().getCase(l, c).getI()));
+								break;
+							case 7:
+								World.getBoard().getCase(l, c).setBonus(new Slow(World.getBoard().getCase(l, c).getJ(),World.getBoard().getCase(l, c).getI()));
+								break;
+							case 8:
+								World.getBoard().getCase(l, c).setBonus(new Range(World.getBoard().getCase(l, c).getJ(),World.getBoard().getCase(l, c).getI()));
+								break;
+							}
+						}
 						arret[dir] = d+1;
 						stop = true;
 					}

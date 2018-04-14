@@ -7,7 +7,7 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import app.AppInput;
 import app.AppPlayer;
-import games.bomberman.board.Board;
+import games.labyrinthe.Labyrinth.*;
 import games.labyrinthe.World;
 
 public abstract class Player {
