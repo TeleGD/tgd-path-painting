@@ -3,8 +3,8 @@ package games.labyrinthe.Labyrinth;
 public class Board {
 
 	private Case board[][];
-	private int hauteur;
-	private int longueur;
+	private int height;
+	private int width;
 	
 	public boolean movePlayer(){
 	
