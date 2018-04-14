@@ -5,6 +5,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.Sound;
 import org.newdawn.slick.state.StateBasedGame;
 
 import games.bomberman.Player;
@@ -15,8 +16,7 @@ public class Accelerate extends Bonus{
 	private boolean activated, deleted;
 	private Player player;
 	private long initTime;
-	private Music music1;
-	private Music music2;
+	private Sound sound;
 	
 	public Accelerate(int caseX, int caseY) {
 		super(caseX, caseY);
@@ -24,13 +24,7 @@ public class Accelerate extends Bonus{
 		this.deleted = false;
 
 		try {
-			music1 = new Music("musics/bonus/latin.ogg");
-		} catch (SlickException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		try {
-			music2 = new Music("musics/main_music/amazon_rain_2.ogg");
+			sound = new Sound("musics/bonus/sncf.ogg");
 		} catch (SlickException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -56,15 +50,13 @@ public class Accelerate extends Bonus{
 		
 			this.player = player;
 
-			music1.loop();
+			sound.play(1, (float) 0.4);
 		}
 	}
 	
 	public void desactivate() {
 		this.deleted = true;
 		this.player.setSpeed(this.speed);
-
-		music2.loop();
 	}
 	
 	public boolean isDeleted() {
