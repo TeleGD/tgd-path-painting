@@ -12,7 +12,6 @@ import games.bomberman.Player;
 import games.bomberman.World;
 
 public class Accelerate extends Bonus{
-	private float speed;
 	private boolean activated, deleted;
 	private Player player;
 	private long initTime;
@@ -44,7 +43,6 @@ public class Accelerate extends Bonus{
 		if (!isActivated()) {
 			this.activated = true;
 
-			this.speed = player.getSpeed();
 			player.setSpeed(player.getSpeed()*1.25f);
 
 			initTime = System.currentTimeMillis();
@@ -57,7 +55,7 @@ public class Accelerate extends Bonus{
 	
 	public void desactivate() {
 		this.deleted = true;
-		this.player.setSpeed(this.speed);
+		this.player.setSpeed(player.getSpeed()*0.8f);
 	}
 	
 	public boolean isDeleted() {

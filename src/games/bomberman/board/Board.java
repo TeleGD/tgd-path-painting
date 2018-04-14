@@ -14,7 +14,7 @@ public class Board {
 
 	//taille case 50x50
 	private float caseSize=50;
-	private Case[][] cases;
+	public Case[][] cases;
 
 
 	//Dans un permier temps, generation non dependante d'un niveau

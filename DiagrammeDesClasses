@@ -36,17 +36,20 @@ Board *-- labyGenerator : create
 package Players #DDDDDDDD {
   abstract class Player {
     # World world
-    # Image spriteUp
-    # Image spriteDown
-    # Image spriteLeft
-    # Image spriteRight
+    # {static} Image spriteUp
+    # {static} Image spriteDown
+    # {static} Image spriteLeft
+    # {static} Image spriteRight
+    # int controllerID
+    # String name
+    # Color couleur
     # int posX
     # int posY
     # int x
     # int y
     # int speed
     # int direction
-    # void move()
+    + void move()
   }
   class HunterPlayer {
     

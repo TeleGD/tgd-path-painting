@@ -7,6 +7,7 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import games.bomberman.Bomb;
 import games.bomberman.Player;
+import games.bomberman.World;
 import games.bomberman.bonus.Bonus;
 
 public abstract class Case {
@@ -28,7 +29,8 @@ public abstract class Case {
 	}
 
 	public void render (GameContainer container, StateBasedGame game, Graphics context) {
-		context.drawImage(img, j*50, i*50);
+		int sizeCase = (int) World.getBoard().getCaseSize();
+		context.drawImage(img, j*sizeCase, i*sizeCase);
 		if(bonus!=null) {
 			if(!bonus.isActivated()) {
 				bonus.render(container, game, context);

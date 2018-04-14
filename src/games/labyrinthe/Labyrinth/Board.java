@@ -2,12 +2,12 @@ package games.labyrinthe.Labyrinth;
 
 public class Board {
 
-	private Cases board[][];
-	private int hauteur;
-	private int longueur;
+	private Case board[][];
+	private int height;
+	private int width;
 	
 	public boolean movePlayer(){
 	
-		
+		return true; // TODO : faire un truc
 	}
 }
