@@ -21,19 +21,21 @@ public abstract class Case {
 		this.j=j;
 		this.img=img;
 		this.passable=passable;
+		this.bonus=null;
 	}
 
 	public void render (GameContainer container, StateBasedGame game, Graphics context) {
 		context.drawImage(img, j*50, i*50);
 		if(bonus!=null) {
-			bonus.render(container, game, context);
+			if(!bonus.isActivated()) {
+				bonus.render(container, game, context);
+			}
 		}
 	}
 
 	public void getBonusAction(Player p) {
-		if(bonus!=null);
-		bonus.activate(p);
-		bonus=null;
+		if(bonus!=null)
+			bonus.activate(p);
 	}
 
 	public void getAction(Player p) {
@@ -49,7 +51,12 @@ public abstract class Case {
 	}
 
 	public void update (GameContainer container, StateBasedGame game, int delta) {
-
+		if (bonus!=null) {
+			bonus.update(container, game, delta);
+		}
+		if (bonus.isDeleted()) {
+			bonus = null;
+		}
 	}
 
 

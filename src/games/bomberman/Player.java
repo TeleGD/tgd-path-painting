@@ -116,6 +116,7 @@ public class Player {
 		mayDropBomb();
 		callMove();
 		updateXY();
+		World.getBoard().getCase(i, j).getAction(this);
 		
 	}
 	
