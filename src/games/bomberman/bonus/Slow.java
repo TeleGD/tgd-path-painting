@@ -38,7 +38,7 @@ public class Slow extends Bonus{
 	}
 	
 	public void activate(Player player) {
-		if (!isActivated()) {
+		if (!activated) {
 			this.activated = true;		
 
 			for (Player p : World.getPlayers()) {
