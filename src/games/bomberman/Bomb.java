@@ -6,6 +6,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.Sound;
 import org.newdawn.slick.state.StateBasedGame;
 
 import games.bomberman.board.Board;
@@ -24,6 +25,7 @@ public class Bomb {
 	private Image sprite;
 	private int arret[]= {0,0,0,0};
 	private boolean detruite = false;
+	private Sound sound;
 	
 	
 	public Bomb(int numJoueur,int i,int j,int porteep,int tpsRestantp) {
@@ -42,7 +44,12 @@ public class Bomb {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+		try {
+			sound = new Sound("musics/bomb/explo_forte.ogg");
+		} catch (SlickException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public int[] convertInXY(int i, int j) {
@@ -206,7 +213,8 @@ public class Bomb {
 		for (int x : arret) {
 			//System.out.println(x);
 		}
-		
+
+		sound.play(1, (float) 0.8);
 		detruite = true;
 	}
 	

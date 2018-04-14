@@ -39,10 +39,9 @@ public class World extends AppWorld {
 	private static List<Bonus> bonus;
 	private static List<Bomb> bombs;
 	
-	private Music music;
-	private Sound poseBombe;
-	private Sound explose;
-	private Sound pickBonus;
+	private static Music music;
+	private static Sound poseBombe;
+	private static Sound theEnd;
 	
 
 	public World (int ID) {
@@ -60,6 +59,8 @@ public class World extends AppWorld {
 		this.height = container.getHeight ();
 		board=new Board(13,25);
 		music = new Music("musics/main_music/amazon_rain_2.ogg");
+		poseBombe = new Sound("musics/bomb/pose_bombe_3.ogg");
+		theEnd = new Sound("musics/bomb/criWilhelm.ogg");
 	
 	}
 
@@ -80,7 +81,7 @@ public class World extends AppWorld {
 		appInput.clearKeyPressedRecord ();
 		appInput.clearControlPressedRecord ();
 		time = System.currentTimeMillis();
-		music.loop();
+		music.loop(1, (float) 0.5);
 	}
 
 	public static void removeBonus(Bonus b) {
@@ -127,6 +128,7 @@ public class World extends AppWorld {
 		
 		for(int i=0 ; i<players.size() ; i++) {
 			if (players.get(i).getLife() <= 0) {
+				theEnd.play(1, (float) 1);
 				players.remove(i);
 			}
 		}
@@ -215,6 +217,7 @@ public class World extends AppWorld {
 	}
 	
 	public static void addBomb(int numJoueur,int i, int j,int porteep,int tpsRestantp) {
+		poseBombe.play(1, (float) 0.4);
 		bombs.add(new Bomb(numJoueur, i, j, porteep, tpsRestantp));
 	}
 	
