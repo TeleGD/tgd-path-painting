@@ -1,5 +1,7 @@
 package games.bomberman;
 
+import java.util.*;
+
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -47,6 +49,7 @@ public class Player {
 	private int cooldownMove = -1;
 	private int reversed = 1; // =1 : controles normaux, =-1 : controles inversés
 	private int bombCapacity = 3; // Nombre de bombe posable en même temps
+	private List<Bomb> bombs = new ArrayList<Bomb>();
 	private int dropCoolDown = 1000; // 1sec entre chaque bombe posée
 	private int cooldownBomb = 0; // temps restant pour poser la prochaine bombe : est initialité à cooldownTime à chaque bombe posée
 	private int clignotement;
@@ -346,16 +349,29 @@ public class Player {
 	} 
 	
 	public void mayDropBomb() {
-		if (dropTheBomb && !bombDropped) {
-			dropBomb();
-			dropTheBomb =false;
-			cooldownBomb = dropCoolDown;
-			bombDropped = true;
+		List<Bomb> temp = new ArrayList<Bomb>();
+		for(Bomb b : bombs) {
+			if(b.isDetruite()) {
+				temp.add(b);
+			}
+		}
+		for(Bomb b : temp) {
+			bombs.remove(b);
+		}
+		
+		if(bombs.size() < bombCapacity) {
+			if (dropTheBomb && !bombDropped) {
+				dropBomb();
+				dropTheBomb = false;
+				cooldownBomb = dropCoolDown;
+				bombDropped = true;
+			}
 		}
 	}
 	
 	public void dropBomb() {
 		World.addBomb(controllerID, i, j, range, 3000);
+		bombs.add(World.getBombs().get(World.getBombs().size()-1));
 	}
 	
 	public void addRange(int deltaRange) {

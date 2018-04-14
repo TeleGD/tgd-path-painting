@@ -43,7 +43,7 @@ public class Slow extends Bonus{
 
 			for (Player p : World.getPlayers()) {
 				if (!p.equals(player)) {
-					p.setSpeed(p.getSpeed()*0.75f);
+					p.setSpeed(0.5f);
 				}
 			}
 		
@@ -73,7 +73,7 @@ public class Slow extends Bonus{
 	}
 	
 	public void update (GameContainer container, StateBasedGame game, int delta) {
-		if (activated && (System.currentTimeMillis() - initTime > 10000)) {
+		if (activated && (System.currentTimeMillis() - initTime > 7000)) {
 			this.desactivate();
 		}
 	}	
