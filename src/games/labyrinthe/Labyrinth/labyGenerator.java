@@ -3,13 +3,10 @@ package games.labyrinthe.Labyrinth;
 import java.util.ArrayList;
 import java.util.Random;
 
-
-import org.newdawn.slick.SlickException;
-
 import games.labyrinthe.Labyrinth.Case;
 
 public class labyGenerator {
-	 private ArrayList<ArrayList<Case>> lab; 
+	 private Case[][] lab; 
 	 private int n;
 	 private int m;
 
@@ -26,7 +23,9 @@ public class labyGenerator {
 		 }else{
 			 this.m = m+1;
 		 }
-		 this.lab = new ArrayList<ArrayList<Case>>();
+		 this.lab = new Case[n][m];
+		 creerLabMur();
+		 genLab();
 		 
 	 }
 	 
@@ -36,21 +35,23 @@ public class labyGenerator {
 	 public int getNbLig() {
 		 return this.n;
 	 }
+	 public Case[][] getLab() {
+		 return this.lab;
+	 }
 	 
-	 
-	 public void creerLabMur() throws SlickException{
+	 public void creerLabMur() {
 		 for (int i=0;i<this.n;i++){
-		 	ArrayList<Case> lig =  new ArrayList<Case>();
+		 	Case[] lig =  new Case[n];
 		 	for (int j=0;i<this.m;j++){
 		 		WallCase c = new WallCase(i*50,j*50,50,false);
-		 		lig.add(c); 
+		 		lig[j]=c; 
 		 	}
-		 	this.lab.add(lig);
+		 	this.lab[i]=lig;
 		 }
 	 }
 	 
 		 
-	public void genLab() throws SlickException{
+	public void genLab(){
 		ArrayList<Case> liste = new ArrayList<Case>();
 		Case d = new FreeCase(r.nextInt(this.n/2),r.nextInt(this.m/2),50);
 		liste.add(d);
@@ -60,36 +61,33 @@ public class labyGenerator {
 		while (!liste.isEmpty()){
 			choix = r.nextInt(l);
 			pos=liste.get(choix);
-	        if (pos.getI()!=0 && this.lab.get(pos.getI()-2).get(pos.getJ()) instanceof WallCase){
-	        	this.lab.get(pos.getI()-2).add(pos.getJ(),new FreeCase(pos.getI()*50,pos.getJ()*50,50));
-	        	this.lab.get(pos.getI()-2).remove(pos.getJ());
-	        	this.lab.get(pos.getI()-1).add(pos.getJ(),new FreeCase(pos.getI()*50,pos.getJ()*50,50));
-	        	this.lab.get(pos.getI()-1).remove(pos.getJ());
-	        	pos = this.lab.get(pos.getI()-2).get(pos.getJ());
+	        if (pos.getI()!=0 && this.lab[pos.getI()-2][pos.getJ()] instanceof WallCase){
+	        	this.lab[pos.getI()-2][pos.getJ()]=new FreeCase(pos.getI()*50,pos.getJ()*50,50);
+	        	this.lab[pos.getI()-1][pos.getJ()]=new FreeCase(pos.getI()*50,pos.getJ()*50,50);
+	        	liste.remove(pos);
+	        	pos = this.lab[pos.getI()-2][pos.getJ()];
 	        	liste.add(pos);
 	        }
-	        if (pos.getI()!=(n-1) && this.lab.get(pos.getI()+2).get(pos.getJ()) instanceof WallCase){
-	        	this.lab.get(pos.getI()+2).add(pos.getJ(),new FreeCase(pos.getI()*50,pos.getJ()*50,50));
-	        	this.lab.get(pos.getI()+2).remove(pos.getJ());
-	        	this.lab.get(pos.getI()+1).add(pos.getJ(),new FreeCase(pos.getI()*50,pos.getJ()*50,50));
-	        	this.lab.get(pos.getI()+1).remove(pos.getJ());
-	        	pos = this.lab.get(pos.getI()+2).get(pos.getJ());
+	        if (pos.getI()!=(n-1) && this.lab[pos.getI()+2][pos.getJ()] instanceof WallCase){
+	        	this.lab[pos. getI()+2][pos.getJ()]=new FreeCase(pos.getI()*50,pos.getJ()*50,50);
+	        	this.lab[pos.getI()+1][pos.getJ()]=new FreeCase(pos.getI()*50,pos.getJ()*50,50);
+	        	liste.remove(pos);
+	        	pos = this.lab[pos.getI()+2][pos.getJ()];
 	        	liste.add(pos);
 	        }
-	        if (pos.getJ()!=0 && this.lab.get(pos.getI()).get(pos.getJ()-2) instanceof WallCase){
-	        	this.lab.get(pos.getI()).add(pos.getJ()-2,new FreeCase(pos.getI()*50,pos.getJ()*50,50));
-	        	this.lab.get(pos.getI()).remove(pos.getJ()-2);
-	        	this.lab.get(pos.getI()).add(pos.getJ()-1,new FreeCase(pos.getI()*50,pos.getJ()*50,50));
-	        	this.lab.get(pos.getI()).remove(pos.getJ()-1);
-	        	pos = this.lab.get(pos.getI()).get(pos.getJ()-2);
+	        if (pos.getJ()!=0 && this.lab[pos.getI()][pos.getJ()-2] instanceof WallCase){
+	        	this.lab[pos.getI()][(pos.getJ()-2)]=new FreeCase(pos.getI()*50,pos.getJ()*50,50);
+	        	this.lab[pos.getI()][(pos.getJ()-1)]=new FreeCase(pos.getI()*50,pos.getJ()*50,50);
+
+	        	liste.remove(pos);
+	        	pos = this.lab[pos.getI()][(pos.getJ()-2)];
 	        	liste.add(pos);
 	        }
-	        if (pos.getJ()!=(m-1) && this.lab.get(pos.getI()).get(pos.getJ()+2) instanceof WallCase){
-	        	this.lab.get(pos.getI()).add(pos.getJ()+2,new FreeCase(pos.getI()*50,pos.getJ()*50,50));
-	        	this.lab.get(pos.getI()).remove(pos.getJ()+2);
-	        	this.lab.get(pos.getI()).add(pos.getJ()+1,new FreeCase(pos.getI()*50,pos.getJ()*50,50));
-	        	this.lab.get(pos.getI()).remove(pos.getJ()+1);
-	        	pos = this.lab.get(pos.getI()).get(pos.getJ()+2);
+	        if (pos.getJ()!=(m-1) && this.lab[pos.getI()][(pos.getJ()+2)] instanceof WallCase){
+	        	this.lab[pos.getI()][(pos.getJ()+2)]=new FreeCase(pos.getI()*50,pos.getJ()*50,50);
+	        	this.lab[pos.getI()][(pos.getJ()+1)]=new FreeCase(pos.getI()*50,pos.getJ()*50,50);
+	        	liste.remove(pos);
+	        	pos = this.lab[pos.getI()][(pos.getJ()+2)];
 	        	liste.add(pos);
 	        }
 		}
@@ -97,8 +95,8 @@ public class labyGenerator {
 	        	for (int j=0;i<this.m;j++){
 	        		int p = r.nextInt(100);
 	        			if (p<=7) {
-	        				this.lab.get(i).add(j,new FreeCase(i*50,j*50,50));
-	        				this.lab.get(i).remove(j+1);
+	        				this.lab[i][j]=new FreeCase(i*50,j*50,50);
+	        				
 	        	}
 	        }
 		}
