@@ -6,9 +6,18 @@ import org.newdawn.slick.SlickException;
 public class WallCase extends Case {
 	
 	private boolean destructible;
+	private static Image image;
+	
+	static {
+		try {
+			image = new Image("DIRECTORY_IMAGES/Ground.png");
+		} catch (SlickException e) {
+			e.printStackTrace();
+		}
+	}
 
-	public WallCase(int i, int j,int height, int width, boolean destructible) throws SlickException {
-		super(i, j, height, width, new Image("images/bomberman/Wall.png"));
+	public WallCase(int i, int j, int size, boolean destructible) throws SlickException {
+		super(i, j, size, image);
 		this.destructible = destructible;
 	}
 

@@ -12,32 +12,28 @@ public abstract class Case {
 		protected int i;
 		protected int j;
 		
-		private int height;
-		private int width;
+		private int size;
 		
 		protected boolean passable;
 		protected Image img;
 		
-		public Case(int i,int j, int height, int width, Image img) {
+		public Case(int i,int j, int size, Image img) {
 			this.i=i;
 			this.j=j;
 			this.img=img;
-			this.height =height;
-			this.width = width;
-		}
-		
-		public int getHeight() {
-			return height;
+			this.size = size;
 		}
 
-		public int getWidth() {
-			return width;
-		}
 
 		public void render (GameContainer container, StateBasedGame game, Graphics context) {
-			context.drawImage(img, j*width, i*height);
+			context.drawImage(img, j*size, i*size);
 		}
 		
+		public int getSize() {
+			return size;
+		}
+
+
 		public int getI() {
 			return i;
 		}

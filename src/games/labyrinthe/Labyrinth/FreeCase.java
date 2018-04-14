@@ -8,9 +8,19 @@ public class FreeCase extends Case {
 	private int playerId;
 	private int bonusId;
 	
+	private static Image image;
+	
+	static {
+		try {
+			image = new Image("DIRECTORY_IMAGES/Ground.png");
+		} catch (SlickException e) {
+			e.printStackTrace();
+		}
+	}
 
-	public FreeCase(int i, int j,int height, int width) throws SlickException {
-		super(i, j, height, width, new Image("images/bomberman/Ground.png"));
+	public FreeCase(int i, int j,int size){
+		super(i, j, size, image);
+		
 	}
 
 
