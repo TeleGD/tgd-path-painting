@@ -143,6 +143,7 @@ public class World extends AppWorld {
 			time=System.currentTimeMillis();
 		}
 		
+		board.update(container, game, delta);
 	}
 
 	@Override

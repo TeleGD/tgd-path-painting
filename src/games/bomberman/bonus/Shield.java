@@ -68,8 +68,6 @@ public class Shield extends Bonus{
 		if (activated && (System.currentTimeMillis() - initTime > 30000)) {
 			this.desactivate();
 		}
-		
-		super.update(container, game, delta);
 	}	
 	
 	public void render (GameContainer container, StateBasedGame game, Graphics context) {

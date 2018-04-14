@@ -42,7 +42,7 @@ public class Capacity extends Bonus{
 			
 			player.setBombCapacity(player.getBombCapacity()+1);
 			
-			deleted = true;
+			this.deleted = true;
 
 			sound.play(1, (float) 0.4);
 		}
@@ -56,7 +56,7 @@ public class Capacity extends Bonus{
 	}
 	
 	public void update (GameContainer container, StateBasedGame game, int delta) {
-		super.update(container, game, delta);
+
 	}	
 	
 	public void render (GameContainer container, StateBasedGame game, Graphics context) {

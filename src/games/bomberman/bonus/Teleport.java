@@ -67,7 +67,7 @@ public class Teleport extends Bonus{
 	}
 	
 	public void update (GameContainer container, StateBasedGame game, int delta) {
-		super.update(container, game, delta);
+		
 	}	
 	
 	public void render (GameContainer container, StateBasedGame game, Graphics context) {

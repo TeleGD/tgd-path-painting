@@ -40,13 +40,12 @@ public class Reverse extends Bonus{
 	
 	public void activate(Player player) {
 		if(!activated) {
-			
 			this.activated = true;
 		
 			player.setReversed(-player.getReversed());
 		
 			this.player = player;
-			initTime = System.currentTimeMillis();
+			this.initTime = System.currentTimeMillis();
 			
 			sound.play(1, (float) 0.4);
 		}
@@ -54,7 +53,7 @@ public class Reverse extends Bonus{
 	
 	public void desactivate() {
 		this.player.setReversed(1);
-		this.deleted = false;
+		this.deleted = true;
 	}
 	
 	public boolean isActivated() {
@@ -66,11 +65,9 @@ public class Reverse extends Bonus{
 	}
 	
 	public void update (GameContainer container, StateBasedGame game, int delta) {
-		if (activated && (System.currentTimeMillis() - initTime > 7000)) {
+		if (activated && ((System.currentTimeMillis() - initTime) >= 7000)) {
 			this.desactivate();
 		}
-		
-		super.update(container, game, delta);
 	}	
 	
 	public void render (GameContainer container, StateBasedGame game, Graphics context) {
