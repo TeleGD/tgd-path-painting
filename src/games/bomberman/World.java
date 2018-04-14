@@ -120,6 +120,12 @@ public class World extends AppWorld {
 			}
 		}
 		
+		for(int i=0 ; i<bombs.size() ; i++) {
+			if (bombs.get(i).isDetruite()) {
+				bombs.remove(i);
+			}
+		}
+		
 		if(System.currentTimeMillis()-time>=500 && System.currentTimeMillis()-time<=5020) {
 			generateBonus();
 			time=System.currentTimeMillis();

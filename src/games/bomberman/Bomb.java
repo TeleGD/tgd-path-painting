@@ -11,6 +11,7 @@ public class Bomb {
 	private int portee;
 	private int tpsRestant;
 	private int numJoueur;
+	private boolean detruite = false;
 	
 	
 	public Bomb(int numJoueur,int xp,int yp,int porteep,int tpsRestantp) {
@@ -30,6 +31,10 @@ public class Bomb {
 		return tpsRestant;
 	}
 	
+	public boolean isDetruite() {
+		return detruite;
+	}
+
 	public void update(int delta) {
 		tpsRestant-=1*delta;
 		if(tpsRestant<=0) {
@@ -117,7 +122,7 @@ public class Bomb {
 		// autre moyen : obtenir coords cellule bombe puis portee dans toutes directions
 		
 		
-		
+		detruite = true;
 		
 	}
 	
