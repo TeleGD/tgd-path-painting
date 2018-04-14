@@ -4,6 +4,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.Sound;
 import org.newdawn.slick.state.StateBasedGame;
 
 import games.bomberman.Player;
@@ -13,6 +14,7 @@ public class Reverse extends Bonus{
 	private boolean activated, deleted;
 	private Player player;
 	private long initTime;
+	private Sound sound;
 	
 	public Reverse(int caseX, int caseY) {
 		super(caseX, caseY);
@@ -26,16 +28,26 @@ public class Reverse extends Bonus{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		try {
+			sound = new Sound("musics/bonus/interf.ogg");
+		} catch (SlickException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public void activate(Player player) {
 		if(!activated) {
+			
 			this.activated = true;
 		
 			player.setReversed(-player.getReversed());
 		
 			this.player = player;
-			initTime = System.currentTimeMillis();	
+			initTime = System.currentTimeMillis();
+			
+			sound.play(1, (float) 0.4);
 		}
 	}
 	
