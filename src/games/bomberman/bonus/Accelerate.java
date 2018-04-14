@@ -15,9 +15,8 @@ public class Accelerate extends Bonus{
 	private Player player;
 	private long initTime;
 	
-	public Accelerate(int caseX, int caseY, float speed) {
+	public Accelerate(int caseX, int caseY) {
 		super(caseX, caseY);
-		this.speed = speed;
 		this.activated = false;
 		
 		try {
@@ -30,11 +29,10 @@ public class Accelerate extends Bonus{
 	}
 	
 	public void activate(Player player) {
-		float oldSpeed = player.getSpeed();
+		this.speed = player.getSpeed();
 		this.activated = true;
 		
-		player.setSpeed(this.speed);
-		this.speed = oldSpeed;
+		player.setSpeed(player.getSpeed()*1.25f);
 		
 		initTime = System.currentTimeMillis();
 		
