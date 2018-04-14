@@ -22,7 +22,7 @@ public class Player {
 	//Position du joueur :
 	private float x;	// Abcisse réelle du joueur
 	private float y;	// Ordonnée réelle du joueur
-	private float nextX, nextY;
+	private float nextX, nextY, tempNY, tempNX;
 	private int i;		// Position du joueur dans la matrice
 	private int j;		// pillule bleue ou pillule rouge?
 	
@@ -37,11 +37,14 @@ public class Player {
 	private boolean moveLeft,moveRight,moveUp,moveDown, dropTheBomb, move=false;
 	private int direction;
 	
+	private boolean isMovingUD, isMovingRL;
+	private int tempDI, tempDJ;
+	
 	// Caractéristiques modifiables par bonus/malus :
-	private float speed = 1;
+	private float speed = 0.5f;
 	private int reversed = 1; // =1 : controles normaux, =-1 : controles inversés
 	private int bombCapacity = 3; // Nombre de bombe posable en même temps
-	private int dropCoolDown = 2000; // 2sec entre chaque bombe posée
+	private int dropCoolDown = 1000; // 1sec entre chaque bombe posée
 	private int cooldownBomb = 0; // temps restant pour poser la prochaine bombe : est initialité à cooldownTime à chaque bombe posée
 	private int clignotement;
 	private boolean bombDropped =false;
@@ -83,6 +86,9 @@ public class Player {
 					break;
 		}
 		updateXY(); // initialisation de x et y selon les i et j de départ
+		
+		isMovingRL = false;
+		isMovingUD = false;
 		
 		direction = 2;
 		
@@ -133,6 +139,7 @@ public class Player {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	
 	}
 	
 	private Animation loadAnimation(SpriteSheet spriteSheet, int startX, int endX, int y) {
@@ -176,10 +183,10 @@ public class Player {
 		
 		World.getBoard().getCase(i, j).getAction(this);
 		mayDropBomb();
-		callMove();
-//		fluidMove(delta);
-		updateXY();
-		updateNextXY();
+		callMove(delta);
+		//fluidMove(delta);
+		//updateXY();
+		//updateNextXY();
 	}
 	
 
@@ -207,7 +214,7 @@ public class Player {
 
 	}
 	
-	public void callMove() throws SlickException{
+	public void callMove(int delta) throws SlickException{
 		int deltaJ = 0, deltaI = 0;
 		if(moveUp && !moveDown && !moveRight && ! moveLeft){ //haut
 			deltaI = -1;
@@ -241,6 +248,8 @@ public class Player {
 				move(deltaI,deltaJ);
 			}
 		}	
+		updateNextXY();
+		fluidMove(deltaI, deltaJ, delta);
 	}
 	
 	public void move(int deltaI, int deltaJ) {
@@ -248,14 +257,49 @@ public class Player {
 		j += deltaJ * reversed;
 	}
     
-//    public void fluidMove(int delta) {
-//    	switch(direction) {
-//	    	case 0 : y = (y > nextY) ? y-delta*speed : nextY; break;
-//	    	case 1 : x = (x > nextX) ? x-delta*speed : nextX; break;
-//	    	case 2 : y = (y < nextY) ? y+delta*speed : nextY; break;
-//	    	case 3 : x = (x < nextX) ? x+delta*speed : nextX; break;
-//    	}
-//    }
+   public void fluidMove(int dI, int dJ, int delta) {
+	   if(!isMovingUD && dI != 0) {
+		   isMovingUD = true;
+		   tempNY = nextY;
+		   tempDI = dI;
+	   }
+	   if(isMovingUD) {
+		   if(tempDI==1) {
+			   y = (y < tempNY) ? y+delta*speed : tempNY;
+			   if (y>=tempNY) {
+				   isMovingUD = false;	
+				   y = tempNY;
+			   }  
+		   } else if(tempDI==-1) {
+			   y = (y > tempNY) ? y-delta*speed : tempNY;
+			   if (y<=tempNY) {
+				   y = tempNY;
+				   isMovingUD = false;
+			   }
+		   }
+	   }
+	   
+	   if(!isMovingRL && dJ != 0) {
+		   isMovingRL = true;
+		   tempNX = nextX;
+		   tempDJ = dJ;
+	   }
+	   if(isMovingRL) {
+		   if(tempDJ==1) {
+			   x = (x < tempNX) ? x+delta*speed : tempNX;
+			   if (x>=tempNX) {
+				   x = tempNX;
+				   isMovingRL = false;
+			   }	   
+		   } else if(tempDJ==-1) {
+			   x = (x > tempNX) ? x-delta*speed : tempNX;
+			   if (x<=tempNX) {
+				   x = tempNX;
+				   isMovingRL = false;
+			   }
+		   }
+	   }
+    }
 	
 	public void updateXY() {
 		int[] XY = convertInXY(i,j);
@@ -383,6 +427,8 @@ public class Player {
 	}
 
 	public void setIJ(int i, int j) {
+		isMovingUD = false;
+		isMovingRL = false;
 		this.i =i;
 		this.j = j;
 		updateXY();
