@@ -240,6 +240,7 @@ public class Bomb {
 				case 3 :
 					c-=d;
 				}
+				explose = true;
 				//System.out.println(l+" "+c);
 				if ( c<0 || l<0 || c>24 || l>12 ) {
 					arret[dir] = d;
@@ -261,6 +262,11 @@ public class Bomb {
 							//System.out.println("prend damage");
 						}
 					}
+					for (Bomb b : World.getBombs()) {
+						if (b.getI()==l && b.getJ()==c && !b.isExplosed()) {
+							b.BombExplose();
+						}
+					}
 				}
 				d++;
 			}
@@ -269,8 +275,27 @@ public class Bomb {
 //			System.out.println(x);
 //		}
 		sound.play(1, (float) 0.8);
-		explose = true;
 
+	}
+
+	public int getI() {
+		return i;
+	}
+
+	public void setI(int i) {
+		this.i = i;
+	}
+
+	public int getJ() {
+		return j;
+	}
+
+	public void setJ(int j) {
+		this.j = j;
+	}
+	
+	public boolean isExplosed() {
+		return explose;
 	}
 	
 	
