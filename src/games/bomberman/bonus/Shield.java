@@ -4,6 +4,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.Sound;
 import org.newdawn.slick.state.StateBasedGame;
 
 import games.bomberman.Player;
@@ -13,6 +14,7 @@ public class Shield extends Bonus{
 	private boolean activated;
 	private Player player;
 	private long initTime;
+	private Sound sound;
 	
 	public Shield(int caseX, int caseY) {
 		super(caseX, caseY);
@@ -28,6 +30,13 @@ public class Shield extends Bonus{
 	}
 	
 	public void activate(Player player) {
+		try {
+			sound = new Sound("musics/bonus/tataa.ogg");
+		} catch (SlickException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		sound.play();
 		this.activated = true;
 		
 		player.setBouclier(true);

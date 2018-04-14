@@ -4,6 +4,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.Sound;
 import org.newdawn.slick.state.StateBasedGame;
 
 import games.bomberman.Player;
@@ -11,6 +12,7 @@ import games.bomberman.World;
 
 public class Life extends Bonus{
 	private boolean activated;
+	private Sound sound;
 	
 	public Life(int caseX, int caseY) {
 		super(caseX, caseY);
@@ -26,6 +28,13 @@ public class Life extends Bonus{
 	}
 	
 	public void activate(Player player) {
+		try {
+			sound = new Sound("musics/bonus/tataa.ogg");
+		} catch (SlickException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		sound.play();
 		this.activated = true;
 		
 		player.addLife(1);
