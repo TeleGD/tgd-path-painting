@@ -14,7 +14,7 @@ public abstract class Player {
 
 	
 	protected World world;
-	protected Board bd;
+	protected Board board;
 	
 	protected Image spriteUp;
 	protected Image spriteDown;
@@ -34,13 +34,13 @@ public abstract class Player {
 	protected boolean moveDown;
 	protected boolean moveUp;
 	
-	protected int controlerID;
+	protected int controllerID;
 	
 	
-	public Player(World w,AppPlayer aplayer) {
-		controlerID=aplayer.getControllerID();
+	public Player(World w,AppPlayer appPlayer) {
+		controllerID=appPlayer.getControllerID();
 		world=w;
-		bd=w.board;
+		this.board=w.board;
 		
 	}
 	
@@ -53,36 +53,36 @@ public abstract class Player {
 	}
 	
 	public void move(GameContainer container) {
-		if (controlerID == 0) {
+		if (controllerID == 0) {
 			return;
 		}
 		AppInput input = (AppInput) container.getInput();
-		moveLeft = input.isControlPressed(AppInput.BUTTON_LEFT,controlerID);
-		moveRight = input.isControlPressed(AppInput.BUTTON_RIGHT,controlerID);
-		moveUp = input.isControlPressed(AppInput.BUTTON_UP,controlerID);
-		moveDown = input.isControlPressed(AppInput.BUTTON_DOWN,controlerID);
+		moveLeft = input.isControlPressed(AppInput.BUTTON_LEFT,controllerID);
+		moveRight = input.isControlPressed(AppInput.BUTTON_RIGHT,controllerID);
+		moveUp = input.isControlPressed(AppInput.BUTTON_UP,controllerID);
+		moveDown = input.isControlPressed(AppInput.BUTTON_DOWN,controllerID);
 		
 		if(moveLeft) {
-			if(bd.movePlayer(posX-1,posY)) {
+			if(board.movePlayer(posX-1,posY)) {
 				posX--;
 			}
 		}
 		
 		else {
 			if(moveRight) {
-				if(bd.movePlayer(posX+1,posY)) {
+				if(board.movePlayer(posX+1,posY)) {
 					posX++;
 				}
 			}
 			
 			else {
 				if(moveUp) {
-					if(bd.movePlayer(posX,posY+1)) {
+					if(board.movePlayer(posX,posY+1)) {
 						posY++;
 					}
 				}
 				else {
-					if(bd.movePlayer(posX,posY-1)) {
+					if(board.movePlayer(posX,posY-1)) {
 						posY--;
 					}
 				}
