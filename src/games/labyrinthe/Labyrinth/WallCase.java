@@ -18,7 +18,7 @@ public class WallCase extends Case {
 		}
 	}
 
-	public WallCase(int i, int j, int size, boolean destructible) throws SlickException {
+	public WallCase(int i, int j, int size, boolean destructible) {
 		super(i, j, size, image);
 		this.destructible = destructible;
 	}
