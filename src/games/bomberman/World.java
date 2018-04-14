@@ -134,6 +134,7 @@ public class World extends AppWorld {
 		
 		for(int i=0 ; i<bombs.size() ; i++) {
 			if (bombs.get(i).isDetruite()) {
+				board.getCase(bombs.get(i).getI(), bombs.get(i).getJ()).setBomb(null);
 				bombs.remove(i);
 			}
 		}
@@ -176,7 +177,7 @@ public class World extends AppWorld {
 		//Find the ground without bonus and player
 		ArrayList<Case> freeCases=new ArrayList<Case>() ;
 		for(Case c:board.getAllCases()) {
-			if(c instanceof Ground && c.getBonus()==null) {
+			if(c instanceof Ground && c.getBonus()==null && c.getBomb()==null) {
 				boolean temp = true;
 				for (Player p : this.players) {
 					if(p.getI() == c.getI() && p.getJ() == c.getJ())
@@ -227,6 +228,7 @@ public class World extends AppWorld {
 		poseBombe.play(1, (float) 0.4);
 		
 		bombs.add(new Bomb(numJoueur, i, j, porteep, tpsRestantp));
+		board.getCase(i, j).setBomb(bombs.get(bombs.size()-1));
 	}
 	
 }
