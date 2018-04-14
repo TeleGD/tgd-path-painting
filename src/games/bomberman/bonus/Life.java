@@ -30,18 +30,20 @@ public class Life extends Bonus{
 	}
 	
 	public void activate(Player player) {
-		try {
-			sound = new Sound("musics/bonus/tataa.ogg");
-		} catch (SlickException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		if(!activated) {
+			this.activated = true;
+			try {
+				sound = new Sound("musics/bonus/tataa.ogg");
+			} catch (SlickException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			sound.play();
+		
+			player.addLife(1);
+		
+			this.deleted = true;
 		}
-		sound.play();
-		this.activated = true;
-		
-		player.addLife(1);
-		
-		this.deleted = true;
 	}
 	
 	public boolean isActivated() {

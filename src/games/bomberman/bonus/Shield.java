@@ -31,19 +31,21 @@ public class Shield extends Bonus{
 	}
 	
 	public void activate(Player player) {
-		try {
-			sound = new Sound("musics/bonus/tataa.ogg");
-		} catch (SlickException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		if(!activated) {
+			this.activated = true;
+			try {
+				sound = new Sound("musics/bonus/tataa.ogg");
+			} catch (SlickException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			sound.play();
+		
+			player.setBouclier(true);
+		
+			this.player = player;
+			initTime = System.currentTimeMillis();	
 		}
-		sound.play();
-		this.activated = true;
-		
-		player.setBouclier(true);
-		
-		this.player = player;
-		initTime = System.currentTimeMillis();	
 	}
 	
 	public void desactivate() {

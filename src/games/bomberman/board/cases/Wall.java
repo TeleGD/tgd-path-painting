@@ -9,7 +9,5 @@ public class Wall extends Case{
 		super(i, j, new Image("images/bomberman/Wall.png"), false);
 	}
 
-
-	
 	
 }

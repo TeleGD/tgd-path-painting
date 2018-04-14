@@ -29,12 +29,14 @@ public class Cooldown extends Bonus{
 	}
 	
 	public void activate(Player player) {
-		this.activated = true;
+		if(!activated) {
+			this.activated = true;
 		
-		player.setDropCoolDown(3);
+			player.setDropCoolDown(3);
 		
-		this.player = player;
-		initTime = System.currentTimeMillis();	
+			this.player = player;
+			initTime = System.currentTimeMillis();	
+		}
 	}
 	
 	public void desactivate() {
