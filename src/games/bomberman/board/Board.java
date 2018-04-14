@@ -56,8 +56,10 @@ public class Board {
 			}
 			//For each Board created their is a pair of tp cases
 			int i,j,k,l;
-			i= (int) (Math.random()*imax);
-			j= (int) (Math.random()*jmax);
+			//i= (int) (Math.random()*imax);
+			//j= (int) (Math.random()*jmax);
+			i=1;
+			j=0;
 			k= (int) (Math.random()*imax);
 			l= (int) (Math.random()*jmax);
 			cases[i][j]=new TP(i,j,cases[k][l]);

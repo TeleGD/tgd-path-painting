@@ -40,7 +40,7 @@ public class Life extends Bonus{
 		this.activated = true;
 		
 		player.addLife(1);
-		
+	
 		this.deleted = true;
 	}
 	

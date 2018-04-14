@@ -50,9 +50,9 @@ public class Accelerate extends Bonus{
 		this.activated = true;
 		
 		player.setSpeed(player.getSpeed()*1.25f);
-		
+	
 		initTime = System.currentTimeMillis();
-		
+	
 		this.player = player;
 	}
 	

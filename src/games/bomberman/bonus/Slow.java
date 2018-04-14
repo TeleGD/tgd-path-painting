@@ -40,14 +40,14 @@ public class Slow extends Bonus{
 		if (!isActivated()) sound.play(1, (float) 0.4);
 		this.activated = true;
 
-		for (Player p : World.getPlayers()) {
-			if (!p.equals(player)) {
-				p.setSpeed(p.getSpeed()*0.75f);
+			for (Player p : World.getPlayers()) {
+				if (!p.equals(player)) {
+					p.setSpeed(p.getSpeed()*0.75f);
+				}
 			}
-		}
 		
 		initTime = System.currentTimeMillis();
-		
+	
 		this.player = player;
 	}
 	

@@ -100,6 +100,8 @@ public abstract class Case {
 		this.size = size;
 	}
 
+	public void setJustTP(boolean b) {}
 
+	public void setInitTime(long initTime) {}
 
 }

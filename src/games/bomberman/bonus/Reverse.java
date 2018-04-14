@@ -29,12 +29,14 @@ public class Reverse extends Bonus{
 	}
 	
 	public void activate(Player player) {
-		this.activated = true;
+		if(!activated) {
+			this.activated = true;
 		
-		player.setReversed(-player.getReversed());
+			player.setReversed(-player.getReversed());
 		
-		this.player = player;
-		initTime = System.currentTimeMillis();	
+			this.player = player;
+			initTime = System.currentTimeMillis();	
+		}
 	}
 	
 	public void desactivate() {

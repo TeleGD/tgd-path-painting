@@ -41,7 +41,7 @@ public class Shield extends Bonus{
 		this.activated = true;
 		
 		player.setBouclier(true);
-		
+	
 		this.player = player;
 		initTime = System.currentTimeMillis();	
 	}
