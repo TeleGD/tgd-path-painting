@@ -1,6 +1,7 @@
 package games.bomberman;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -258,37 +259,48 @@ public class Bomb {
 					Case ca = World.getBoard().getCase(l, c);
 					if (ca instanceof DestructibleWall) {
 						World.getBoard().destruct(l, c);
-						if (Math.random()<0.33) {
-							int k= (int)(Math.random()*9);
-							switch (k) {
-							case 0:
+						if (Math.random()<0.4) {
+							double r = Math.random();
+							/* répartition :
+							 * 
+							 * acceleration  : 0.20
+							 * life : 0.05
+							 * reverse : 0.05
+							 * capacity : 0.1
+							 * shield : 0.15
+							 * teleport : 0.05
+							 * cooldown : 0.1
+							 * slow : 0.05
+							 * range : 0.25
+							 */
+							if (r<0.2) {
 								World.getBoard().getCase(l, c).setBonus(new Accelerate(World.getBoard().getCase(l, c).getJ(),World.getBoard().getCase(l, c).getI()));
-								break;
-							case 1:
-								World.getBoard().getCase(l, c).setBonus(new Life(World.getBoard().getCase(l, c).getJ(),World.getBoard().getCase(l, c).getI()));
-								break;
-							case 2:
-								World.getBoard().getCase(l, c).setBonus(new Reverse(World.getBoard().getCase(l, c).getJ(),World.getBoard().getCase(l, c).getI()));
-								break;
-							case 3:
-								World.getBoard().getCase(l, c).setBonus(new Capacity(World.getBoard().getCase(l, c).getJ(),World.getBoard().getCase(l, c).getI()));
-								break;
-							case 4:
-								World.getBoard().getCase(l, c).setBonus(new Shield(World.getBoard().getCase(l, c).getJ(),World.getBoard().getCase(l, c).getI()));
-								break;
-							case 5:
-								World.getBoard().getCase(l, c).setBonus(new Teleport(World.getBoard().getCase(l, c).getJ(),World.getBoard().getCase(l, c).getI()));
-								break;
-							case 6:
-								World.getBoard().getCase(l, c).setBonus(new Cooldown(World.getBoard().getCase(l, c).getJ(),World.getBoard().getCase(l, c).getI()));
-								break;
-							case 7:
-								World.getBoard().getCase(l, c).setBonus(new Slow(World.getBoard().getCase(l, c).getJ(),World.getBoard().getCase(l, c).getI()));
-								break;
-							case 8:
-								World.getBoard().getCase(l, c).setBonus(new Range(World.getBoard().getCase(l, c).getJ(),World.getBoard().getCase(l, c).getI()));
-								break;
 							}
+							if (r>=0.2 && r<0.25) {
+								World.getBoard().getCase(l, c).setBonus(new Life(World.getBoard().getCase(l, c).getJ(),World.getBoard().getCase(l, c).getI()));
+							}
+							if (r>=0.25 && r<0.30) {
+								World.getBoard().getCase(l, c).setBonus(new Reverse(World.getBoard().getCase(l, c).getJ(),World.getBoard().getCase(l, c).getI()));
+							}
+							if (r>=0.30 && r<0.4) {
+								World.getBoard().getCase(l, c).setBonus(new Capacity(World.getBoard().getCase(l, c).getJ(),World.getBoard().getCase(l, c).getI()));
+							}
+							if (r>=0.4 && r<0.55) {
+								World.getBoard().getCase(l, c).setBonus(new Shield(World.getBoard().getCase(l, c).getJ(),World.getBoard().getCase(l, c).getI()));
+							}
+							if (r>=0.55 && r<0.60) {
+								World.getBoard().getCase(l, c).setBonus(new Teleport(World.getBoard().getCase(l, c).getJ(),World.getBoard().getCase(l, c).getI()));
+							}
+							if (r>=0.60 && r<0.70) {
+								World.getBoard().getCase(l, c).setBonus(new Cooldown(World.getBoard().getCase(l, c).getJ(),World.getBoard().getCase(l, c).getI()));
+							}
+							if (r>=0.7 && r<0.75) {
+								World.getBoard().getCase(l, c).setBonus(new Slow(World.getBoard().getCase(l, c).getJ(),World.getBoard().getCase(l, c).getI()));
+							}
+							if (r>=0.75 && r<1) {
+								World.getBoard().getCase(l, c).setBonus(new Range(World.getBoard().getCase(l, c).getJ(),World.getBoard().getCase(l, c).getI()));
+							}
+							
 						}
 						arret[dir] = d+1;
 						stop = true;
