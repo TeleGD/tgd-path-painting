@@ -3,6 +3,8 @@ package games.labyrinthe.Labyrinth;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
+import games.labyrinthe.World;
+
 public class FreeCase extends Case {
 	
 	private int playerId;
@@ -12,7 +14,7 @@ public class FreeCase extends Case {
 	
 	static {
 		try {
-			image = new Image("DIRECTORY_IMAGES/Ground.png");
+			image = new Image(World.DIRECTORY_IMAGES+"/Ground.png");
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}

@@ -12,9 +12,12 @@ public class Board {
 	private int rows;
 	private int columns;
 	private World w;
+	private labyGenerator lab;
 	
 	public Board(World w, int rows, int columns) {
 		this.w=w;
+		this.lab = (new labyGenerator(rows,columns));
+		board=lab.getLab();
 	}
 	
 	public boolean movePlayer(int posX, int posY){
@@ -30,7 +33,11 @@ public class Board {
 	}
 
 	public void render(GameContainer container, StateBasedGame game, Graphics context) {
-		
+		for (int i=0; i<this.lab.getNbLig();i++){
+			for (int j=0; j<this.lab.getNbCol();j++){
+				this.board[i][j].render(container, game, context);
+			}
+		}
 	}
 
 	public void update(GameContainer container, StateBasedGame game, int delta) {
