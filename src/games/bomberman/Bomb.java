@@ -2,6 +2,12 @@ package games.bomberman;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
+import org.newdawn.slick.state.StateBasedGame;
+
 import games.bomberman.board.Board;
 
 public class Bomb {
@@ -12,6 +18,7 @@ public class Bomb {
 	private int portee;
 	private int tpsRestant;
 	private int numJoueur;
+	private Image sprite;
 	private boolean detruite = false;
 	
 	
@@ -24,6 +31,12 @@ public class Bomb {
 		y = XY[1];
 		portee=porteep;
 		tpsRestant=tpsRestantp;
+		try {
+			sprite = new Image("images/bomberman/bombe.png");
+		} catch (SlickException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 	
@@ -50,6 +63,11 @@ public class Bomb {
 			this.BombExplose();
 		}
 	}
+	
+	public void render(GameContainer container, StateBasedGame game, Graphics context) {
+		context.drawImage(sprite, x, y);
+	}
+	
 	public void BombExplose()
 	{
 		

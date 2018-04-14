@@ -148,9 +148,9 @@ public class World extends AppWorld {
 	public void render (GameContainer container, StateBasedGame game, Graphics context) {
 		board.render(container, game, context);
 
-//		for (Bomb b : bombs) {
-//			b.render();
-//		}
+		for (Bomb b : bombs) {
+			b.render(container,game,context);
+		}
 		
 		for (Player p : this.players) {
 			p.render(container, game, context);
