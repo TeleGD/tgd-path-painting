@@ -4,6 +4,7 @@ import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.state.StateBasedGame;
@@ -50,6 +51,7 @@ public class Player {
 	private int range = 1; // Portée des bombes en cases
 	private int invincibilite=1500;
 	private boolean invincible;
+	private Image imgBouclier;
 
 
 	public Player (AppPlayer appPlayer) {
@@ -65,6 +67,12 @@ public class Player {
 		tpable = true;
 		invincible=false;
 		clignotement =200;
+		try {
+			imgBouclier = new Image ("images/bomberman/bouclier.png");
+		} catch (SlickException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		
 		// Attribution des positions de départ en fonction du n° de joueur
 		Integer[] size = World.getBoard().getDim();
@@ -156,10 +164,12 @@ public class Player {
 			if (invincibilite<0) {
 				invincible=false;
 				clignotement = 200;
+				System.out.println("fin");
 			}
 			clignotement-=delta;
 			if (clignotement<0) {
 				clignotement=200;
+				System.out.println("change");
 			}
 			
 		}
@@ -205,6 +215,9 @@ public class Player {
 			}
 		}
 
+		if (bouclier) {
+			context.drawImage(imgBouclier, x, y);
+		}
 	}
 	
 	public void callMove() throws SlickException{
