@@ -3,6 +3,8 @@ package games.labyrinthe.Labyrinth;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
+import games.bomberman.World;
+
 public class WallCase extends Case {
 	
 	private boolean destructible;
@@ -10,7 +12,7 @@ public class WallCase extends Case {
 	
 	static {
 		try {
-			image = new Image("DIRECTORY_IMAGES/Ground.png");
+			image = new Image(World.DIRECTORY_IMAGES+"/Ground.png");
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}
