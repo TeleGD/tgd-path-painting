@@ -22,9 +22,10 @@ public class Bomb {
 	private int portee;
 	private int tpsRestant;
 	private int numJoueur;
-	private Image sprite;
+	private Image sprite,bord,milieu,centre;
 	private int arret[]= {0,0,0,0};
-	private boolean detruite = false;
+	private int tempsExplosion=700;
+	private boolean detruite = false,explose=false;
 	private Sound sound;
 	
 	
@@ -36,10 +37,13 @@ public class Bomb {
 		x = XY[0];
 		y = XY[1];
 		portee=porteep;
-		for (int k=0;k<3;k++) {arret[k]=portee;}
+		for (int k=0;k<4;k++) {arret[k]=portee;}
 		tpsRestant=tpsRestantp;
 		try {
 			sprite = new Image("images/bomberman/bombe.png");
+			bord = new Image("images/bomberman/fin_deflagration.png");
+			milieu = new Image("images/bomberman/deflagration.png");
+			centre = new Image("images/bomberman/bombe_explose.png");
 		} catch (SlickException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -70,14 +74,64 @@ public class Bomb {
 	}
 
 	public void update(int delta) {
-		tpsRestant-=delta;
-		if(tpsRestant<=0) {
-			this.BombExplose();
+		if (!explose) {
+			tpsRestant-=delta;
+			if(tpsRestant<=0) {
+				this.BombExplose();
+			}
+		} else {
+			tempsExplosion-=delta;
+			if (tempsExplosion<=0) {
+				detruite = true;
+			}
 		}
+		
 	}
 	
 	public void render(GameContainer container, StateBasedGame game, Graphics context) {
+		if (!explose) {
 		context.drawImage(sprite, x, y);
+		} else {
+			
+			context.drawImage(centre,x,y);
+			bord.rotate(90);
+			milieu.rotate(90);
+			for (int k=1;k<arret[0];k++) {
+				if (k==portee-1) {
+					context.drawImage(bord, x, y-50*k);
+				} else {
+					context.drawImage(milieu, x, y-50*k);
+				}
+			}
+			bord.rotate(90);
+			milieu.rotate(90);
+			for (int k=1;k<arret[1];k++) {
+				if (k==portee-1) {
+					context.drawImage(bord, x+50*k, y);
+				} else {
+					context.drawImage(milieu, x+50*k, y);
+				}
+			}
+			bord.rotate(90);
+			milieu.rotate(90);
+			for (int k=1;k<arret[2];k++) {
+				if (k==portee-1) {
+					context.drawImage(bord, x, y+50*k);
+				} else {
+					context.drawImage(milieu, x, y+50*k);
+				}
+			}
+			bord.rotate(90);
+			milieu.rotate(90);
+			for (int k=1;k<arret[3];k++) {
+				if (k==portee-1) {
+					context.drawImage(bord, x-50*k, y);
+				} else {
+					context.drawImage(milieu, x-50*k, y);
+				}
+			}
+			
+		}
 	}
 	
 /*	public void BombExplose()
@@ -167,6 +221,7 @@ public class Bomb {
 	*/
 	
 	public void BombExplose() {
+		
 		for (int dir=0;dir<4;dir++) {
 			boolean stop = false;
 			int d = 0;
@@ -185,7 +240,7 @@ public class Bomb {
 				case 3 :
 					c-=d;
 				}
-				System.out.println(l+" "+c);
+				//System.out.println(l+" "+c);
 				if ( c<0 || l<0 || c>24 || l>12 ) {
 					arret[dir] = d;
 					stop = true;
@@ -193,7 +248,7 @@ public class Bomb {
 					Case ca = World.getBoard().getCase(l, c);
 					if (ca instanceof DestructibleWall) {
 						World.getBoard().destruct(l, c);
-						arret[dir] = d;
+						arret[dir] = d+1;
 						stop = true;
 					}
 					if (ca instanceof Wall) {
@@ -203,19 +258,19 @@ public class Bomb {
 					for (Player p : World.getPlayers()) {
 						if (p.getI()==l && p.getJ()==c) {
 							p.takeDamage();
-							System.out.println("prend damage");
+							//System.out.println("prend damage");
 						}
 					}
 				}
 				d++;
 			}
 		}
-		for (int x : arret) {
-			//System.out.println(x);
-		}
-
+//		for (int x : arret) {
+//			System.out.println(x);
+//		}
 		sound.play(1, (float) 0.8);
-		detruite = true;
+		explose = true;
+
 	}
 	
 	
