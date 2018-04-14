@@ -151,10 +151,10 @@ public class World extends AppWorld {
 		int i=(int) (Math.random()*freeCases.size());
 		
 		//Generate the bonus
-		int k= (int)(Math.random()*7);
+		int k= (int)(Math.random()*8);
 		switch (k) {
 		case 0:
-			freeCases.get(i).setBonus(new Accelerate(freeCases.get(i).getJ(),freeCases.get(i).getI(),10));
+			freeCases.get(i).setBonus(new Accelerate(freeCases.get(i).getJ(),freeCases.get(i).getI()));
 			break;
 		case 1:
 			freeCases.get(i).setBonus(new Life(freeCases.get(i).getJ(),freeCases.get(i).getI()));
@@ -173,6 +173,9 @@ public class World extends AppWorld {
 			break;
 		case 6:
 			freeCases.get(i).setBonus(new Cooldown(freeCases.get(i).getJ(),freeCases.get(i).getI()));
+			break;
+		case 7:
+			freeCases.get(i).setBonus(new Slow(freeCases.get(i).getJ(),freeCases.get(i).getI()));
 			break;
 		}
 	}

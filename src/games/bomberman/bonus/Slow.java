@@ -9,18 +9,17 @@ import org.newdawn.slick.state.StateBasedGame;
 import games.bomberman.Player;
 import games.bomberman.World;
 
-public class Accelerate extends Bonus{
-	private float speed;
+public class Slow extends Bonus{
 	private boolean activated;
 	private Player player;
 	private long initTime;
 	
-	public Accelerate(int caseX, int caseY) {
+	public Slow(int caseX, int caseY) {
 		super(caseX, caseY);
 		this.activated = false;
 		
 		try {
-			Image sprite = new Image(World.DIRECTORY_IMAGES+"bonus_accelerate.png");
+			Image sprite = new Image(World.DIRECTORY_IMAGES+"bonus_slow.png");
 			super.setSprite(sprite);
 		} catch (SlickException e) {
 			// TODO Auto-generated catch block
@@ -29,10 +28,12 @@ public class Accelerate extends Bonus{
 	}
 	
 	public void activate(Player player) {
-		this.speed = player.getSpeed();
-		this.activated = true;
 		
-		player.setSpeed(player.getSpeed()*1.25f);
+		for (Player p : World.getPlayers()) {
+			if (!p.equals(player)) {
+				p.setSpeed(p.getSpeed()*0.75f);
+			}
+		}
 		
 		initTime = System.currentTimeMillis();
 		
@@ -40,7 +41,11 @@ public class Accelerate extends Bonus{
 	}
 	
 	public void desactivate() {
-		this.player.setSpeed(this.speed);
+		for (Player p : World.getPlayers()) {
+			if (!p.equals(player)) {
+				p.setSpeed(1);
+			}
+		}
 		World.removeBonus(this);
 	}
 	
