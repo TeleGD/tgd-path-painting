@@ -14,11 +14,12 @@ import games.bomberman.board.cases.Case;
 import games.bomberman.board.cases.Ground;
 
 public class Teleport extends Bonus{
-	private boolean activated;
+	private boolean activated, deleted;
 	
 	public Teleport(int caseX, int caseY) {
 		super(caseX, caseY);
 		this.activated = false;
+		this.deleted = false;
 		
 		try {
 			Image sprite = new Image(World.DIRECTORY_IMAGES+"bonus_teleport.png");
@@ -35,18 +36,22 @@ public class Teleport extends Bonus{
 		int i, j;
 		
 		do {
-			i = (int)Math.random()*World.getBoard().getDim()[0];
-			j = (int)Math.random()*World.getBoard().getDim()[1];
+			i = (int)(Math.random()*World.getBoard().getDim()[0]);
+			j = (int)(Math.random()*World.getBoard().getDim()[1]);
 		} while(!World.getBoard().getCase(i, j).isPassable());
 		
 		player.setI(i);
 		player.setJ(j);
 		
-		World.removeBonus(this);
+		this.deleted = true;
 	}
 	
 	public boolean isActivated() {
 		return this.activated;
+	}
+	
+	public boolean isDeleted() {
+		return this.deleted;
 	}
 	
 	public void update (GameContainer container, StateBasedGame game, int delta) {
