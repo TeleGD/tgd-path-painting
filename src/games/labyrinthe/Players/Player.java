@@ -64,11 +64,28 @@ public abstract class Player {
 				posX--;
 			}
 		}
-		if(moveRight) {
-			if(bd.movePlayer(posX+1,posY)) {
-				posX++;
+		
+		else {
+			if(moveRight) {
+				if(bd.movePlayer(posX+1,posY)) {
+					posX++;
+				}
+			}
+			
+			else {
+				if(moveUp) {
+					if(bd.movePlayer(posX,posY+1)) {
+						posY++;
+					}
+				}
+				else {
+					if(bd.movePlayer(posX,posY-1)) {
+						posY--;
+					}
+				}
 			}
 		}
+		
 		
 	}
 	
