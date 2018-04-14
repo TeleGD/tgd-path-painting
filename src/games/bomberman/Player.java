@@ -23,8 +23,8 @@ public class Player {
 	private float x;	// Abcisse réelle du joueur
 	private float y;	// Ordonnée réelle du joueur
 	private float nextX, nextY;
-	private int i, oldI;		// Position du joueur dans la matrice
-	private int j, oldJ;
+	private int i;		// Position du joueur dans la matrice
+	private int j;		// pillule bleue ou pillule rouge?
 	
 	private int height = 50;
 	private int width = 50;
@@ -34,14 +34,14 @@ public class Player {
 
 	private boolean moveLeft,moveRight,moveUp,moveDown, dropTheBomb, move=false;
 	private int direction;
-
+	
 	// Caractéristiques modifiables par bonus/malus :
 	private float speed = 1;
 	private int reversed = 1; // =1 : controles normaux, =-1 : controles inversés
 	private int dropCoolDown = 5; // temps entre chaque pose de bombe
 	private int bombCapacity = 3; // Nombre de bombe posable en même temps
 	private boolean bouclier = false; 
-	
+	private boolean tpable; //pour la case de TP	
 
 
 	public Player (AppPlayer appPlayer) {
@@ -54,6 +54,7 @@ public class Player {
 		this.controllerID = controllerID;
 		this.name = name;
 		// Fin des trucs de Tristan
+		tpable = true;
 		
 		// Attribution des positions de départ en fonction du n° de joueur
 		Integer[] size = World.getBoard().getDim();
@@ -112,12 +113,12 @@ public class Player {
 		if (moveUp || moveDown || moveRight || moveLeft) {move=true;}
 		else {move = false;}
 		
+		World.getBoard().getCase(i, j).getAction(this);
 		mayDropBomb();
 		callMove();
 //		fluidMove(delta);
 		updateXY();
 		updateNextXY();
-		World.getBoard().getCase(i, j).getAction(this);
 	}
 	
 
@@ -155,14 +156,15 @@ public class Player {
 		Integer[] size = World.getBoard().getDim();
 		if (newI >= 0 && newI < size[0] && newJ >= 0 && newJ < size[1]) {
 			if (World.getBoard().getCase(newI,newJ).isPassable()) {
+				if(!tpable && !(World.getBoard().getCase(newI,newJ) instanceof TP))
+					tpable = true;
+				
 				move(deltaI,deltaJ);
 			}
 		}	
 	}
 	
 	public void move(int deltaI, int deltaJ) {
-		oldI = i;
-		oldJ = j;
 		i += deltaI * reversed;
 		j += deltaJ * reversed;
 	}
@@ -290,16 +292,6 @@ public class Player {
 		return j;
 	}
 
-	public void setI(int i) {
-		oldI = this.i;
-		this.i = i;
-	}
-
-	public void setJ(int j) {
-		oldJ = this.j;
-		this.j = j;
-	}
-	
 	public void setIJ(int i, int j) {
 		this.i =i;
 		this.j = j;
@@ -307,11 +299,11 @@ public class Player {
 		updateNextXY();
 	}
 	
-	public int getOldI() {
-		return oldI;
+	public boolean isTPable() {
+		return this.tpable;
 	}
 	
-	public int getOldJ() {
-		return oldJ;
+	public void setTPable(boolean b) {
+		this.tpable = b;
 	}
 }

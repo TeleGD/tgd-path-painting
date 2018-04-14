@@ -36,13 +36,11 @@ public class World extends AppWorld {
 	private int height;
 
 	private static List<Player> players;
-	private static List<Bonus> bonus;
 	private static List<Bomb> bombs;
 	
-	private Music music;
-	private Sound poseBombe;
-	private Sound explose;
-	private Sound pickBonus;
+	private static Music music;
+	private static Sound poseBombe;
+	private static Sound theEnd;
 	
 
 	public World (int ID) {
@@ -59,7 +57,10 @@ public class World extends AppWorld {
 		this.width = container.getWidth ();
 		this.height = container.getHeight ();
 		board=new Board(13,25);
+		
 		music = new Music("musics/main_music/amazon_rain_2.ogg");
+		poseBombe = new Sound("musics/bomb/pose_bombe_3.ogg");
+		theEnd = new Sound("musics/bomb/criWilhelm.ogg");
 	
 	}
 
@@ -67,11 +68,13 @@ public class World extends AppWorld {
 	public void play (GameContainer container, StateBasedGame game) {
 		AppGame appGame = (AppGame) game;
 		int n = appGame.appPlayers.size ();
+		
 		World.players = new ArrayList<Player>();
 		World.bombs = new ArrayList<Bomb>();
+		
 		for (int i = 0; i < n; i++) {
 			World.players.add(new Player (appGame.appPlayers.get (i)));
-		};
+		}
 	}
 
 	@Override
@@ -80,11 +83,8 @@ public class World extends AppWorld {
 		appInput.clearKeyPressedRecord ();
 		appInput.clearControlPressedRecord ();
 		time = System.currentTimeMillis();
-		music.loop();
-	}
-
-	public static void removeBonus(Bonus b) {
-		bonus.remove(b);
+		
+		music.loop(1, (float) 0.5);
 	}
 	
 	@Override
@@ -127,6 +127,7 @@ public class World extends AppWorld {
 		
 		for(int i=0 ; i<players.size() ; i++) {
 			if (players.get(i).getLife() <= 0) {
+				theEnd.play(1, (float) 1);
 				players.remove(i);
 			}
 		}
@@ -137,11 +138,12 @@ public class World extends AppWorld {
 			}
 		}
 		
-		if(System.currentTimeMillis()-time>=500 && System.currentTimeMillis()-time<=5020) {
+		if(System.currentTimeMillis()-time>=2500 && System.currentTimeMillis()-time<=7520) {
 			generateBonus();
 			time=System.currentTimeMillis();
 		}
 		
+		board.update(container, game, delta);
 	}
 
 	@Override
@@ -167,11 +169,18 @@ public class World extends AppWorld {
 	}
 	
 	private void generateBonus() {
-		//Find the ground
+		//Find the ground without bonus and player
 		ArrayList<Case> freeCases=new ArrayList<Case>() ;
 		for(Case c:board.getAllCases()) {
-			if(c instanceof Ground) {
-				freeCases.add(c);
+			if(c instanceof Ground && c.getBonus()==null) {
+				boolean temp = true;
+				for (Player p : this.players) {
+					if(p.getI() == c.getI() && p.getJ() == c.getJ())
+						temp = false;
+				}
+				
+				if(temp)
+					freeCases.add(c);
 			}
 		}
 		
@@ -208,6 +217,8 @@ public class World extends AppWorld {
 	}
 	
 	public static void addBomb(int numJoueur,int i, int j,int porteep,int tpsRestantp) {
+		poseBombe.play(1, (float) 0.4);
+		
 		bombs.add(new Bomb(numJoueur, i, j, porteep, tpsRestantp));
 	}
 	
