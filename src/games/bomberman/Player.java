@@ -38,9 +38,8 @@ public class Player {
 	// Caractéristiques modifiables par bonus/malus :
 	private float speed = 1;
 	private int reversed = 1; // =1 : controles normaux, =-1 : controles inversés
-	private int dropCoolDown = 5; // temps entre chaque pose de bombe
 	private int bombCapacity = 3; // Nombre de bombe posable en même temps
-	private int cooldownTime = 2000; // 2sec entre chaque bombe posée
+	private int dropCoolDown = 2000; // 2sec entre chaque bombe posée
 	private int cooldownBomb = 0; // temps restant pour poser la prochaine bombe : est initialité à cooldownTime à chaque bombe posée
 	private boolean bombDropped =false;
 	private boolean bouclier = false; 
@@ -204,13 +203,13 @@ public class Player {
 	public int[] convertInXY(int i, int j) {
 		int sizeCase = (int) World.getBoard().getCaseSize();
 		return new int[] {j * sizeCase, i * sizeCase};
-	}
+	} 
 	
 	public void mayDropBomb() {
 		if (dropTheBomb && !bombDropped) {
 			dropBomb();
 			dropTheBomb =false;
-			cooldownBomb = cooldownTime;
+			cooldownBomb = dropCoolDown;
 			bombDropped = true;
 		}
 	}
