@@ -137,7 +137,7 @@ public class World extends AppWorld {
 			}
 		}
 		
-		if(System.currentTimeMillis()-time>=500 && System.currentTimeMillis()-time<=5020) {
+		if(System.currentTimeMillis()-time>=2500 && System.currentTimeMillis()-time<=7520) {
 			generateBonus();
 			time=System.currentTimeMillis();
 		}
@@ -167,11 +167,18 @@ public class World extends AppWorld {
 	}
 	
 	private void generateBonus() {
-		//Find the ground
+		//Find the ground without bonus and player
 		ArrayList<Case> freeCases=new ArrayList<Case>() ;
 		for(Case c:board.getAllCases()) {
-			if(c instanceof Ground) {
-				freeCases.add(c);
+			if(c instanceof Ground && c.getBonus()==null) {
+				boolean temp = true;
+				for (Player p : this.players) {
+					if(p.getI() == c.getI() && p.getJ() == c.getJ())
+						temp = false;
+				}
+				
+				if(temp)
+					freeCases.add(c);
 			}
 		}
 		

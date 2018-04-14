@@ -18,7 +18,8 @@ public class TP extends Case{
 
 	public void getAction(Player p) {
 		super.getAction(p);
-		if(p.getOldI()!=twin.getI() && p.getOldJ()!=twin.getJ()) {
+		if(p.isTPable()) {
+			p.setTPable(false);			
 			p.setIJ(twin.getI(),twin.getJ());
 		}
 	}

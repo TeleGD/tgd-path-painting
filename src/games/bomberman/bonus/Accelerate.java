@@ -22,6 +22,7 @@ public class Accelerate extends Bonus{
 		super(caseX, caseY);
 		this.activated = false;
 		this.deleted = false;
+
 		try {
 			music1 = new Music("musics/bonus/latin.ogg");
 		} catch (SlickException e1) {
@@ -45,20 +46,25 @@ public class Accelerate extends Bonus{
 	}
 	
 	public void activate(Player player) {
-		if (!isActivated()) music1.loop();
-		this.speed = player.getSpeed();
-		this.activated = true;
+		if (!isActivated()) {
+			this.activated = true;
+
+			this.speed = player.getSpeed();
+			player.setSpeed(player.getSpeed()*1.25f);
+
+			initTime = System.currentTimeMillis();
 		
-		player.setSpeed(player.getSpeed()*1.25f);
-	
-		initTime = System.currentTimeMillis();
-	
-		this.player = player;
+			this.player = player;
+
+			music1.loop();
+		}
 	}
 	
 	public void desactivate() {
-		this.player.setSpeed(this.speed);
 		this.deleted = true;
+		this.player.setSpeed(this.speed);
+
+		music2.loop();
 	}
 	
 	public boolean isDeleted() {
@@ -70,8 +76,7 @@ public class Accelerate extends Bonus{
 	}
 	
 	public void update (GameContainer container, StateBasedGame game, int delta) {
-		if (activated && (System.currentTimeMillis() - initTime > 30000)) {
-			music2.loop();
+		if (activated && (System.currentTimeMillis() - initTime > 7000)) {
 			this.desactivate();
 		}
 		

@@ -28,26 +28,31 @@ public class Shield extends Bonus{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
-	
-	public void activate(Player player) {
+
 		try {
 			sound = new Sound("musics/bonus/tataa.ogg");
 		} catch (SlickException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		if (!isActivated()) sound.play(1, (float) 0.4);
-		this.activated = true;
-		
-		player.setBouclier(true);
+	}
 	
-		this.player = player;
-		initTime = System.currentTimeMillis();	
+	public void activate(Player player) {
+		if (!isActivated()) {
+			this.activated = true;
+		
+			player.setBouclier(true);
+		
+			this.player = player;
+			initTime = System.currentTimeMillis();
+
+			sound.play(1, (float) 0.4);
+		}
 	}
 	
 	public void desactivate() {
-		this.player.setBouclier(false);
+		if (this.player.isBouclier())
+			this.player.setBouclier(false);
 		this.deleted = true;
 	}
 	

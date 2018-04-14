@@ -53,7 +53,7 @@ public class Cooldown extends Bonus{
 	}
 	
 	public void update (GameContainer container, StateBasedGame game, int delta) {
-		if (activated && (System.currentTimeMillis() - initTime > 30000)) {
+		if (activated && (System.currentTimeMillis() - initTime > 10000)) {
 			this.desactivate();
 		}
 		
