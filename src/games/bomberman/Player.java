@@ -21,6 +21,7 @@ public class Player {
 	//Position du joueur :
 	private float x;	// Abcisse réelle du joueur
 	private float y;	// Ordonnée réelle du joueur
+	private float nextX, nextY;
 	private int i;		// Position du joueur dans la matrice
 	private int j;
 	
@@ -113,9 +114,11 @@ public class Player {
 		if (moveDown) { direction = 2;}
 		if (moveUp || moveDown || moveRight || moveLeft) {move=true;}
 		else {move = false;}
+		
 		mayDropBomb();
 		callMove();
-		updateXY();
+		fluidMove(delta);
+		updateNextXY();
 		World.getBoard().getCase(i, j).getAction(this);
 		
 	}
@@ -161,11 +164,26 @@ public class Player {
 		i += deltaI * reversed;
 		j += deltaJ * reversed;
 	}
+    
+    public void fluidMove(int delta) {
+    	switch(direction) {
+	    	case 0 : y = (y > nextY) ? y-delta*speed : nextY; break;
+	    	case 1 : x = (x > nextX) ? x-delta*speed : nextX; break;
+	    	case 2 : y = (y < nextY) ? y+delta*speed : nextY; break;
+	    	case 3 : x = (x < nextX) ? x+delta*speed : nextX; break;
+    	}
+    }
 	
 	public void updateXY() {
 		int[] XY = convertInXY(i,j);
 		x = XY[0];
 		y = XY[1];
+	}
+    
+	public void updateNextXY() {
+		int[] XY = convertInXY(i,j);
+		nextX = XY[0];
+		nextY = XY[1];
 	}
 	
 	public int[] convertInXY(int i, int j) {
@@ -276,5 +294,12 @@ public class Player {
 
 	public void setJ(int j) {
 		this.j = j;
+	}
+	
+	public void setIJ(int i, int j) {
+		this.i =i;
+		this.j = j;
+		updateXY();
+		updateNextXY();
 	}
 }
