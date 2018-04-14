@@ -28,9 +28,10 @@ public class TP extends Case{
 	public void getAction(Player p) {
 		super.getAction(p);
 		if(p.isTPable()) {
-			sound.play(1, (float) 0.4);
 			p.setTPable(false);			
 			p.setIJ(twin.getI(),twin.getJ());
+			
+			sound.play(1, (float) 0.4);
 		}
 	}
 

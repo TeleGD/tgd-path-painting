@@ -36,7 +36,6 @@ public class World extends AppWorld {
 	private int height;
 
 	private static List<Player> players;
-	private static List<Bonus> bonus;
 	private static List<Bomb> bombs;
 	
 	private static Music music;
@@ -58,6 +57,7 @@ public class World extends AppWorld {
 		this.width = container.getWidth ();
 		this.height = container.getHeight ();
 		board=new Board(13,25);
+		
 		music = new Music("musics/main_music/amazon_rain_2.ogg");
 		poseBombe = new Sound("musics/bomb/pose_bombe_3.ogg");
 		theEnd = new Sound("musics/bomb/criWilhelm.ogg");
@@ -68,11 +68,13 @@ public class World extends AppWorld {
 	public void play (GameContainer container, StateBasedGame game) {
 		AppGame appGame = (AppGame) game;
 		int n = appGame.appPlayers.size ();
+		
 		World.players = new ArrayList<Player>();
 		World.bombs = new ArrayList<Bomb>();
+		
 		for (int i = 0; i < n; i++) {
 			World.players.add(new Player (appGame.appPlayers.get (i)));
-		};
+		}
 	}
 
 	@Override
@@ -81,11 +83,8 @@ public class World extends AppWorld {
 		appInput.clearKeyPressedRecord ();
 		appInput.clearControlPressedRecord ();
 		time = System.currentTimeMillis();
+		
 		music.loop(1, (float) 0.5);
-	}
-
-	public static void removeBonus(Bonus b) {
-		bonus.remove(b);
 	}
 	
 	@Override
@@ -218,6 +217,7 @@ public class World extends AppWorld {
 	
 	public static void addBomb(int numJoueur,int i, int j,int porteep,int tpsRestantp) {
 		poseBombe.play(1, (float) 0.4);
+		
 		bombs.add(new Bomb(numJoueur, i, j, porteep, tpsRestantp));
 	}
 	

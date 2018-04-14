@@ -14,6 +14,7 @@ public class Cooldown extends Bonus{
 	private boolean activated, deleted;
 	private Player player;
 	private long initTime;
+	
 	private Sound sound;
 	
 	public Cooldown(int caseX, int caseY) {

@@ -14,6 +14,7 @@ public class Reverse extends Bonus{
 	private boolean activated, deleted;
 	private Player player;
 	private long initTime;
+	
 	private Sound sound;
 	
 	public Reverse(int caseX, int caseY) {

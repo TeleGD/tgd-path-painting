@@ -16,6 +16,7 @@ public class Accelerate extends Bonus{
 	private boolean activated, deleted;
 	private Player player;
 	private long initTime;
+	
 	private Sound sound;
 	
 	public Accelerate(int caseX, int caseY) {

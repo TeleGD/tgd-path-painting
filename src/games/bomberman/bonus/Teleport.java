@@ -16,6 +16,7 @@ import games.bomberman.board.cases.Ground;
 
 public class Teleport extends Bonus{
 	private boolean activated, deleted;
+	
 	private Sound sound;
 	
 	public Teleport(int caseX, int caseY) {
@@ -41,9 +42,6 @@ public class Teleport extends Bonus{
 	
 	public void activate(Player player) {
 		if(!activated) {
-			
-			sound.play(1, (float) 0.4);
-			
 			this.activated = true;
 		
 			int i, j;
@@ -54,7 +52,8 @@ public class Teleport extends Bonus{
 			} while(!World.getBoard().getCase(i, j).isPassable());
 		
 			player.setIJ(i,j);
-		
+			sound.play(1, (float) 0.4);
+			
 			this.deleted = true;
 		}
 	}
