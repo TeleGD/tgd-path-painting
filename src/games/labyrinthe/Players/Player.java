@@ -4,7 +4,7 @@ import org.newdawn.slick.Image;
 
 import games.labyrinthe.World;
 
-public class Player {
+public abstract class Player {
 
 	
 	protected World world;
@@ -24,6 +24,7 @@ public class Player {
 	
 	
 	public void move() {
+		
 		
 		
 	}
