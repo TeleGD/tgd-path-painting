@@ -42,6 +42,7 @@ public class Player {
 	private int bombCapacity = 3; // Nombre de bombe posable en même temps
 	private boolean bouclier = false; 
 	private boolean tpable; //pour la case de TP	
+	private int range = 1; // Portée des bombes en cases
 
 
 	public Player (AppPlayer appPlayer) {
@@ -203,7 +204,11 @@ public class Player {
 	}
 	
 	public void dropBomb() {
-		World.addBomb(controllerID, i, j, 2, 3000);
+		World.addBomb(controllerID, i, j, range, 3000);
+	}
+	
+	public void addRange(int deltaRange) {
+		range = Math.max(1, range + deltaRange ); // Car le minimum de portée est d'une case
 	}
 
 	public int getLife() {
