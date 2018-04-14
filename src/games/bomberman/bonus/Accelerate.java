@@ -33,21 +33,25 @@ public class Accelerate extends Bonus{
 	}
 	
 	public void activate(Player player) {
-		try {
-			music1 = new Music("musics/bonus/latin.ogg");
-		} catch (SlickException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		if(!activated) {
+			this.activated = true;
+			this.speed = player.getSpeed();
+			
+			try {
+				music1 = new Music("musics/bonus/latin.ogg");
+			} catch (SlickException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			music1.loop();
+		
+		
+			player.setSpeed(player.getSpeed()*1.25f);
+		
+			initTime = System.currentTimeMillis();
+		
+			this.player = player;
 		}
-		music1.loop();
-		this.speed = player.getSpeed();
-		this.activated = true;
-		
-		player.setSpeed(player.getSpeed()*1.25f);
-		
-		initTime = System.currentTimeMillis();
-		
-		this.player = player;
 	}
 	
 	public void desactivate() {

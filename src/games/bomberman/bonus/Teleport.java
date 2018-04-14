@@ -31,19 +31,21 @@ public class Teleport extends Bonus{
 	}
 	
 	public void activate(Player player) {
-		this.activated = true;
+		if(!activated) {
+			this.activated = true;
 		
-		int i, j;
+			int i, j;
 		
-		do {
-			i = (int)(Math.random()*World.getBoard().getDim()[0]);
-			j = (int)(Math.random()*World.getBoard().getDim()[1]);
-		} while(!World.getBoard().getCase(i, j).isPassable());
+			do {
+				i = (int)(Math.random()*World.getBoard().getDim()[0]);
+				j = (int)(Math.random()*World.getBoard().getDim()[1]);
+			} while(!World.getBoard().getCase(i, j).isPassable());
 		
-		player.setI(i);
-		player.setJ(j);
+			player.setI(i);
+			player.setJ(j);
 		
-		this.deleted = true;
+			this.deleted = true;
+		}
 	}
 	
 	public boolean isActivated() {
