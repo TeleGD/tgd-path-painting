@@ -42,7 +42,7 @@ public class Cooldown extends Bonus{
 		if(!activated) {
 			this.activated = true;
 		
-			player.setDropCoolDown(3);
+			player.setDropCoolDown(500);
 		
 			this.player = player;
 			initTime = System.currentTimeMillis();	
@@ -52,7 +52,7 @@ public class Cooldown extends Bonus{
 	}
 	
 	public void desactivate() {
-		player.setDropCoolDown(5);
+		player.setDropCoolDown(2000);
 		deleted = true;
 	}
 	
@@ -65,7 +65,7 @@ public class Cooldown extends Bonus{
 	}
 	
 	public void update (GameContainer container, StateBasedGame game, int delta) {
-		if (activated && (System.currentTimeMillis() - initTime > 10000)) {
+		if (activated && (System.currentTimeMillis() - initTime > 15000)) {
 			this.desactivate();
 		}
 	}	
