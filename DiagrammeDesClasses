@@ -8,7 +8,7 @@ package Labyrinth #DDDDDDDD {
     - int longueur
     + boolean movePlayer()
   }
-  class labyGenerator {
+  class LabyGenerator {
     "Salut Victor"
   }
   abstract class Cases {
