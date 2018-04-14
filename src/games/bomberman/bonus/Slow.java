@@ -11,7 +11,7 @@ import games.bomberman.Player;
 import games.bomberman.World;
 
 public class Slow extends Bonus{
-	private boolean activated;
+	private boolean activated, deleted;
 	private Player player;
 	private long initTime;
 	private Sound sound;
@@ -19,6 +19,7 @@ public class Slow extends Bonus{
 	public Slow(int caseX, int caseY) {
 		super(caseX, caseY);
 		this.activated = false;
+		this.deleted = false;
 		
 		try {
 			Image sprite = new Image(World.DIRECTORY_IMAGES+"bonus_slow.png");
@@ -37,6 +38,8 @@ public class Slow extends Bonus{
 			e.printStackTrace();
 		}
 		sound.play();
+		this.activated = true;
+
 		for (Player p : World.getPlayers()) {
 			if (!p.equals(player)) {
 				p.setSpeed(p.getSpeed()*0.75f);
@@ -54,11 +57,15 @@ public class Slow extends Bonus{
 				p.setSpeed(1);
 			}
 		}
-		World.removeBonus(this);
+		deleted = true;
 	}
 	
 	public boolean isActivated() {
 		return this.activated;
+	}
+	
+	public boolean isDeleted() {
+		return this.deleted;
 	}
 	
 	public void update (GameContainer container, StateBasedGame game, int delta) {
