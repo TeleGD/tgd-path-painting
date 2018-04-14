@@ -29,6 +29,8 @@ public class Player {
 	private int height = 50;
 	private int width = 50;
 	private Animation animations[] = new Animation[8];
+	private Animation animationsSlow[] = new Animation[8];
+	private Animation animationsFast[] = new Animation[8];
 	
 	private int life = 3;
 
@@ -95,6 +97,37 @@ public class Player {
 			e.printStackTrace();
 		}
 		
+		SpriteSheet persoSlow;
+		try {
+			persoSlow = new SpriteSheet("images/bomberman/personnage_slow.png",50,50);
+			animationsSlow[0] = loadAnimation(persoSlow,0,1,0);
+			animationsSlow[1] = loadAnimation(persoSlow,0,1,1);
+			animationsSlow[2] = loadAnimation(persoSlow,0,1,2);
+			animationsSlow[3] = loadAnimation(persoSlow,0,1,3);
+			animationsSlow[4] = loadAnimation(persoSlow,1,9,0);
+			animationsSlow[5] = loadAnimation(persoSlow,1,9,1);
+			animationsSlow[6] = loadAnimation(persoSlow,1,9,2);
+			animationsSlow[7] = loadAnimation(persoSlow,1,9,3);
+		} catch (SlickException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		SpriteSheet persoFast;
+		try {
+			persoFast = new SpriteSheet("images/bomberman/personnage_fast.png",50,50);
+			animationsFast[0] = loadAnimation(persoFast,0,1,0);
+			animationsFast[1] = loadAnimation(persoFast,0,1,1);
+			animationsFast[2] = loadAnimation(persoFast,0,1,2);
+			animationsFast[3] = loadAnimation(persoFast,0,1,3);
+			animationsFast[4] = loadAnimation(persoFast,1,9,0);
+			animationsFast[5] = loadAnimation(persoFast,1,9,1);
+			animationsFast[6] = loadAnimation(persoFast,1,9,2);
+			animationsFast[7] = loadAnimation(persoFast,1,9,3);
+		} catch (SlickException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	private Animation loadAnimation(SpriteSheet spriteSheet, int startX, int endX, int y) {
@@ -135,7 +168,12 @@ public class Player {
 	public void render(GameContainer container, StateBasedGame game, Graphics context) {
 		//context.setColor(fillColor);
 		//context.fillRect(x, y, height, width);
-		context.drawAnimation(animations[direction + (move ? 4 : 0)], x, y);
+		if (speed >= 1.25f) 
+			context.drawAnimation(animationsFast[direction + (move ? 4 : 0)], x, y);
+		else if (speed <= 0.75f)
+			context.drawAnimation(animationsSlow[direction + (move ? 4 : 0)], x, y);
+		else 
+			context.drawAnimation(animations[direction + (move ? 4 : 0)], x, y);
 	}
 	
 	public void callMove() throws SlickException{
