@@ -18,11 +18,12 @@ public class Board {
 	
 	public Board(World w, int rows, int columns) {
 		this.w=w;
-		this.lab = (new LabyGenerator(rows,columns));
+		this.lab = (new LabyGenerator(this,rows,columns));
 		board=lab.getLab();
 		int height = w.getHeight();
 		int width = w.getWidth();
-		size = ((columns/width)>(height/rows))?(columns/width)-1:(height/rows)-1;
+		size = ((width/columns)<(height/rows))?(width/columns):(height/rows);
+		System.out.println(size);
 	}
 	
 	public boolean movePlayer(int posX, int posY, Player p){
@@ -54,6 +55,14 @@ public class Board {
 	
 	public Case getCase(int row, int column) {
 		return board[row][column];
+	}
+	
+	public int getRows() {
+		return rows;
+	}
+	
+	public int getColumns() {
+		return columns;
 	}
 	
 	public int getSize() {

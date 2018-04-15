@@ -36,7 +36,7 @@ public class World extends AppWorld {
 		int n = appGame.appPlayers.size ();
 		height = container.getHeight();
 		width = container.getWidth();
-		board = new Board(this,14,14);
+		board = new Board(this,100,100);
 		players = new ArrayList<Player>();
 		players.add(new VictimPlayer(this, appGame.appPlayers.get(0)));
 		for (int i = 1; i < n; i++) {

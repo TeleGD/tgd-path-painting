@@ -29,7 +29,6 @@ public class LabyGenerator {
 		 this.lab = new Case[n][m];
 		 creerLabMur();
 		 genLab();
-		 System.out.println(lab.toString());
 		 
 	 }
 	 
