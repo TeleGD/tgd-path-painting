@@ -13,21 +13,29 @@ public class Board {
 	private int rows;
 	private int columns;
 	private World w;
-	private labyGenerator lab;
+	private LabyGenerator lab;
+	private int size;
 	
 	public Board(World w, int rows, int columns) {
 		this.w=w;
-		this.lab = (new labyGenerator(rows,columns));
+		this.lab = (new LabyGenerator(rows,columns));
 		board=lab.getLab();
+		int height = w.getHeight();
+		int width = w.getWidth();
+		size = (columns/width>height/rows)?columns/width:height/rows;
 	}
 	
 	public boolean movePlayer(int posX, int posY, Player p){
-		if(posX < rows && posY < columns && posX >= 0 && posY >= 0 && board[posX][posY].getPlayerId()==-1){
-			//set new cell true
-			board[posX][posY].setPlayerId(w.players.indexOf(p));
-			//set old cell false
-			board[p.getPosX()][p.getPosY()].setPlayerId(-1);
-			return true;
+		if(posX < rows && posY < columns && posX >= 0 && posY >= 0 && board[posX][posY] instanceof FreeCase){
+			if (board[posX][posY].getPlayerId()==-1) {
+				//set new cell true
+				board[posX][posY].setPlayerId(w.players.indexOf(p));
+				//set old cell false
+				board[p.getPosX()][p.getPosY()].setPlayerId(-1);
+				return true;
+			} else if (board[posX][posY].getPlayerId()==0) {
+				w.endGame();
+			}
 		}
 		return  false; 
 	}
@@ -42,5 +50,9 @@ public class Board {
 
 	public void update(GameContainer container, StateBasedGame game, int delta) {
 		
+	}
+	
+	public int getSize() {
+		return this.size;
 	}
 }
