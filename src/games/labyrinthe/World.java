@@ -27,6 +27,8 @@ public class World extends AppWorld {
 	private int height;
 	private int width;
 	
+	private int timer;
+	
 	public World(int id) {
 		this.id=id;
 	}
@@ -36,12 +38,13 @@ public class World extends AppWorld {
 		int n = appGame.appPlayers.size ();
 		height = container.getHeight();
 		width = container.getWidth();
-		board = new Board(this,100);
+		board = new Board(this,50);
 		players = new ArrayList<Player>();
 		players.add(new VictimPlayer(this, appGame.appPlayers.get(0)));
 		for (int i = 1; i < n; i++) {
 			players.add(new HunterPlayer(this, appGame.appPlayers.get(i)));
 		}
+		timer = 90000; //temps de la partie (90s)
 	}
 	
 	@Override
@@ -62,6 +65,11 @@ public class World extends AppWorld {
 		for (Player p : players) {
 			p.update(container, game, delta);
 		}
+		
+		timer -= delta;
+		if(timer <= 0) {
+			endGame(players.get(0));
+		}
 	}
 
 	@Override
@@ -69,9 +77,10 @@ public class World extends AppWorld {
 		return this.id;
 	}
 
-	public void endGame() {
+	public void endGame(Player p) {
+		System.out.println("Le player "+p.getID()+" a gagné");
 		// Met fin au jeu
-		
+		// le joueur p est le gagnant
 	}
 
 	public int getHeight() {

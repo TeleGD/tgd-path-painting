@@ -13,5 +13,11 @@ public class VictimPlayer extends Player {
 		invulnerable = false;
 		immaterial = false;
 	}
+	
+	public void collideWithPlayer(Player p) {
+		if(p instanceof HunterPlayer) {
+			super.world.endGame(p);
+		}
+	}
 
 }

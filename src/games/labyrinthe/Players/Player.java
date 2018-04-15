@@ -26,7 +26,7 @@ public abstract class Player {
 	protected int posY;
 	protected float x;
 	protected float y;
-	private float newX, newY;
+	protected float newX, newY;
 
 	protected float width;
 	protected float height;
@@ -40,7 +40,7 @@ public abstract class Player {
 	protected boolean moveRight = false;
 	protected boolean moveDown = false;
 	protected boolean moveUp = false;
-	private boolean canMoveHorizontal, canMoveVertical;
+	protected boolean canMoveHorizontal, canMoveVertical;
 	
 	protected int controllerID;
 	
@@ -221,7 +221,19 @@ public abstract class Player {
 				}
 			}
 		}
+		
+		//Player collisions
+		for (Player p : world.players) {
+			if (!p.equals(this)) {
+				if (willBeInside(p.getX(), p.getY(), p.getWidth(), p.getHeight())) {
+					this.collideWithPlayer(p);
+					p.collideWithPlayer(this);
+				}
+			}
+		}
 	}
+
+	public abstract void collideWithPlayer(Player p);
 
 	public boolean willBeInsideCase(int x0, int y0) {
 		return willBeInside(x0*size, y0*size, (x0+1)*size, (y0+1)*size);
@@ -237,12 +249,32 @@ public abstract class Player {
 		return true;
 	}
 	
+	public float getX() {
+		return x;
+	}
+	
+	public float getY() {
+		return y;
+	}
+	
 	public int getPosX() {
 		return this.posX;
 	}
 
 	public int getPosY() {
 		return this.posY;
+	}
+	
+	public float getWidth() {
+		return width;
+	}
+	
+	public float getHeight() {
+		return height;
+	}
+	
+	public int getID() {
+		return controllerID;
 	}
 
 	public void render(GameContainer container, StateBasedGame game, Graphics context) {
