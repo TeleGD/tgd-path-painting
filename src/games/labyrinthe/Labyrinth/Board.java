@@ -16,16 +16,22 @@ public class Board {
 	private LabyGenerator lab;
 	private int size;
 	
-	public Board(World w, int rows, int columns) {
+	public Board(World w, int minSide) {
 		this.w=w;
-		this.lab = (new LabyGenerator(this,rows,columns));
-		board=lab.getLab();
 		int height = w.getHeight();
 		int width = w.getWidth();
-		size = ((width/columns)<(height/rows))?(width/columns):(height/rows);
-		System.out.println(size);
-		this.rows = rows;
-		this.columns=columns;
+		if (width<height) {
+			size = width/minSide;
+			rows = height/size;
+			columns = minSide;
+		} else {
+			size = height/minSide;
+			rows = minSide;
+			columns = width/size;
+		}
+		System.out.println(""+size+" "+rows+" "+columns);
+		this.lab = (new LabyGenerator(this,rows,columns));
+		board=lab.getLab();
 	}
 	
 	public boolean movePlayer(int posX, int posY, Player p){
