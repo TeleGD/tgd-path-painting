@@ -49,6 +49,7 @@ public class Player {
 	private int cooldownMove = -1;
 	private int reversed = 1; // =1 : controles normaux, =-1 : controles inversés
 	private int bombCapacity = 3; // Nombre de bombe posable en même temps
+	private int bombAvailable = bombCapacity;
 	private List<Bomb> bombs = new ArrayList<Bomb>();
 	private int dropCoolDown = 1000; // 1sec entre chaque bombe posée
 	private int cooldownBomb = 0; // temps restant pour poser la prochaine bombe : est initialité à cooldownTime à chaque bombe posée
@@ -485,4 +486,13 @@ public class Player {
 	public void setTPable(boolean b) {
 		this.tpable = b;
 	}
+	
+	public int getBombAvailable() {
+		return bombAvailable;
+	}
+	
+	public Color getFillColor() {
+		return fillColor;
+	}
+	
 }

@@ -28,8 +28,16 @@ public class LesTrucsQuiVontSAfficherACoteDuPlateau {
 	public void render (GameContainer container, StateBasedGame game, Graphics context) {
 		for (int i = 0 ; i<players.size() ; i++) {
 			context.setColor(Color.white);
-			context.drawLine((i*longueur-1)/(players.size()), hauteurPlateau, (i*longueur-1)/(players.size()), hauteurPlateau+hauteur);
+			int right = (i*longueur-1)/(players.size());
+			
+			context.drawLine(right, hauteurPlateau, right, hauteurPlateau+hauteur);
+			
+			context.setColor(players.get(i).getFillColor());
+			context.drawString("Joueur 1 : ", right, hauteurPlateau +5);
+			context.drawString("Vies : " + players.get(i).getLife(), right+10, hauteurPlateau +25);
+			context.drawString("Bombes disponibles : " + players.get(i).getBombAvailable(), right +10, hauteurPlateau + 40);
+			
 		}
 	}
-
+	
 }
