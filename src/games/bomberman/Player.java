@@ -209,6 +209,7 @@ public class Player {
 		World.getBoard().getCase(i, j).getAction(this);
 		mayDropBomb();
 		callMove(delta);
+		updateBombAvailable();
 		//fluidMove(delta);
 		//updateXY();
 		//updateNextXY();
@@ -368,6 +369,10 @@ public class Player {
 				bombDropped = true;
 			}
 		}
+	}
+	
+	public void updateBombAvailable(){
+		bombAvailable = bombCapacity - bombs.size();
 	}
 	
 	public void dropBomb() {
