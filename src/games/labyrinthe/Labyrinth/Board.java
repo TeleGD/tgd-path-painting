@@ -22,14 +22,13 @@ public class Board {
 		int width = w.getWidth();
 		if (width<height) {
 			size = width/minSide;
-			rows = height/size;
+			rows = height/size-1;
 			columns = minSide;
 		} else {
 			size = height/minSide;
 			rows = minSide;
-			columns = width/size;
+			columns = width/size-1;
 		}
-		System.out.println(""+size+" "+rows+" "+columns);
 		this.lab = (new LabyGenerator(this,rows,columns));
 		board=lab.getLab();
 	}

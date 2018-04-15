@@ -3,7 +3,7 @@ package games.labyrinthe.Labyrinth;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
-import games.bomberman.World;
+import games.labyrinthe.World;
 
 public class WallCase extends Case {
 	
