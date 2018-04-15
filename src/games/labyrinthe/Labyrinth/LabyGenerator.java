@@ -44,7 +44,7 @@ public class LabyGenerator {
 	 
 	 public void creerLabMur() {
 		 for (int i=0;i<this.n;i++){
-		 	Case[] lig =  new Case[n];
+		 	Case[] lig =  new Case[m];
 		 	for (int j=0;j<this.m;j++){
 		 		WallCase c = new WallCase(i,j,board.getSize(),false);
 		 		lig[j]=c; 
@@ -123,6 +123,25 @@ public class LabyGenerator {
 	        	}
 	        }
 		}
+        
+        //on entoure la map de murs parce que c'est plus simple pour les collisions !!
+        for (int i=0;i<this.n;i++) {
+        	this.lab[i][0] = new WallCase(i,0,board.getSize(),false);
+        	if(i!=0 && i!=this.n-1) {
+        		this.lab[i][1] = new FreeCase(i,1,laVariableQuiFaitPlaisirAAmos);
+        		this.lab[i][this.m-2] = new FreeCase(i,this.m-2,laVariableQuiFaitPlaisirAAmos);
+        	}
+        	this.lab[i][this.m-1] = new WallCase(i,this.m-1,board.getSize(),false);
+        }
+        for (int j=0;j<this.m;j++) {
+        	this.lab[0][j] = new WallCase(0,j,board.getSize(),false);
+        	if(j!=0 && j!=this.m-1) {
+        		this.lab[1][j] = new FreeCase(1,j,laVariableQuiFaitPlaisirAAmos);
+        		this.lab[this.n-2][j] = new FreeCase(this.m-2,j,laVariableQuiFaitPlaisirAAmos);
+        	}
+        	this.lab[this.n-1][j] = new WallCase(this.n-1,j,board.getSize(),false);
+        }
+        
 	}
 }
 		
