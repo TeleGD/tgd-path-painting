@@ -25,6 +25,10 @@ public abstract class Case {
 			this.passable = passable;
 		}
 		
+		public boolean isPassable() {
+			return passable;
+		}
+		
 		public boolean isEquals(Case c) {
 			return (c.i==this.i && c.j == this.j);
 		}
