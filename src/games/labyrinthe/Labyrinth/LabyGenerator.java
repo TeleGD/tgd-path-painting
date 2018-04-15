@@ -5,14 +5,14 @@ import java.util.Random;
 
 import games.labyrinthe.Labyrinth.Case;
 
-public class labyGenerator {
+public class LabyGenerator {
 	 private Case[][] lab; 
 	 private int n;
 	 private int m;
 
 	 Random r = new Random();
 	 
-	 public labyGenerator (int n,int m){
+	 public LabyGenerator (int n,int m){
 		 if (n%2==0){
 			 this.n = n;
 		 }else{
@@ -59,10 +59,26 @@ public class labyGenerator {
 		int choix ;
 		int l = liste.size();
 		Case pos;
+		Case variableAAjouterPASPartout;
 		while (!liste.isEmpty()){
 			choix = r.nextInt(l);
 			pos=liste.get(choix);
-	        if (pos.getI()!=0 && this.lab[pos.getI()-2][pos.getJ()] instanceof WallCase){
+	        
+			if ( pos.getI()!=0 && this.lab[pos.getI()-2][pos.getJ()] instanceof WallCase){	  
+	        	variableAAjouterPASPartout = this.lab[pos.getI()-2][pos.getJ()];
+	        	liste.add(variableAAjouterPASPartout);
+	        } if (pos.getI()!=(n-2) && this.lab[pos.getI()+2][pos.getJ()] instanceof WallCase){
+	        	variableAAjouterPASPartout = this.lab[pos.getI()+2][pos.getJ()];
+	        	liste.add(variableAAjouterPASPartout);
+	        } if (pos.getJ()!=0 && this.lab[pos.getI()][pos.getJ()-2] instanceof WallCase){
+	        	variableAAjouterPASPartout = this.lab[pos.getI()][(pos.getJ()-2)];
+	        	liste.add(variableAAjouterPASPartout);
+	        } if (pos.getJ()!=(m-2) && this.lab[pos.getI()][(pos.getJ()+2)] instanceof WallCase){
+	        	variableAAjouterPASPartout = this.lab[pos.getI()][(pos.getJ()+2)];
+	        	liste.add(variableAAjouterPASPartout);
+	        }
+			
+			if ( pos.getI()!=0 && this.lab[pos.getI()-2][pos.getJ()] instanceof WallCase){
 	        	this.lab[pos.getI()-2][pos.getJ()]=new FreeCase(pos.getI()-2,pos.getJ(),50);
 	        	this.lab[pos.getI()-1][pos.getJ()]=new FreeCase(pos.getI()-1,pos.getJ(),50);
 	        	liste.remove(pos);
@@ -90,14 +106,13 @@ public class labyGenerator {
 	        	liste.remove(pos);
 	        }
 		}
-//        for (int i=0;i<this.n;i++){
-//        	for (int j=0;j<this.m;j++){
-//        		int p = r.nextInt(100);
-//    			if (p<=7) {
-//    				this.lab[i][j]=new FreeCase(i,j,50);	
-//	        	}
-//	        }
-//		}
+        for (int i=0;i<this.n;i++){
+       	for (int j=0;j<this.m;j++){        		int p = r.nextInt(100);
+    			if (p<=20) {
+   				this.lab[i][j]=new FreeCase(i,j,50);	
+	        	}
+	        }
+		}
 	}
 }
 		
