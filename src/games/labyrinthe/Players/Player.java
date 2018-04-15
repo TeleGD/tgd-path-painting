@@ -59,17 +59,17 @@ public abstract class Player {
 		size = board.getSize();
 		rows = board.getRows();
 		columns = board.getColumns();
-
+		
 		direction = 1;
-		speed = 0.1f;
-		width = 24*(size/50)+size;
-		height = 36*(size/50)+size;
+		speed = 0.3f*((float)size/board.getImgInitSize()[0]);
+		width = spriteDown.getWidth()*((float)size/board.getImgInitSize()[0]);
+		height = spriteDown.getHeight()*((float)size/board.getImgInitSize()[1]);
 
 		// Attribution des positions de départ en fonction du n° de joueur
 		switch(controllerID) {
 			case 0 : 
-				posX = (int)(columns/2);
-				posY = (int)(rows/2);;
+				posX = (int)(columns/2)+1;
+				posY = (int)(rows/2)+1;
 				break;
 			case 1 : 
 				posX = 1;
@@ -246,7 +246,6 @@ public abstract class Player {
 	}
 
 	public void render(GameContainer container, StateBasedGame game, Graphics context) {
-		//context.drawImage(spriteDown, x, y);
 		context.drawImage(spriteDown, x, y, x+width, y+height, 0, 0, spriteDown.getWidth()-1,spriteDown.getHeight()-1);
 	}
 	

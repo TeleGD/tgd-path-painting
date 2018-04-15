@@ -65,6 +65,10 @@ public class Board {
 		return board[row][column];
 	}
 	
+	public int[] getImgInitSize() {
+		return board[0][0].getImgInitSize();
+	}
+	
 	public int getRows() {
 		return rows;
 	}
