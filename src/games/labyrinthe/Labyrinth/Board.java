@@ -52,6 +52,10 @@ public class Board {
 		
 	}
 	
+	public Case getCase(int row, int column) {
+		return board[row][column];
+	}
+	
 	public int getSize() {
 		return this.size;
 	}
