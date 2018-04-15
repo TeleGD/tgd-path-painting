@@ -68,8 +68,8 @@ public abstract class Player {
 		// Attribution des positions de départ en fonction du n° de joueur
 		switch(controllerID) {
 			case 0 : 
-				posX = (int)(rows/2);
-				posY = (int)(columns/2);;
+				posX = (int)(columns/2);
+				posY = (int)(rows/2);;
 				break;
 			case 1 : 
 				posX = 1;
@@ -98,9 +98,6 @@ public abstract class Player {
 	}
 	
 	public void move(GameContainer container, int dlt) {
-		if (controllerID == 0) {
-			return;
-		}
 		AppInput input = (AppInput) container.getInput();
 		moveLeft = input.isControllerLeft(controllerID);
 		moveRight = input.isControllerRight(controllerID);
