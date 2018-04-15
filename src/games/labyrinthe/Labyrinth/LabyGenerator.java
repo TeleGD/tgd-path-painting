@@ -9,10 +9,13 @@ public class LabyGenerator {
 	 private Case[][] lab; 
 	 private int n;
 	 private int m;
-
+	 private Board board;
+	 
 	 Random r = new Random();
 	 
-	 public LabyGenerator (int n,int m){
+	 public LabyGenerator (Board board,int n,int m){
+		 this.board =board;
+		 
 		 if (n%2==0){
 			 this.n = n;
 		 }else{
@@ -44,7 +47,7 @@ public class LabyGenerator {
 		 for (int i=0;i<this.n;i++){
 		 	Case[] lig =  new Case[n];
 		 	for (int j=0;j<this.m;j++){
-		 		WallCase c = new WallCase(i,j,50,false);
+		 		WallCase c = new WallCase(i,j,board.getSize(),false);
 		 		lig[j]=c; 
 		 	}
 		 	this.lab[i]=lig;
@@ -54,7 +57,8 @@ public class LabyGenerator {
 		 
 	public void genLab(){
 		ArrayList<Case> liste = new ArrayList<Case>();
-		Case d = new FreeCase(r.nextInt(this.n/2)*2,r.nextInt(this.m/2)*2,50);
+		int laVariableQuiFaitPlaisirAAmos = board.getSize();
+		Case d = new FreeCase(r.nextInt(this.n/2)*2,r.nextInt(this.m/2)*2,board.getSize());
 		liste.add(d);
 		int choix ;
 		int l = liste.size();
@@ -79,26 +83,26 @@ public class LabyGenerator {
 	        }
 			
 			if ( pos.getI()!=0 && this.lab[pos.getI()-2][pos.getJ()] instanceof WallCase){
-	        	this.lab[pos.getI()-2][pos.getJ()]=new FreeCase(pos.getI()-2,pos.getJ(),50);
-	        	this.lab[pos.getI()-1][pos.getJ()]=new FreeCase(pos.getI()-1,pos.getJ(),50);
+	        	this.lab[pos.getI()-2][pos.getJ()]=new FreeCase(pos.getI()-2,pos.getJ(),laVariableQuiFaitPlaisirAAmos);
+	        	this.lab[pos.getI()-1][pos.getJ()]=new FreeCase(pos.getI()-1,pos.getJ(),laVariableQuiFaitPlaisirAAmos);
 	        	liste.remove(pos);
 	        	pos = this.lab[pos.getI()-2][pos.getJ()];
 	        	liste.add(pos);
 	        } else if (pos.getI()!=(n-2) && this.lab[pos.getI()+2][pos.getJ()] instanceof WallCase){
-	        	this.lab[pos.getI()+2][pos.getJ()]=new FreeCase(pos.getI()+2,pos.getJ(),50);
-	        	this.lab[pos.getI()+1][pos.getJ()]=new FreeCase(pos.getI()+1,pos.getJ(),50);
+	        	this.lab[pos.getI()+2][pos.getJ()]=new FreeCase(pos.getI()+2,pos.getJ(),laVariableQuiFaitPlaisirAAmos);
+	        	this.lab[pos.getI()+1][pos.getJ()]=new FreeCase(pos.getI()+1,pos.getJ(),laVariableQuiFaitPlaisirAAmos);
 	        	liste.remove(pos);
 	        	pos = this.lab[pos.getI()+2][pos.getJ()];
 	        	liste.add(pos);
 	        } else if (pos.getJ()!=0 && this.lab[pos.getI()][pos.getJ()-2] instanceof WallCase){
-	        	this.lab[pos.getI()][(pos.getJ()-2)]=new FreeCase(pos.getI(),pos.getJ()-2,50);
-	        	this.lab[pos.getI()][(pos.getJ()-1)]=new FreeCase(pos.getI(),pos.getJ()-1,50);
+	        	this.lab[pos.getI()][(pos.getJ()-2)]=new FreeCase(pos.getI(),pos.getJ()-2,laVariableQuiFaitPlaisirAAmos);
+	        	this.lab[pos.getI()][(pos.getJ()-1)]=new FreeCase(pos.getI(),pos.getJ()-1,laVariableQuiFaitPlaisirAAmos);
 	        	liste.remove(pos);
 	        	pos = this.lab[pos.getI()][(pos.getJ()-2)];
 	        	liste.add(pos);
 	        } else if (pos.getJ()!=(m-2) && this.lab[pos.getI()][(pos.getJ()+2)] instanceof WallCase){
-	        	this.lab[pos.getI()][(pos.getJ()+2)]=new FreeCase(pos.getI(),pos.getJ()+2,50);
-	        	this.lab[pos.getI()][(pos.getJ()+1)]=new FreeCase(pos.getI(),pos.getJ()+1,50);
+	        	this.lab[pos.getI()][(pos.getJ()+2)]=new FreeCase(pos.getI(),pos.getJ()+2,laVariableQuiFaitPlaisirAAmos);
+	        	this.lab[pos.getI()][(pos.getJ()+1)]=new FreeCase(pos.getI(),pos.getJ()+1,laVariableQuiFaitPlaisirAAmos);
 	        	liste.remove(pos);
 	        	pos = this.lab[pos.getI()][(pos.getJ()+2)];
 	        	liste.add(pos);
@@ -109,7 +113,7 @@ public class LabyGenerator {
         for (int i=0;i<this.n;i++){
        	for (int j=0;j<this.m;j++){        		int p = r.nextInt(100);
     			if (p<=20) {
-   				this.lab[i][j]=new FreeCase(i,j,50);	
+   				this.lab[i][j]=new FreeCase(i,j,laVariableQuiFaitPlaisirAAmos);	
 	        	}
 	        }
 		}
