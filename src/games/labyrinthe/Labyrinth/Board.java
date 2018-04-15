@@ -22,7 +22,7 @@ public class Board {
 		board=lab.getLab();
 		int height = w.getHeight();
 		int width = w.getWidth();
-		size = (columns/width>height/rows)?columns/width:height/rows;
+		size = ((columns/width)>(height/rows))?(columns/width)-1:(height/rows)-1;
 	}
 	
 	public boolean movePlayer(int posX, int posY, Player p){
@@ -37,7 +37,7 @@ public class Board {
 				w.endGame();
 			}
 		}
-		return  false; 
+		return false; 
 	}
 
 	public void render(GameContainer container, StateBasedGame game, Graphics context) {

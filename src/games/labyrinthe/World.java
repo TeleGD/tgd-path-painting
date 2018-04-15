@@ -34,14 +34,14 @@ public class World extends AppWorld {
 	public void play(GameContainer container, StateBasedGame game) {
 		AppGame appGame = (AppGame) game;
 		int n = appGame.appPlayers.size ();
+		height = container.getHeight();
+		width = container.getWidth();
 		board = new Board(this,14,14);
 		players = new ArrayList<Player>();
 		players.add(new VictimPlayer(this, appGame.appPlayers.get(0)));
 		for (int i = 1; i < n; i++) {
 			players.add(new HunterPlayer(this, appGame.appPlayers.get(i)));
 		}
-		height = container.getHeight();
-		width = container.getWidth();
 	}
 	
 	@Override
