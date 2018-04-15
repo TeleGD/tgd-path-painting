@@ -21,7 +21,7 @@ public class FreeCase extends Case {
 	}
 
 	public FreeCase(int i, int j,int size){
-		super(i, j, size, image);
+		super(i, j, size, image, true);
 		
 	}
 

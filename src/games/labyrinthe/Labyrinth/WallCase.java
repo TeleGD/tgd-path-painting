@@ -19,7 +19,7 @@ public class WallCase extends Case {
 	}
 
 	public WallCase(int i, int j, int size, boolean destructible) {
-		super(i, j, size, image);
+		super(i, j, size, image, false);
 		this.destructible = destructible;
 	}
 

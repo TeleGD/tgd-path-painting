@@ -17,11 +17,12 @@ public abstract class Case {
 		protected boolean passable;
 		protected Image img;
 		
-		public Case(int i,int j, int size, Image img) {
+		public Case(int i,int j, int size, Image img, boolean passable) {
 			this.i=i;
 			this.j=j;
 			this.img=img;
 			this.size = size;
+			this.passable = passable;
 		}
 		
 		public boolean isEquals(Case c) {
