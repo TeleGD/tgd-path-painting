@@ -109,10 +109,17 @@ public class LabyGenerator {
 	        	liste.remove(pos);
 	        }
 		}
+		for (int i=n/2;i<=n/2+1;i++){
+			for (int j=m/2;j<=m/2+1;j++){
+				this.lab[i][j]=new FreeCase(i,j,laVariableQuiFaitPlaisirAAmos);
+			}
+		}
+		
         for (int i=0;i<this.n;i++){
-       	for (int j=0;j<this.m;j++){        		int p = r.nextInt(100);
-    			if (p<=20) {
-   				this.lab[i][j]=new FreeCase(i,j,laVariableQuiFaitPlaisirAAmos);	
+        	for (int j=0;j<this.m;j++){        		
+        		int p = r.nextInt(100);
+    				if (p<=20) {
+    					this.lab[i][j]=new FreeCase(i,j,laVariableQuiFaitPlaisirAAmos);	
 	        	}
 	        }
 		}
