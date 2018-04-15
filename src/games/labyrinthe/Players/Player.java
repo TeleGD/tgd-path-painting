@@ -63,26 +63,26 @@ public abstract class Player {
 		moveDown = input.isControlPressed(AppInput.BUTTON_DOWN,controllerID);
 		
 		if(moveLeft) {
-			if(board.movePlayer(posX-1,posY)) {
+			if(board.movePlayer(posX-1,posY, this)) {
 				posX--;
 			}
 		}
 		
 		else {
 			if(moveRight) {
-				if(board.movePlayer(posX+1,posY)) {
+				if(board.movePlayer(posX+1,posY, this)) {
 					posX++;
 				}
 			}
 			
 			else {
 				if(moveUp) {
-					if(board.movePlayer(posX,posY+1)) {
+					if(board.movePlayer(posX,posY+1, this)) {
 						posY++;
 					}
 				}
 				else {
-					if(board.movePlayer(posX,posY-1)) {
+					if(board.movePlayer(posX,posY-1, this)) {
 						posY--;
 					}
 				}

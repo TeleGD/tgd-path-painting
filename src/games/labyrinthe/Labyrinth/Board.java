@@ -5,6 +5,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.state.StateBasedGame;
 
 import games.labyrinthe.World;
+import games.labyrinthe.Players.Player;
 
 public class Board {
 
@@ -20,13 +21,12 @@ public class Board {
 		board=lab.getLab();
 	}
 	
-	public boolean movePlayer(int posX, int posY){
-		if(posX < rows && posY < columns && posX >= 0 && posY >= 0 /*&& board[posX][posY].getContains()==-1*/){
+	public boolean movePlayer(int posX, int posY, Player p){
+		if(posX < rows && posY < columns && posX >= 0 && posY >= 0 && board[posX][posY].getPlayerId()==-1){
 			//set new cell true
-			// board[posX][posY].setContains(w.players.indexOf(p));
+			board[posX][posY].setPlayerId(w.players.indexOf(p));
 			//set old cell false
-			// board[p.getX()][p.getY()].setContains(-1);
-			
+			board[p.getPosX()][p.getPosY()].setPlayerId(-1);
 			return true;
 		}
 		return  false; 

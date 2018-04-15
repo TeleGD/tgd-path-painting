@@ -53,6 +53,16 @@ public abstract class Case {
 		public int getPosY() {
 			return posY;
 		}
+
+		public int getPlayerId() {
+			// TODO Auto-generated method stub
+			return 0;
+		}
+
+		public void setPlayerId(int indexOf) {
+			// TODO Auto-generated method stub
+			
+		}
 		
 	
 }
