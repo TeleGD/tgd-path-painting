@@ -24,6 +24,8 @@ public class Board {
 		int width = w.getWidth();
 		size = ((width/columns)<(height/rows))?(width/columns):(height/rows);
 		System.out.println(size);
+		this.rows = rows;
+		this.columns=columns;
 	}
 	
 	public boolean movePlayer(int posX, int posY, Player p){
