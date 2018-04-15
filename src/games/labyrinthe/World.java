@@ -5,7 +5,6 @@ import java.util.ArrayList;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
 import app.AppGame;
@@ -24,6 +23,9 @@ public class World extends AppWorld {
 	
 	public Board board;
 	public ArrayList<Player> players;
+
+	private int height;
+	private int width;
 	
 	public World(int id) {
 		this.id=id;
@@ -38,6 +40,8 @@ public class World extends AppWorld {
 		for (int i = 1; i < n; i++) {
 			players.add(new HunterPlayer(this, appGame.appPlayers.get(i)));
 		}
+		height = container.getHeight();
+		width = container.getWidth();
 	}
 	
 	@Override
@@ -62,8 +66,19 @@ public class World extends AppWorld {
 
 	@Override
 	public int getID() {
-		// TODO Auto-generated method stub
 		return this.id;
+	}
+
+	public void endGame() {
+		// Met fin au jeu
+		
+	}
+
+	public int getHeight() {
+		return height;
+	}
+	public int getWidth() {
+		return width;
 	}
 
 }
