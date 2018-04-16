@@ -3,10 +3,21 @@ package games.bomberman.board.cases;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
-public class DestructibleWall extends Case{
+import games.bomberman.World;
 
-	public DestructibleWall(int i, int j) throws SlickException {
-		super(i, j, new Image("images/bomberman/Rocher.png"), false);
+public class DestructibleWall extends Case{
+	
+	private static Image img;
+	static {
+		try {
+			img = new Image(World.DIRECTORY_IMAGES+"Rocher.png");
+		} catch (SlickException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public DestructibleWall(World w, int i, int j) {
+		super(w, i, j, img, false);
 	}
 
 }

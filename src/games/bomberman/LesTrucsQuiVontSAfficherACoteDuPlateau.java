@@ -15,7 +15,7 @@ public class LesTrucsQuiVontSAfficherACoteDuPlateau {
 	private int hauteurPlateau;
 	
 	public LesTrucsQuiVontSAfficherACoteDuPlateau(World w, int hauteurPlateau) {
-		this.players = World.getPlayers();
+		this.players = w.getPlayers();
 		this.hauteurPlateau=hauteurPlateau;
 		this.hauteur = w.getHeight()-hauteurPlateau;
 		this.longueur = w.getWidth();

@@ -18,7 +18,6 @@ import app.AppInput;
 public class Player {
 
 	private Color fillColor;
-	private Color strokeColor;
 	private int controllerID;
 	private String name;
 	
@@ -36,6 +35,7 @@ public class Player {
 	private Animation animationsFast[] = new Animation[8];
 	
 	private int life = 3;
+	private World w;
 
 	private boolean moveLeft,moveRight,moveUp,moveDown, dropTheBomb, move=false;
 	private int direction;
@@ -63,15 +63,15 @@ public class Player {
 	private Image imgBouclier;
 
 
-	public Player (AppPlayer appPlayer) {
+	public Player (World world, AppPlayer appPlayer, int id) {
 		// Trucs de Tristan :
 		int colorID = appPlayer.getColorID ();
 		int controllerID = appPlayer.getControllerID ();
 		String name = appPlayer.getName ();
 		this.fillColor = AppPlayer.FILL_COLORS [colorID];
-		this.strokeColor = AppPlayer.STROKE_COLORS [colorID];
 		this.controllerID = controllerID;
 		this.name = name;
+		w=world;
 		// Fin des trucs de Tristan
 		
 		tpable = true;
@@ -80,13 +80,12 @@ public class Player {
 		try {
 			imgBouclier = new Image ("images/bomberman/bouclier.png");
 		} catch (SlickException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		
 		// Attribution des positions de départ en fonction du n° de joueur
-		Integer[] size = World.getBoard().getDim();
-		switch(controllerID) {
+		Integer[] size = w.getBoard().getDim();
+		switch(id) {
 			case 0 : i = 0;
 				j = 0;
 				break;
@@ -109,7 +108,7 @@ public class Player {
 		
 		SpriteSheet perso;
 		try {
-			perso = new SpriteSheet("images/bomberman/personnage.png",50,50);
+			perso = new SpriteSheet(World.DIRECTORY_IMAGES+"personnage.png",50,50);
 			animations[0] = loadAnimation(perso,0,1,0);
 			animations[1] = loadAnimation(perso,0,1,1);
 			animations[2] = loadAnimation(perso,0,1,2);
@@ -119,13 +118,12 @@ public class Player {
 			animations[6] = loadAnimation(perso,1,9,2);
 			animations[7] = loadAnimation(perso,1,9,3);
 		} catch (SlickException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 		SpriteSheet persoSlow;
 		try {
-			persoSlow = new SpriteSheet("images/bomberman/personnage_slow.png",50,50);
+			persoSlow = new SpriteSheet(World.DIRECTORY_IMAGES+"personnage_slow.png",50,50);
 			animationsSlow[0] = loadAnimation(persoSlow,0,1,0);
 			animationsSlow[1] = loadAnimation(persoSlow,0,1,1);
 			animationsSlow[2] = loadAnimation(persoSlow,0,1,2);
@@ -135,13 +133,12 @@ public class Player {
 			animationsSlow[6] = loadAnimation(persoSlow,1,9,2);
 			animationsSlow[7] = loadAnimation(persoSlow,1,9,3);
 		} catch (SlickException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 		SpriteSheet persoFast;
 		try {
-			persoFast = new SpriteSheet("images/bomberman/personnage_fast.png",50,50);
+			persoFast = new SpriteSheet(World.DIRECTORY_IMAGES+"personnage_fast.png",50,50);
 			animationsFast[0] = loadAnimation(persoFast,0,1,0);
 			animationsFast[1] = loadAnimation(persoFast,0,1,1);
 			animationsFast[2] = loadAnimation(persoFast,0,1,2);
@@ -151,7 +148,6 @@ public class Player {
 			animationsFast[6] = loadAnimation(persoFast,1,9,2);
 			animationsFast[7] = loadAnimation(persoFast,1,9,3);
 		} catch (SlickException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	
@@ -206,7 +202,7 @@ public class Player {
 			}
 		}
 		
-		World.getBoard().getCase(i, j).getAction(this);
+		w.getBoard().getCase(i, j).getAction(this);
 		mayDropBomb();
 		callMove(delta);
 		updateBombAvailable();
@@ -268,10 +264,10 @@ public class Player {
 		
 		int newI = i + deltaI*reversed;
 		int newJ = j + deltaJ*reversed;
-		Integer[] size = World.getBoard().getDim();
+		Integer[] size = w.getBoard().getDim();
 		if (newI >= 0 && newI < size[0] && newJ >= 0 && newJ < size[1]) {
-			if (World.getBoard().getCase(newI,newJ).isPassable()) {
-				if(!tpable && !(World.getBoard().getCase(newI,newJ) instanceof TP))
+			if (w.getBoard().getCase(newI,newJ).isPassable()) {
+				if(!tpable && !(w.getBoard().getCase(newI,newJ) instanceof TP))
 					tpable = true;
 				
 				move(deltaI,deltaJ);
@@ -346,7 +342,7 @@ public class Player {
 	}
 	
 	public int[] convertInXY(int i, int j) {
-		int sizeCase = (int) World.getBoard().getCaseSize();
+		int sizeCase = (int) w.getBoard().getCaseSize();
 		return new int[] {j * sizeCase, i * sizeCase};
 	} 
 	
@@ -376,8 +372,8 @@ public class Player {
 	}
 	
 	public void dropBomb() {
-		World.addBomb(controllerID, i, j, range, 3000);
-		bombs.add(World.getBombs().get(World.getBombs().size()-1));
+		w.addBomb(controllerID, i, j, range, 3000);
+		bombs.add(w.getBombs().get(w.getBombs().size()-1));
 	}
 	
 	public void addRange(int deltaRange) {

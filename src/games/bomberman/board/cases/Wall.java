@@ -3,10 +3,22 @@ package games.bomberman.board.cases;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
-public class Wall extends Case{
+import games.bomberman.World;
 
-	public Wall(int i, int j) throws SlickException {
-		super(i, j, new Image("images/bomberman/Wall.png"), false);
+public class Wall extends Case{
+	
+	private static Image img;
+	
+	static {
+		try {
+			img = new Image(World.DIRECTORY_IMAGES+"Wall.png");
+		} catch (SlickException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public Wall(World w, int i, int j) {
+		super(w, i, j, img, false);
 	}
 
 	

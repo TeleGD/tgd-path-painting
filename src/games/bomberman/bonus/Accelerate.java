@@ -1,9 +1,10 @@
 package games.bomberman.bonus;
 
+import java.io.File;
+
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
-import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
 import org.newdawn.slick.state.StateBasedGame;
@@ -16,27 +17,23 @@ public class Accelerate extends Bonus{
 	private Player player;
 	private long initTime;
 	
-	private Sound sound;
+	private static Sound sound;
+	private static Image sprite;
+	
+	static {
+		try {
+			sound = new Sound(World.DIRECTORY_SOUNDS+"bonus"+File.separator+"sncf.ogg");
+			sprite = new Image(World.DIRECTORY_IMAGES+"bonus_accelerate.png");
+		} catch (SlickException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	public Accelerate(int caseX, int caseY) {
 		super(caseX, caseY);
+		super.setSprite(sprite);
 		this.activated = false;
 		this.deleted = false;
-
-		try {
-			sound = new Sound("musics/bonus/sncf.ogg");
-		} catch (SlickException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		
-		try {
-			Image sprite = new Image(World.DIRECTORY_IMAGES+"bonus_accelerate.png");
-			super.setSprite(sprite);
-		} catch (SlickException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 	
 	public void activate(Player player) {

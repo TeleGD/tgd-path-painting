@@ -28,15 +28,27 @@ public class Bomb {
 	private int portee;
 	private int tpsRestant;
 	private int numJoueur;
-	private Image sprite,bord,milieu,centre;
+	private static Image sprite,bord,milieu,centre;
 	private int arret[]= {0,0,0,0};
 	private int tempsExplosion=700;
 	private boolean detruite = false,explose=false;
-	private Sound sound;
+	private static Sound sound;
+	private World w;
 	
+	static {
+		try {
+			sprite = new Image(World.DIRECTORY_IMAGES+"bombe.png");
+			bord = new Image(World.DIRECTORY_IMAGES+"fin_deflagration.png");
+			milieu = new Image(World.DIRECTORY_IMAGES+"deflagration.png");
+			centre = new Image(World.DIRECTORY_IMAGES+"bombe_explose.png");
+			sound = new Sound(World.DIRECTORY_IMAGES+"explo_forte.ogg");
+		} catch (SlickException e) {
+			e.printStackTrace();
+		}
+	}
 	
-	public Bomb(int numJoueur,int i,int j,int porteep,int tpsRestantp) {
-		
+	public Bomb(World world, int numJoueur,int i,int j,int porteep,int tpsRestantp) {
+		w=world;
 		this.i = i;
 		this.j = j;
 		int[] XY = convertInXY(i,j);
@@ -45,25 +57,10 @@ public class Bomb {
 		portee=porteep+1;
 		for (int k=0;k<4;k++) {arret[k]=portee;}
 		tpsRestant=tpsRestantp;
-		try {
-			sprite = new Image("images/bomberman/bombe.png");
-			bord = new Image("images/bomberman/fin_deflagration.png");
-			milieu = new Image("images/bomberman/deflagration.png");
-			centre = new Image("images/bomberman/bombe_explose.png");
-		} catch (SlickException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		try {
-			sound = new Sound("musics/bomb/explo_forte.ogg");
-		} catch (SlickException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 	
 	public int[] convertInXY(int i, int j) {
-		int sizeCase = (int) World.getBoard().getCaseSize();
+		int sizeCase = (int) w.getBoard().getCaseSize();
 		return new int[] {j * sizeCase, i * sizeCase};
 	}
 	
@@ -140,92 +137,6 @@ public class Bomb {
 		}
 	}
 	
-/*	public void BombExplose()
-	{
-		
-		float[] tab=World.getBoard().getlimits();//renvoie limite basse et droite
- 		float LR=tab[1];
- 		float LB=tab[3];
-		
-		
-		float xc=x;
-		float yc=y;//curseurs pour se déplacer
-		
-		float Tcase=World.getBoard().getCase(0,0).getSize();//initialisation denom
-		int cx,cy;//indices de cases
-		//////////////////////////////////////
-		int i=0;
-		int ht=0;
-		while(yc>0 && i<portee) {
-			yc--;
-			i++;
-			ht++;
-		}//ht est le nombre de cases que l'on peut monter 
-		yc=y;
-		/////////////////////////////////////
-		i=0;
-		int lft=0;
-		while(xc>0 && i<portee) {
-			xc--;
-			i++;
-			lft++;
-		}//lft nb de cases dispos a gauche
-		xc=x;
-		/////////////////////////////////////
-		i=0;
-		int rgt=0;
-		while(xc<LR && i<portee) {
-			xc++;
-			i++;
-			rgt++;
-		}//rgt nb de cases dispos a droite
-		xc=x;
-		/////////////////////////////////////
-		i=0;
-		int bs=0;
-		while(yc<LB && i<portee) {
-			yc++;
-			i++;
-			bs++;
-		}//bs nb de cases dispos en dessous 
-		yc=y;
-		//////////////////////////////////////
-		
-		
-		
-		
-		//parcours des cases pour destruction
-		for(yc=y-ht;yc<y+bs;yc++) {//commence au coin sup gauche
-			
-			xc=x-lft;
-			while(xc<x+rgt) {
-				cx=(int) (xc/Tcase);
-				cy=(int) (yc/Tcase);//traduire une position en num de case
-				World.getBoard().destruct(cy,cx);
-				xc++;
-			}
-		}
-		//////////////////////////////////////
-		//recherche de joueurs a frapper
-		List<Player> pl= World.getPlayers();
-		for(Player p:pl) {
-			float xpl=p.getX();
-			float ypl=p.getY();
-			if(x-lft<=xpl && x+rgt>=xpl && y-ht<=ypl && y+bs>=ypl ) {
-			
-				p.takeDamage();
-					
-			}
-		}
-		///////////////////////////////////////
-		// autre moyen : obtenir coords cellule bombe puis portee dans toutes directions
-		
-		
-		detruite = true;
-		
-	}
-	*/
-	
 	public void BombExplose() {
 		
 		for (int dir=0;dir<4;dir++) {
@@ -247,14 +158,13 @@ public class Bomb {
 					c-=d;
 				}
 				explose = true;
-				//System.out.println(l+" "+c);
 				if ( c<0 || l<0 || c>24 || l>12 ) {
 					arret[dir] = d;
 					stop = true;
 				} else {
-					Case ca = World.getBoard().getCase(l, c);
+					Case ca = w.getBoard().getCase(l, c);
 					if (ca instanceof DestructibleWall) {
-						World.getBoard().destruct(l, c);
+						w.getBoard().destruct(l, c);
 						if (Math.random()<0.4) {
 							double r = Math.random();
 							/* répartition :
@@ -270,31 +180,31 @@ public class Bomb {
 							 * range : 0.25
 							 */
 							if (r<0.2) {
-								World.getBoard().getCase(l, c).setBonus(new Accelerate(World.getBoard().getCase(l, c).getJ(),World.getBoard().getCase(l, c).getI()));
+								w.getBoard().getCase(l, c).setBonus(new Accelerate(w.getBoard().getCase(l, c).getJ(),w.getBoard().getCase(l, c).getI()));
 							}
 							if (r>=0.2 && r<0.25) {
-								World.getBoard().getCase(l, c).setBonus(new Life(World.getBoard().getCase(l, c).getJ(),World.getBoard().getCase(l, c).getI()));
+								w.getBoard().getCase(l, c).setBonus(new Life(w.getBoard().getCase(l, c).getJ(),w.getBoard().getCase(l, c).getI()));
 							}
 							if (r>=0.25 && r<0.30) {
-								World.getBoard().getCase(l, c).setBonus(new Reverse(World.getBoard().getCase(l, c).getJ(),World.getBoard().getCase(l, c).getI()));
+								w.getBoard().getCase(l, c).setBonus(new Reverse(w.getBoard().getCase(l, c).getJ(),w.getBoard().getCase(l, c).getI()));
 							}
 							if (r>=0.30 && r<0.4) {
-								World.getBoard().getCase(l, c).setBonus(new Capacity(World.getBoard().getCase(l, c).getJ(),World.getBoard().getCase(l, c).getI()));
+								w.getBoard().getCase(l, c).setBonus(new Capacity(w.getBoard().getCase(l, c).getJ(),w.getBoard().getCase(l, c).getI()));
 							}
 							if (r>=0.4 && r<0.55) {
-								World.getBoard().getCase(l, c).setBonus(new Shield(World.getBoard().getCase(l, c).getJ(),World.getBoard().getCase(l, c).getI()));
+								w.getBoard().getCase(l, c).setBonus(new Shield(w.getBoard().getCase(l, c).getJ(),w.getBoard().getCase(l, c).getI()));
 							}
 							if (r>=0.55 && r<0.60) {
-								World.getBoard().getCase(l, c).setBonus(new Teleport(World.getBoard().getCase(l, c).getJ(),World.getBoard().getCase(l, c).getI()));
+								w.getBoard().getCase(l, c).setBonus(new Teleport(w, w.getBoard().getCase(l, c).getJ(),w.getBoard().getCase(l, c).getI()));
 							}
 							if (r>=0.60 && r<0.70) {
-								World.getBoard().getCase(l, c).setBonus(new Cooldown(World.getBoard().getCase(l, c).getJ(),World.getBoard().getCase(l, c).getI()));
+								w.getBoard().getCase(l, c).setBonus(new Cooldown(w.getBoard().getCase(l, c).getJ(),w.getBoard().getCase(l, c).getI()));
 							}
 							if (r>=0.7 && r<0.75) {
-								World.getBoard().getCase(l, c).setBonus(new Slow(World.getBoard().getCase(l, c).getJ(),World.getBoard().getCase(l, c).getI()));
+								w.getBoard().getCase(l, c).setBonus(new Slow(w, w.getBoard().getCase(l, c).getJ(),w.getBoard().getCase(l, c).getI()));
 							}
 							if (r>=0.75 && r<1) {
-								World.getBoard().getCase(l, c).setBonus(new Range(World.getBoard().getCase(l, c).getJ(),World.getBoard().getCase(l, c).getI()));
+								w.getBoard().getCase(l, c).setBonus(new Range(w.getBoard().getCase(l, c).getJ(),w.getBoard().getCase(l, c).getI()));
 							}
 							
 						}
@@ -305,13 +215,12 @@ public class Bomb {
 						arret[dir] = d;
 						stop = true;
 					}
-					for (Player p : World.getPlayers()) {
+					for (Player p : w.getPlayers()) {
 						if (p.getI()==l && p.getJ()==c) {
 							p.takeDamage();
-							//System.out.println("prend damage");
 						}
 					}
-					for (Bomb b : World.getBombs()) {
+					for (Bomb b : w.getBombs()) {
 						if (b.getI()==l && b.getJ()==c && !b.isExplosed()) {
 							b.BombExplose();
 						}
@@ -320,9 +229,6 @@ public class Bomb {
 				d++;
 			}
 		}
-//		for (int x : arret) {
-//			System.out.println(x);
-//		}
 		sound.play(1, (float) 0.8);
 
 	}

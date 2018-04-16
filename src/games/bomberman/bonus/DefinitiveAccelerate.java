@@ -3,7 +3,6 @@ package games.bomberman.bonus;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
-import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
 import org.newdawn.slick.state.StateBasedGame;
@@ -24,7 +23,6 @@ public class DefinitiveAccelerate extends Bonus{
 		try {
 			sound = new Sound("musics/bonus/sncf.ogg");
 		} catch (SlickException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		

@@ -1,5 +1,7 @@
 package games.bomberman.bonus;
 
+import java.io.File;
+
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -31,7 +33,7 @@ public class Cooldown extends Bonus{
 		}
 		
 		try {
-			sound = new Sound("musics/bonus/tataa.ogg");
+			sound = new Sound(World.DIRECTORY_SOUNDS+"bonus"+File.separator+"tataa.ogg");
 		} catch (SlickException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

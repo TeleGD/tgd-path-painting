@@ -18,8 +18,11 @@ public abstract class Case {
 	protected float size=50;
 	protected Bonus bonus;
 	protected Bomb bomb;
+	
+	private World w;
 
-	public Case(int i,int j,Image img,boolean passable) {
+	public Case(World world, int i,int j,Image img,boolean passable) {
+		this.w=world;
 		this.i=i;
 		this.j=j;
 		this.img=img;
@@ -29,7 +32,7 @@ public abstract class Case {
 	}
 
 	public void render (GameContainer container, StateBasedGame game, Graphics context) {
-		int sizeCase = (int) World.getBoard().getCaseSize();
+		int sizeCase = (int) w.getBoard().getCaseSize();
 		context.drawImage(img, j*sizeCase, i*sizeCase);
 		if(bonus!=null) {
 			if(!bonus.isActivated()) {
