@@ -1,7 +1,5 @@
 package games.bomberman.bonus;
 
-import java.io.File;
-
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -15,7 +13,7 @@ import games.bomberman.World;
 public class Slow extends Bonus {
 	private boolean activated, deleted;
 	private Player player;
-	private long initTime;
+	private int duration;
 	private static Sound sound;
 	private static Image sprite;
 	private World w;
@@ -23,7 +21,7 @@ public class Slow extends Bonus {
 	static {
 		try {
 			sprite = new Image(World.DIRECTORY_IMAGES + "bonus_slow.png");
-			sound = new Sound(World.DIRECTORY_SOUNDS+"bonus"+File.separator+"gary.ogg");
+			sound = new Sound(World.DIRECTORY_SOUNDS_BONUS+"gary.ogg");
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}
@@ -47,7 +45,7 @@ public class Slow extends Bonus {
 				}
 			}
 
-			initTime = System.currentTimeMillis();
+			duration=7000;
 
 			this.player = player;
 
@@ -73,7 +71,9 @@ public class Slow extends Bonus {
 	}
 
 	public void update(GameContainer container, StateBasedGame game, int delta) {
-		if (activated && (System.currentTimeMillis() - initTime > 7000)) {
+		duration-=delta;
+		if (activated && (duration<=0)) {
+			activated=false;
 			this.desactivate();
 		}
 	}

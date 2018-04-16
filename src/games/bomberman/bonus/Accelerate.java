@@ -15,7 +15,7 @@ import games.bomberman.World;
 public class Accelerate extends Bonus{
 	private boolean activated, deleted;
 	private Player player;
-	private long initTime;
+	private int duration;
 	
 	private static Sound sound;
 	private static Image sprite;
@@ -42,7 +42,7 @@ public class Accelerate extends Bonus{
 
 			player.setSpeed(player.getSpeed()*10f);
 
-			initTime = System.currentTimeMillis();
+			duration = 7000;
 		
 			this.player = player;
 
@@ -64,7 +64,9 @@ public class Accelerate extends Bonus{
 	}
 	
 	public void update (GameContainer container, StateBasedGame game, int delta) {
-		if (activated && (System.currentTimeMillis() - initTime > 7000)) {
+		duration-=delta;
+		if (activated && (duration<=0)) {
+			activated=false;
 			this.desactivate();
 		}
 	}	

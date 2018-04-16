@@ -41,7 +41,7 @@ public class Bomb {
 			bord = new Image(World.DIRECTORY_IMAGES+"fin_deflagration.png");
 			milieu = new Image(World.DIRECTORY_IMAGES+"deflagration.png");
 			centre = new Image(World.DIRECTORY_IMAGES+"bombe_explose.png");
-			sound = new Sound(World.DIRECTORY_IMAGES+"explo_forte.ogg");
+			sound = new Sound(World.DIRECTORY_SOUNDS_BOMBS+"explo_forte.ogg");
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}

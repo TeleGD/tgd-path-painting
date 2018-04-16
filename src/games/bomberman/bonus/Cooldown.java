@@ -15,7 +15,7 @@ import games.bomberman.World;
 public class Cooldown extends Bonus{
 	private boolean activated, deleted;
 	private Player player;
-	private long initTime;
+	private int duration;
 	
 	private Sound sound;
 	
@@ -47,7 +47,7 @@ public class Cooldown extends Bonus{
 			player.setDropCoolDown(500);
 		
 			this.player = player;
-			initTime = System.currentTimeMillis();	
+			duration = 15000;	
 			
 			sound.play(1, (float) 0.4);
 		}
@@ -67,7 +67,9 @@ public class Cooldown extends Bonus{
 	}
 	
 	public void update (GameContainer container, StateBasedGame game, int delta) {
-		if (activated && (System.currentTimeMillis() - initTime > 15000)) {
+		duration-=delta;
+		if (activated && (duration<=0)) {
+			activated = false;
 			this.desactivate();
 		}
 	}	

@@ -13,7 +13,7 @@ import games.bomberman.World;
 public class Shield extends Bonus{
 	private boolean activated, deleted;
 	private Player player;
-	private long initTime;
+	private int duration;
 	private Sound sound;
 	
 	public Shield(int caseX, int caseY) {
@@ -44,7 +44,7 @@ public class Shield extends Bonus{
 			player.setBouclier(true);
 		
 			this.player = player;
-			initTime = System.currentTimeMillis();
+			duration=30000;
 
 			sound.play(1, (float) 0.4);
 		}
@@ -65,7 +65,9 @@ public class Shield extends Bonus{
 	}
 	
 	public void update (GameContainer container, StateBasedGame game, int delta) {
-		if (activated && (System.currentTimeMillis() - initTime > 30000)) {
+		duration-=delta;
+		if (activated && (duration<=0)) {
+			activated=false;
 			this.desactivate();
 		}
 	}	

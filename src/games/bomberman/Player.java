@@ -78,7 +78,7 @@ public class Player {
 		invincible=false;
 		clignotement =200;
 		try {
-			imgBouclier = new Image ("images/bomberman/bouclier.png");
+			imgBouclier = new Image (World.DIRECTORY_IMAGES+"bouclier.png");
 		} catch (SlickException e1) {
 			e1.printStackTrace();
 		}
