@@ -42,6 +42,13 @@ public abstract class Case {
 			return size;
 		}
 
+		public int[] getImgInitSize() {
+			int temp[] = new int[2];
+			temp[0] = img.getWidth();
+			temp[1] = img.getHeight();
+			
+			return temp;
+		}
 
 		public int getI() {
 			return i;

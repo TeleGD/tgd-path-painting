@@ -33,20 +33,20 @@ public class Board {
 		board=lab.getLab();
 	}
 	
-	public boolean movePlayer(int posX, int posY, Player p){
-		if(posX < rows && posY < columns && posX >= 0 && posY >= 0 && board[posX][posY] instanceof FreeCase){
-			if (board[posX][posY].getPlayerId()==-1) {
-				//set new cell true
-				board[posX][posY].setPlayerId(w.players.indexOf(p));
-				//set old cell false
-				board[p.getPosX()][p.getPosY()].setPlayerId(-1);
-				return true;
-			} else if (board[posX][posY].getPlayerId()==0) {
-				w.endGame();
-			}
-		}
-		return false; 
-	}
+//	public boolean movePlayer(int posX, int posY, Player p){
+//		if(posX < rows && posY < columns && posX >= 0 && posY >= 0 && board[posX][posY] instanceof FreeCase){
+//			if (board[posX][posY].getPlayerId()==-1) {
+//				//set new cell true
+//				board[posX][posY].setPlayerId(w.players.indexOf(p));
+//				//set old cell false
+//				board[p.getPosX()][p.getPosY()].setPlayerId(-1);
+//				return true;
+//			} else if (board[posX][posY].getPlayerId()==0) {
+//				w.endGame();
+//			}
+//		}
+//		return false; 
+//	}
 
 	public void render(GameContainer container, StateBasedGame game, Graphics context) {
 		for (int i=0; i<this.lab.getNbLig();i++){
@@ -62,6 +62,10 @@ public class Board {
 	
 	public Case getCase(int row, int column) {
 		return board[row][column];
+	}
+	
+	public int[] getImgInitSize() {
+		return board[0][0].getImgInitSize();
 	}
 	
 	public int getRows() {
