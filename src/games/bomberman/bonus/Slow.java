@@ -20,7 +20,7 @@ public class Slow extends Bonus {
 	
 	static {
 		try {
-			sprite = new Image(World.DIRECTORY_IMAGES + "bonus_slow.png");
+			sprite = new Image(World.DIRECTORY_IMAGES+"bonus_slow.png");
 			sound = new Sound(World.DIRECTORY_SOUNDS_BONUS+"gary.ogg");
 		} catch (SlickException e) {
 			e.printStackTrace();

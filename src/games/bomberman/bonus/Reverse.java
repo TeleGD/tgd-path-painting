@@ -15,27 +15,23 @@ public class Reverse extends Bonus{
 	private Player player;
 	private int duration;
 	
-	private Sound sound;
+	private static Image sprite;
+	private static Sound sound;
+	
+	static {
+		try {
+			sprite = new Image(World.DIRECTORY_IMAGES+"bonus_reverse.png");
+			sound = new Sound(World.DIRECTORY_SOUNDS_BONUS+"interf.ogg");
+		} catch (SlickException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	public Reverse(int caseX, int caseY) {
 		super(caseX, caseY);
+		super.setSprite(sprite);
 		this.activated = false;
 		this.deleted = false;
-		
-		try {
-			Image sprite = new Image(World.DIRECTORY_IMAGES+"bonus_reverse.png");
-			super.setSprite(sprite);
-		} catch (SlickException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		try {
-			sound = new Sound("musics/bonus/interf.ogg");
-		} catch (SlickException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 	
 	public void activate(Player player) {
@@ -45,7 +41,7 @@ public class Reverse extends Bonus{
 			player.setReversed(-player.getReversed());
 		
 			this.player = player;
-			duration = 7;
+			duration = 7000;
 			
 			sound.play(1, (float) 0.4);
 		}

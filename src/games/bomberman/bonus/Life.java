@@ -13,27 +13,23 @@ import games.bomberman.World;
 public class Life extends Bonus{
 
 	private boolean activated, deleted;
-	private Sound sound;
+	private static Image sprite;
+	private static Sound sound;
+	
+	static {
+		try {
+			sprite = new Image(World.DIRECTORY_IMAGES+"bonus_life.png");
+			sound = new Sound(World.DIRECTORY_SOUNDS_BONUS+"extra_life.ogg");
+		} catch (SlickException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	public Life(int caseX, int caseY) {
 		super(caseX, caseY);
+		super.setSprite(sprite);
 		this.activated = false;
 		this.deleted = false;
-		
-		try {
-			Image sprite = new Image(World.DIRECTORY_IMAGES+"bonus_life.png");
-			super.setSprite(sprite);
-		} catch (SlickException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		try {
-			sound = new Sound("musics/bonus/extra_life.ogg");
-		} catch (SlickException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 	
 	public void activate(Player player) {

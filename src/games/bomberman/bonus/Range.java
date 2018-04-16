@@ -13,44 +13,36 @@ import games.bomberman.World;
 public class Range extends Bonus{
 	
 	private boolean activated, deleted;
-	private int rand;
-	private Sound sound0;
-	private Sound sound1;
+	private boolean add;
+	private static Image sprite0;
+	private static Image sprite1;
+	private static Sound sound0;
+	private static Sound sound1;
+	
+	static {
+		try {
+			sprite0 = new Image(World.DIRECTORY_IMAGES+"bonus_range0.png");
+			sprite1 = new Image(World.DIRECTORY_IMAGES+"bonus_range1.png");
+			sound0 = new Sound(World.DIRECTORY_SOUNDS_BONUS+"charger.ogg");
+			sound1 = new Sound(World.DIRECTORY_SOUNDS_BONUS+"bemol.ogg");
+		} catch (SlickException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	public Range(int caseX, int caseY) {
 		super(caseX, caseY);
+		add=Math.random()<0.7;
+		super.setSprite(add?sprite0:sprite1);
 		this.activated = false;
 		this.deleted = false;
-		rand = (int)(Math.random()*2);
-		
-		try {
-			Image sprite = new Image(World.DIRECTORY_IMAGES+"bonus_range"+rand+".png");
-			super.setSprite(sprite);
-		} catch (SlickException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		try {
-			sound0 = new Sound("musics/bonus/charger.ogg");
-		} catch (SlickException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		try {
-			sound1 = new Sound("musics/bonus/bemol.ogg");
-		} catch (SlickException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 	
 	public void activate(Player player) {
 		if (!activated) {
 			this.activated = true;
 			
-			if (rand == 0) {
+			if (add) {
 				player.addRange(1);
 				sound0.play(1, (float) 1);
 			} else {

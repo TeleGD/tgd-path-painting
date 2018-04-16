@@ -13,26 +13,23 @@ import games.bomberman.World;
 public class DefinitiveAccelerate extends Bonus{
 	private boolean activated, deleted;
 	
-	private Sound sound;
+	private static Image sprite;
+	private static Sound sound;
+	
+	static {
+		try {
+			sprite = new Image(World.DIRECTORY_IMAGES+"bonus_defAccelerate.png");
+			sound = new Sound(World.DIRECTORY_SOUNDS_BONUS+"sncf.ogg");
+		} catch (SlickException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	public DefinitiveAccelerate(int caseX, int caseY) {
 		super(caseX, caseY);
+		super.setSprite(sprite);
 		this.activated = false;
 		this.deleted = false;
-
-		try {
-			sound = new Sound("musics/bonus/sncf.ogg");
-		} catch (SlickException e1) {
-			e1.printStackTrace();
-		}
-		
-		try {
-			Image sprite = new Image(World.DIRECTORY_IMAGES+"bonus_defAccelerate.png");
-			super.setSprite(sprite);
-		} catch (SlickException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 	
 	public void activate(Player player) {

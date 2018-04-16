@@ -1,7 +1,5 @@
 package games.bomberman.bonus;
 
-import java.io.File;
-
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -22,7 +20,7 @@ public class Accelerate extends Bonus{
 	
 	static {
 		try {
-			sound = new Sound(World.DIRECTORY_SOUNDS+"bonus"+File.separator+"sncf.ogg");
+			sound = new Sound(World.DIRECTORY_SOUNDS_BONUS+"sncf.ogg");
 			sprite = new Image(World.DIRECTORY_IMAGES+"bonus_accelerate.png");
 		} catch (SlickException e) {
 			e.printStackTrace();

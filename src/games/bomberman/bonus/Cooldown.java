@@ -1,7 +1,5 @@
 package games.bomberman.bonus;
 
-import java.io.File;
-
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -16,28 +14,23 @@ public class Cooldown extends Bonus{
 	private boolean activated, deleted;
 	private Player player;
 	private int duration;
+	private static Image sprite;
+	private static Sound sound;
 	
-	private Sound sound;
+	static {
+		try {
+			sprite = new Image(World.DIRECTORY_IMAGES+"bonus_cooldown.png");
+			sound = new Sound(World.DIRECTORY_SOUNDS_BONUS+"tataa.ogg");
+		} catch (SlickException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	public Cooldown(int caseX, int caseY) {
 		super(caseX, caseY);
+		super.setSprite(sprite);
 		this.activated = false;
 		this.deleted = false;
-		
-		try {
-			Image sprite = new Image(World.DIRECTORY_IMAGES+"bonus_cooldown.png");
-			super.setSprite(sprite);
-		} catch (SlickException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		try {
-			sound = new Sound(World.DIRECTORY_SOUNDS+"bonus"+File.separator+"tataa.ogg");
-		} catch (SlickException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 	
 	public void activate(Player player) {

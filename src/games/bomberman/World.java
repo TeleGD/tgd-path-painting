@@ -67,16 +67,20 @@ public class World extends AppWorld {
 
 	@Override
 	public void init (GameContainer container, StateBasedGame game) throws SlickException {
-		this.width = container.getWidth ();
-		this.height = container.getHeight ();
-		board=new Board(this,13,25);	
 	}
 
 	@Override
 	public void play (GameContainer container, StateBasedGame game) {
 		AppGame appGame = (AppGame) game;
+		AppInput appInput = (AppInput) container.getInput ();
+		appInput.clearKeyPressedRecord ();
+		appInput.clearControlPressedRecord ();
+		time = 30000;
+		music.loop(1, (float) 0.5);
 		int n = appGame.appPlayers.size ();
-		
+		this.width = container.getWidth ();
+		this.height = container.getHeight ();
+		board=new Board(this,13,25);	
 		players = new ArrayList<Player>();
 		bombs = new ArrayList<Bomb>();
 		
@@ -88,12 +92,6 @@ public class World extends AppWorld {
 
 	@Override
 	public void enter (GameContainer container, StateBasedGame game) {
-		AppInput appInput = (AppInput) container.getInput ();
-		appInput.clearKeyPressedRecord ();
-		appInput.clearControlPressedRecord ();
-		time = 10000;
-		
-		music.loop(1, (float) 0.5);
 	}
 
 	@Override
@@ -104,6 +102,7 @@ public class World extends AppWorld {
 		AppInput appInput = (AppInput) container.getInput ();
 		AppGame appGame = (AppGame) game;
 		if (appInput.isKeyPressed (AppInput.KEY_ESCAPE)) {
+			music.stop();
 			appGame.enterState (AppGame.PAGES_GAMES, new FadeOutTransition (), new FadeInTransition ());
 		} else {
 		for (Player p : players) {
@@ -130,7 +129,7 @@ public class World extends AppWorld {
 		time-=delta;
 		if(time<=0) {
 			generateBonus();
-			time=10000;
+			time=30000;
 		}
 		board.update(container, game, delta);
 		gui.update(container, game, delta);

@@ -14,27 +14,23 @@ public class Shield extends Bonus{
 	private boolean activated, deleted;
 	private Player player;
 	private int duration;
-	private Sound sound;
+	private static Image sprite;
+	private static Sound sound;
+	
+	static {
+		try {
+			sprite = new Image(World.DIRECTORY_IMAGES+"bonus_shield.png");
+			sound = new Sound(World.DIRECTORY_SOUNDS_BONUS+"tataa.ogg");
+		} catch (SlickException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	public Shield(int caseX, int caseY) {
 		super(caseX, caseY);
+		super.setSprite(sprite);
 		this.activated = false;
 		this.deleted = false;
-		
-		try {
-			Image sprite = new Image(World.DIRECTORY_IMAGES+"bonus_shield.png");
-			super.setSprite(sprite);
-		} catch (SlickException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		try {
-			sound = new Sound("musics/bonus/tataa.ogg");
-		} catch (SlickException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 	
 	public void activate(Player player) {
