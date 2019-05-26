@@ -16,26 +16,26 @@ import games.labyrinthe.Labyrinth.*;
 import games.labyrinthe.Players.*;
 
 public class World extends AppWorld {
-	
+
 	private final int id;
-	
+
 	public final static String GAME_FOLDER_NAME="labyrinthe";
 	public final static String DIRECTORY_SOUNDS="musics"+File.separator+GAME_FOLDER_NAME+File.separator;
 	public final static String DIRECTORY_MUSICS="musics"+File.separator+GAME_FOLDER_NAME+File.separator;
 	public final static String DIRECTORY_IMAGES="images"+File.separator+GAME_FOLDER_NAME+File.separator;
-	
+
 	public Board board;
 	public ArrayList<Player> players;
 
 	private int height;
 	private int width;
-	
+
 	private int timer;
-	
+
 	public World(int id) {
 		this.id=id;
 	}
-	
+
 	public void play(GameContainer container, StateBasedGame game) {
 		AppGame appGame = (AppGame) game;
 		int n = appGame.appPlayers.size ();
@@ -49,7 +49,7 @@ public class World extends AppWorld {
 		}
 		timer = 90000; //temps de la partie (90s)
 	}
-	
+
 	@Override
 	public void init(GameContainer container, StateBasedGame game) {
 	}
@@ -69,13 +69,13 @@ public class World extends AppWorld {
 		if (appInput.isKeyPressed (AppInput.KEY_ESCAPE)) {
 			appGame.enterState (AppGame.PAGES_GAMES, new FadeOutTransition (), new FadeInTransition ());
 		} else {
-		
+
 			board.update(container, game, delta);
 			for (Player p : players) {
 				p.update(container, game, delta);
 			}
 		}
-		
+
 		timer -= delta;
 		if(timer <= 0) {
 			endGame(players.get(0));

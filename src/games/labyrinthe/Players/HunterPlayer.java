@@ -9,7 +9,7 @@ public class HunterPlayer extends Player {
 		super(w, aplayer);
 		// TODO Auto-generated constructor stub
 	}
-	
+
 	public void collideWithPlayer(Player p) {
 		if(p instanceof VictimPlayer) {
 			super.world.endGame(this);

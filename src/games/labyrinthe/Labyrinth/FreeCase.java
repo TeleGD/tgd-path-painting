@@ -6,12 +6,12 @@ import org.newdawn.slick.SlickException;
 import games.labyrinthe.World;
 
 public class FreeCase extends Case {
-	
+
 	private int playerId;
 	private int bonusId;
-	
+
 	private static Image image;
-	
+
 	static {
 		try {
 			image = new Image(World.DIRECTORY_IMAGES+"/Ground.png");
@@ -22,7 +22,7 @@ public class FreeCase extends Case {
 
 	public FreeCase(int i, int j,int size){
 		super(i, j, size, image, true);
-		
+
 	}
 
 
@@ -44,7 +44,7 @@ public class FreeCase extends Case {
 	public void setBonusId(int bonusId) {
 		this.bonusId = bonusId;
 	}
-	
-	
+
+
 
 }

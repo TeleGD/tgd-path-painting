@@ -13,15 +13,15 @@ import games.labyrinthe.World;
 
 public abstract class Player {
 
-	
+
 	protected World world;
 	protected Board board;
-	
+
 	protected Image spriteUp;
 	protected static Image spriteDown;
 	protected Image spriteLeft;
 	protected Image spriteRight;
-	
+
 	protected int posX;
 	protected int posY;
 	protected float x;
@@ -33,17 +33,17 @@ public abstract class Player {
 
 	protected int size;
 	protected int rows, columns;
-	
+
 	protected float speed;
-	protected int direction;// 1 right 2 up 3 left 4 down 
+	protected int direction;// 1 right 2 up 3 left 4 down
 	protected boolean moveLeft = false;
 	protected boolean moveRight = false;
 	protected boolean moveDown = false;
 	protected boolean moveUp = false;
 	protected boolean canMoveHorizontal, canMoveVertical;
-	
+
 	protected int controllerID;
-	
+
 	static {
 		try {
 			spriteDown = new Image(World.DIRECTORY_IMAGES+"/personnage.png");
@@ -51,7 +51,7 @@ public abstract class Player {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public Player(World w,AppPlayer appPlayer) {
 		controllerID=appPlayer.getControllerID();
 		world=w;
@@ -59,7 +59,7 @@ public abstract class Player {
 		size = board.getSize();
 		rows = board.getRows();
 		columns = board.getColumns();
-		
+
 		direction = 1;
 		speed = 0.3f*((float)size/board.getImgInitSize()[0]);
 		width = spriteDown.getWidth()*((float)size/board.getImgInitSize()[0]);
@@ -67,19 +67,19 @@ public abstract class Player {
 
 		// Attribution des positions de départ en fonction du n° de joueur
 		switch(controllerID) {
-			case 0 : 
+			case 0 :
 				posX = (int)(columns/2)+1;
 				posY = (int)(rows/2)+1;
 				break;
-			case 1 : 
+			case 1 :
 				posX = 1;
 				posY = 1;
 				break;
-			case 2 : 
+			case 2 :
 				posX = 1;
 				posY = columns-2;
 				break;
-			case 3 : 
+			case 3 :
 				posX = rows-2;
 				posY = 1;
 				break;
@@ -96,7 +96,7 @@ public abstract class Player {
 		posX = (int)(x/size);
 		posY = (int)(y/size);
 	}
-	
+
 	public void move(GameContainer container, int dlt) {
 		AppInput input = (AppInput) container.getInput();
 		moveLeft = input.isControllerLeft(controllerID);
@@ -126,12 +126,12 @@ public abstract class Player {
 
 		newX = x + dlt*speedX;
 		newY = y + dlt*speedY;
-		doCollisions();	
+		doCollisions();
 
 		if (canMoveHorizontal) x = newX;
 		if (canMoveVertical) y = newY;
 
-		updatePosXY();	
+		updatePosXY();
 	}
 
 	private void doCollisions() {
@@ -221,7 +221,7 @@ public abstract class Player {
 				}
 			}
 		}
-		
+
 		//Player collisions
 		for (Player p : world.players) {
 			if (!p.equals(this)) {
@@ -248,15 +248,15 @@ public abstract class Player {
 
 		return true;
 	}
-	
+
 	public float getX() {
 		return x;
 	}
-	
+
 	public float getY() {
 		return y;
 	}
-	
+
 	public int getPosX() {
 		return this.posX;
 	}
@@ -264,15 +264,15 @@ public abstract class Player {
 	public int getPosY() {
 		return this.posY;
 	}
-	
+
 	public float getWidth() {
 		return width;
 	}
-	
+
 	public float getHeight() {
 		return height;
 	}
-	
+
 	public int getID() {
 		return controllerID;
 	}
@@ -280,7 +280,7 @@ public abstract class Player {
 	public void render(GameContainer container, StateBasedGame game, Graphics context) {
 		context.drawImage(spriteDown, x, y, x+width, y+height, 0, 0, spriteDown.getWidth()-1,spriteDown.getHeight()-1);
 	}
-	
+
 	public void update(GameContainer container, StateBasedGame game, int delta) {
 		this.move(container, delta);
 	}

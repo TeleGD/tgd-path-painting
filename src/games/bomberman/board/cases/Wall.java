@@ -6,9 +6,9 @@ import org.newdawn.slick.SlickException;
 import games.bomberman.World;
 
 public class Wall extends Case{
-	
+
 	private static Image img;
-	
+
 	static {
 		try {
 			img = new Image(World.DIRECTORY_IMAGES+"Wall.png");
@@ -16,10 +16,10 @@ public class Wall extends Case{
 			e.printStackTrace();
 		}
 	}
-	
+
 	public Wall(World w, int i, int j) {
 		super(w, i, j, img, false);
 	}
 
-	
+
 }

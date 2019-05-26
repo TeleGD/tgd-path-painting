@@ -34,7 +34,7 @@ public class Bomb {
 	private boolean detruite = false,explose=false;
 	private static Sound sound;
 	private World w;
-	
+
 	static {
 		try {
 			sprite = new Image(World.DIRECTORY_IMAGES+"bombe.png");
@@ -46,7 +46,7 @@ public class Bomb {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public Bomb(World world, int numJoueur,int i,int j,int porteep,int tpsRestantp) {
 		w=world;
 		this.i = i;
@@ -58,20 +58,20 @@ public class Bomb {
 		for (int k=0;k<4;k++) {arret[k]=portee;}
 		tpsRestant=tpsRestantp;
 	}
-	
+
 	public int[] convertInXY(int i, int j) {
 		int sizeCase = (int) w.getBoard().getCaseSize();
 		return new int[] {j * sizeCase, i * sizeCase};
 	}
-	
+
 	public int getNumJoueur() {
 		return numJoueur;
 	}
-	
+
 	public int getTpsRestant() {
 		return tpsRestant;
 	}
-	
+
 	public boolean isDetruite() {
 		return detruite;
 	}
@@ -88,14 +88,14 @@ public class Bomb {
 				detruite = true;
 			}
 		}
-		
+
 	}
-	
+
 	public void render(GameContainer container, StateBasedGame game, Graphics context) {
 		if (!explose) {
 		context.drawImage(sprite, x, y);
 		} else {
-			
+
 			context.drawImage(centre,x,y);
 			bord.rotate(90);
 			milieu.rotate(90);
@@ -133,12 +133,12 @@ public class Bomb {
 					context.drawImage(milieu, x-50*k, y);
 				}
 			}
-			
+
 		}
 	}
-	
+
 	public void BombExplose() {
-		
+
 		for (int dir=0;dir<4;dir++) {
 			boolean stop = false;
 			int d = 0;
@@ -168,7 +168,7 @@ public class Bomb {
 						if (Math.random()<0.4) {
 							double r = Math.random();
 							/* répartition :
-							 * 
+							 *
 							 * acceleration  : 0.20
 							 * life : 0.05
 							 * reverse : 0.05
@@ -206,7 +206,7 @@ public class Bomb {
 							if (r>=0.75 && r<1) {
 								w.getBoard().getCase(l, c).setBonus(new Range(w.getBoard().getCase(l, c).getJ(),w.getBoard().getCase(l, c).getI()));
 							}
-							
+
 						}
 						arret[dir] = d+1;
 						stop = true;
@@ -248,10 +248,10 @@ public class Bomb {
 	public void setJ(int j) {
 		this.j = j;
 	}
-	
+
 	public boolean isExplosed() {
 		return explose;
 	}
-	
-	
+
+
 }

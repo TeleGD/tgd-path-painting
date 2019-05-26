@@ -15,7 +15,7 @@ public class Life extends Bonus{
 	private boolean activated, deleted;
 	private static Image sprite;
 	private static Sound sound;
-	
+
 	static {
 		try {
 			sprite = new Image(World.DIRECTORY_IMAGES+"bonus_life.png");
@@ -24,38 +24,38 @@ public class Life extends Bonus{
 			e.printStackTrace();
 		}
 	}
-	
+
 	public Life(int caseX, int caseY) {
 		super(caseX, caseY);
 		super.setSprite(sprite);
 		this.activated = false;
 		this.deleted = false;
 	}
-	
+
 	public void activate(Player player) {
 		if (!isActivated()) {
 			this.activated = true;
-		
+
 			player.addLife(1);
-		
+
 			this.deleted = true;
 
 			sound.play(1, (float) 0.4);
 		}
 	}
-	
+
 	public boolean isActivated() {
 		return this.activated;
 	}
-	
+
 	public boolean isDeleted() {
 		return this.deleted;
 	}
-	
+
 	public void update (GameContainer container, StateBasedGame game, int delta) {
 
-	}	
-	
+	}
+
 	public void render (GameContainer container, StateBasedGame game, Graphics context) {
 		super.render(container, game, context);
 	}

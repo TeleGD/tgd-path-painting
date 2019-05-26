@@ -12,11 +12,11 @@ import games.bomberman.World;
 
 public class Teleport extends Bonus{
 	private boolean activated, deleted;
-	
+
 	private static Sound sound;
 	private static Image sprite;
 	private World w;
-	
+
 	static {
 		try {
 			sprite = new Image(World.DIRECTORY_IMAGES+"bonus_teleport.png");
@@ -25,7 +25,7 @@ public class Teleport extends Bonus{
 			e.printStackTrace();
 		}
 	}
-	
+
 	public Teleport(World w, int caseX, int caseY) {
 		super(caseX, caseY);
 		super.setSprite(sprite);
@@ -33,37 +33,37 @@ public class Teleport extends Bonus{
 		this.activated = false;
 		this.deleted = false;
 	}
-	
+
 	public void activate(Player player) {
 		if(!activated) {
 			this.activated = true;
-		
+
 			int i, j;
-		
+
 			do {
 				i = (int)(Math.random()*w.getBoard().getDim()[0]);
 				j = (int)(Math.random()*w.getBoard().getDim()[1]);
 			} while(!w.getBoard().getCase(i, j).isPassable());
-		
+
 			player.setIJ(i,j);
 			sound.play(1, (float) 0.4);
-			
+
 			this.deleted = true;
 		}
 	}
-	
+
 	public boolean isActivated() {
 		return this.activated;
 	}
-	
+
 	public boolean isDeleted() {
 		return this.deleted;
 	}
-	
+
 	public void update (GameContainer container, StateBasedGame game, int delta) {
-		
-	}	
-	
+
+	}
+
 	public void render (GameContainer container, StateBasedGame game, Graphics context) {
 		super.render(container, game, context);
 	}

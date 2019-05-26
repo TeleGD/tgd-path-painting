@@ -6,7 +6,7 @@ import org.newdawn.slick.SlickException;
 import games.bomberman.World;
 
 public class DestructibleWall extends Case{
-	
+
 	private static Image img;
 	static {
 		try {
@@ -15,7 +15,7 @@ public class DestructibleWall extends Case{
 			e.printStackTrace();
 		}
 	}
-	
+
 	public DestructibleWall(World w, int i, int j) {
 		super(w, i, j, img, false);
 	}

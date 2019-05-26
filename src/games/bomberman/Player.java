@@ -20,29 +20,29 @@ public class Player {
 	private Color fillColor;
 	private int controllerID;
 	private String name;
-	
+
 	//Position du joueur :
 	private float x;	// Abcisse réelle du joueur
 	private float y;	// Ordonnée réelle du joueur
 	private float nextX, nextY, tempNY, tempNX;
 	private int i;		// Position du joueur dans la matrice
 	private int j;		// pillule bleue ou pillule rouge?
-	
+
 	private int height = 50;
 	private int width = 50;
 	private Animation animations[] = new Animation[8];
 	private Animation animationsSlow[] = new Animation[8];
 	private Animation animationsFast[] = new Animation[8];
-	
+
 	private int life = 3;
 	private World w;
 
 	private boolean moveLeft,moveRight,moveUp,moveDown, dropTheBomb, move=false;
 	private int direction;
-	
+
 	private boolean isMovingUD, isMovingRL;
 	private int tempDI, tempDJ;
-	
+
 	// Caractéristiques modifiables par bonus/malus :
 	private float speed = 1;
 	private int cooldownMoveMax = 400; // Temps entre chanque déplacement
@@ -55,8 +55,8 @@ public class Player {
 	private int cooldownBomb = 0; // temps restant pour poser la prochaine bombe : est initialité à cooldownTime à chaque bombe posée
 	private int clignotement;
 	private boolean bombDropped =false;
-	private boolean bouclier = false; 
-	private boolean tpable; //pour la case de TP	
+	private boolean bouclier = false;
+	private boolean tpable; //pour la case de TP
 	private int range = 1; // Portée des bombes en cases
 	private int invincibilite=1500;
 	private boolean invincible;
@@ -73,7 +73,7 @@ public class Player {
 		this.name = name;
 		w=world;
 		// Fin des trucs de Tristan
-		
+
 		tpable = true;
 		invincible=false;
 		clignotement =200;
@@ -82,7 +82,7 @@ public class Player {
 		} catch (SlickException e1) {
 			e1.printStackTrace();
 		}
-		
+
 		// Attribution des positions de départ en fonction du n° de joueur
 		Integer[] size = w.getBoard().getDim();
 		switch(id) {
@@ -100,12 +100,12 @@ public class Player {
 					break;
 		}
 		updateXY(); // initialisation de x et y selon les i et j de départ
-		
+
 		isMovingRL = false;
 		isMovingUD = false;
-		
+
 		direction = 2;
-		
+
 		SpriteSheet perso;
 		try {
 			perso = new SpriteSheet(World.DIRECTORY_IMAGES+"personnage.png",50,50);
@@ -120,7 +120,7 @@ public class Player {
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}
-		
+
 		SpriteSheet persoSlow;
 		try {
 			persoSlow = new SpriteSheet(World.DIRECTORY_IMAGES+"personnage_slow.png",50,50);
@@ -135,7 +135,7 @@ public class Player {
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}
-		
+
 		SpriteSheet persoFast;
 		try {
 			persoFast = new SpriteSheet(World.DIRECTORY_IMAGES+"personnage_fast.png",50,50);
@@ -150,9 +150,9 @@ public class Player {
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}
-	
+
 	}
-	
+
 	private Animation loadAnimation(SpriteSheet spriteSheet, int startX, int endX, int y) {
 		Animation animation = new Animation();
 		for (int x = startX;x<endX; x++) {
@@ -160,11 +160,11 @@ public class Player {
 		}
 		return animation;
 	}
-	
+
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
-		
+
 		AppInput input = (AppInput) container.getInput();
-		
+
 		if (cooldownMove <= 0) {
 			moveLeft = input.isControlPressed(AppInput.BUTTON_LEFT,controllerID);
 			moveRight = input.isControlPressed(AppInput.BUTTON_RIGHT,controllerID);
@@ -175,8 +175,8 @@ public class Player {
 			cooldownMove -= delta;
 
 		}
-		
-		
+
+
 		if (invincible) {
 			invincibilite-=delta;
 			if (invincibilite<0) {
@@ -189,19 +189,19 @@ public class Player {
 				clignotement=200;
 				System.out.println("change");
 			}
-			
+
 		}
-		
+
 		if (moveUp || moveDown || moveRight || moveLeft) {move=true;}
 		else {move = false;}
-		
+
 		if (bombDropped) {
 			cooldownBomb -= delta;
 			if (cooldownBomb <= 0) {
 				bombDropped = false;
 			}
 		}
-		
+
 		w.getBoard().getCase(i, j).getAction(this);
 		mayDropBomb();
 		callMove(delta);
@@ -210,26 +210,26 @@ public class Player {
 		//updateXY();
 		//updateNextXY();
 	}
-	
+
 
 	public void render(GameContainer container, StateBasedGame game, Graphics context) {
 		//context.setColor(fillColor);
 		//context.fillRect(x, y, height, width);
 
 		if (!invincible) {
-			if (speed >= 3) 
+			if (speed >= 3)
 				context.drawAnimation(animationsFast[direction + (move ? 4 : 0)], x, y);
 			else if (speed <= 0.75f)
 				context.drawAnimation(animationsSlow[direction + (move ? 4 : 0)], x, y);
-			else 
+			else
 				context.drawAnimation(animations[direction + (move ? 4 : 0)], x, y);
 		} else {
 			if (clignotement < 100) {
-				if (speed >= 3) 
+				if (speed >= 3)
 					context.drawAnimation(animationsFast[direction + (move ? 4 : 0)], x, y);
 				else if (speed <= 0.75f)
 					context.drawAnimation(animationsSlow[direction + (move ? 4 : 0)], x, y);
-				else 
+				else
 					context.drawAnimation(animations[direction + (move ? 4 : 0)], x, y);
 			}
 		}
@@ -238,7 +238,7 @@ public class Player {
 			context.drawImage(imgBouclier, x, y);
 		}
 	}
-	
+
 	public void callMove(int delta) throws SlickException{
 		int deltaJ = 0, deltaI = 0;
 		if(moveUp && !moveDown && !moveRight && ! moveLeft){ //haut
@@ -261,7 +261,7 @@ public class Player {
 			direction = 3;
 			moveRight = false;
 		}
-		
+
 		int newI = i + deltaI*reversed;
 		int newJ = j + deltaJ*reversed;
 		Integer[] size = w.getBoard().getDim();
@@ -269,22 +269,22 @@ public class Player {
 			if (w.getBoard().getCase(newI,newJ).isPassable()) {
 				if(!tpable && !(w.getBoard().getCase(newI,newJ) instanceof TP))
 					tpable = true;
-				
+
 				move(deltaI,deltaJ);
 				if (deltaI != 0 || deltaJ != 0) {
 					cooldownMove = (int) (cooldownMoveMax / speed);
 				}
 			}
-		}	
+		}
 		updateNextXY();
 		fluidMove(deltaI, deltaJ, delta);
 	}
-	
+
 	public void move(int deltaI, int deltaJ) {
 		i += deltaI * reversed;
 		j += deltaJ * reversed;
 	}
-    
+
    public void fluidMove(int dI, int dJ, int delta) {
 	   if(!isMovingUD && dI != 0) {
 		   isMovingUD = true;
@@ -295,9 +295,9 @@ public class Player {
 		   if(tempDI==1) {
 			   y = (y < tempNY) ? y+delta*speed/2 : tempNY;
 			   if (y>=tempNY) {
-				   isMovingUD = false;	
+				   isMovingUD = false;
 				   y = tempNY;
-			   }  
+			   }
 		   } else if(tempDI==-1) {
 			   y = (y > tempNY) ? y-delta*speed/2 : tempNY;
 			   if (y<=tempNY) {
@@ -306,7 +306,7 @@ public class Player {
 			   }
 		   }
 	   }
-	   
+
 	   if(!isMovingRL && dJ != 0) {
 		   isMovingRL = true;
 		   tempNX = nextX;
@@ -318,7 +318,7 @@ public class Player {
 			   if (x>=tempNX) {
 				   x = tempNX;
 				   isMovingRL = false;
-			   }	   
+			   }
 		   } else if(tempDJ==-1) {
 			   x = (x > tempNX) ? x-delta*speed/2 : tempNX;
 			   if (x<=tempNX) {
@@ -328,24 +328,24 @@ public class Player {
 		   }
 	   }
     }
-	
+
 	public void updateXY() {
 		int[] XY = convertInXY(i,j);
 		x = XY[0];
 		y = XY[1];
 	}
-    
+
 	public void updateNextXY() {
 		int[] XY = convertInXY(i,j);
 		nextX = XY[0];
 		nextY = XY[1];
 	}
-	
+
 	public int[] convertInXY(int i, int j) {
 		int sizeCase = (int) w.getBoard().getCaseSize();
 		return new int[] {j * sizeCase, i * sizeCase};
-	} 
-	
+	}
+
 	public void mayDropBomb() {
 		List<Bomb> temp = new ArrayList<Bomb>();
 		for(Bomb b : bombs) {
@@ -356,7 +356,7 @@ public class Player {
 		for(Bomb b : temp) {
 			bombs.remove(b);
 		}
-		
+
 		if(bombs.size() < bombCapacity) {
 			if (dropTheBomb && !bombDropped) {
 				dropBomb();
@@ -366,16 +366,16 @@ public class Player {
 			}
 		}
 	}
-	
+
 	public void updateBombAvailable(){
 		bombAvailable = bombCapacity - bombs.size();
 	}
-	
+
 	public void dropBomb() {
 		w.addBomb(controllerID, i, j, range, 3000);
 		bombs.add(w.getBombs().get(w.getBombs().size()-1));
 	}
-	
+
 	public void addRange(int deltaRange) {
 		range = Math.max(1, range + deltaRange ); // Car le minimum de portée est d'une case
 	}
@@ -387,7 +387,7 @@ public class Player {
 	public void addLife(int deltaLife) {
 		this.life += deltaLife;
 	}
-	
+
 	public void takeDamage() {
 		if (bouclier) {
 			bouclier = false;
@@ -454,7 +454,7 @@ public class Player {
 	public String getName () {
 		return this.name;
 	}
-	
+
 	public float getX() {
 		return x;
 	}
@@ -479,21 +479,21 @@ public class Player {
 		updateXY();
 		updateNextXY();
 	}
-	
+
 	public boolean isTPable() {
 		return this.tpable;
 	}
-	
+
 	public void setTPable(boolean b) {
 		this.tpable = b;
 	}
-	
+
 	public int getBombAvailable() {
 		return bombAvailable;
 	}
-	
+
 	public Color getFillColor() {
 		return fillColor;
 	}
-	
+
 }

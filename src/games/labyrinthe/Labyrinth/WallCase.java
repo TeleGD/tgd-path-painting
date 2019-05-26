@@ -6,10 +6,10 @@ import org.newdawn.slick.SlickException;
 import games.labyrinthe.World;
 
 public class WallCase extends Case {
-	
+
 	private boolean destructible;
 	private static Image image;
-	
+
 	static {
 		try {
 			image = new Image(World.DIRECTORY_IMAGES+"/Wall.png");
@@ -26,6 +26,6 @@ public class WallCase extends Case {
 	public boolean isDestructible() {
 		return destructible;
 	}
-	
-	
+
+
 }

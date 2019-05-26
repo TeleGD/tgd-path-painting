@@ -12,10 +12,10 @@ import games.bomberman.World;
 public class TP extends Case{
 
 	private Case twin;
-	
+
 	private static Sound sound;
 	private static Image img;
-	
+
 	static {
 		try {
 			img = new Image(World.DIRECTORY_IMAGES+"try.png");
@@ -24,7 +24,7 @@ public class TP extends Case{
 			e.printStackTrace();
 		}
 	}
-	
+
 	public TP(World w, int i, int j, Case twin) {
 		super(w, i, j, img, true);
 		this.twin=twin;
@@ -33,9 +33,9 @@ public class TP extends Case{
 	public void getAction(Player p) {
 		super.getAction(p);
 		if(p.isTPable()) {
-			p.setTPable(false);			
+			p.setTPable(false);
 			p.setIJ(twin.getI(),twin.getJ());
-			
+
 			sound.play(1, (float) 0.4);
 		}
 	}

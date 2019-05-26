@@ -15,7 +15,7 @@ public class Board {
 	private World w;
 	private LabyGenerator lab;
 	private int size;
-	
+
 	public Board(World w, int minSide) {
 		this.w=w;
 		int height = w.getHeight();
@@ -32,7 +32,7 @@ public class Board {
 		this.lab = (new LabyGenerator(this,rows,columns));
 		board=lab.getLab();
 	}
-	
+
 //	public boolean movePlayer(int posX, int posY, Player p){
 //		if(posX < rows && posY < columns && posX >= 0 && posY >= 0 && board[posX][posY] instanceof FreeCase){
 //			if (board[posX][posY].getPlayerId()==-1) {
@@ -45,7 +45,7 @@ public class Board {
 //				w.endGame();
 //			}
 //		}
-//		return false; 
+//		return false;
 //	}
 
 	public void render(GameContainer container, StateBasedGame game, Graphics context) {
@@ -57,25 +57,25 @@ public class Board {
 	}
 
 	public void update(GameContainer container, StateBasedGame game, int delta) {
-		
+
 	}
-	
+
 	public Case getCase(int row, int column) {
 		return board[row][column];
 	}
-	
+
 	public int[] getImgInitSize() {
 		return board[0][0].getImgInitSize();
 	}
-	
+
 	public int getRows() {
 		return rows;
 	}
-	
+
 	public int getColumns() {
 		return columns;
 	}
-	
+
 	public int getSize() {
 		return this.size;
 	}

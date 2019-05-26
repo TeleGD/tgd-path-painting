@@ -15,9 +15,9 @@ public abstract class AppPage extends BasicGameState {
 	static protected Color backgroundColor = Color.black;
 	static protected Color highlightColor = Color.red;
 
-	static protected Font titleFont = FontUtils.loadFont ("PressStart2P.ttf", java.awt.Font.BOLD, 40, false);
+	static protected Font titleFont = FontUtils.loadFont ("press-start-2p.ttf", java.awt.Font.BOLD, 40, false);
 	static protected Font subtitleFont = FontUtils.loadFont ("Kalinga", java.awt.Font.BOLD, 24, true);
-	static protected Font hintFont = FontUtils.loadFont ("PressStart2P.ttf", java.awt.Font.PLAIN, 20, false);
+	static protected Font hintFont = FontUtils.loadFont ("press-start-2p.ttf", java.awt.Font.PLAIN, 20, false);
 
 	static protected int titleLineHeight = 50;
 	static protected int subtitleLineHeight = 30;

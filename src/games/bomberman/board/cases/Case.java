@@ -18,7 +18,7 @@ public abstract class Case {
 	protected float size=50;
 	protected Bonus bonus;
 	protected Bomb bomb;
-	
+
 	private World w;
 
 	public Case(World world, int i,int j,Image img,boolean passable) {
@@ -61,11 +61,11 @@ public abstract class Case {
 	public Bomb getBomb() {
 		return this.bomb;
 	}
-	
+
 	public void setBomb(Bomb b) {
 		this.bomb = b;
 	}
-	
+
 	public void update (GameContainer container, StateBasedGame game, int delta) {
 		if (bonus!=null) {
 			bonus.update(container, game, delta);

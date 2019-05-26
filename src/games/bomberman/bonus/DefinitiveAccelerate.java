@@ -12,10 +12,10 @@ import games.bomberman.World;
 
 public class DefinitiveAccelerate extends Bonus{
 	private boolean activated, deleted;
-	
+
 	private static Image sprite;
 	private static Sound sound;
-	
+
 	static {
 		try {
 			sprite = new Image(World.DIRECTORY_IMAGES+"bonus_defAccelerate.png");
@@ -24,38 +24,38 @@ public class DefinitiveAccelerate extends Bonus{
 			e.printStackTrace();
 		}
 	}
-	
+
 	public DefinitiveAccelerate(int caseX, int caseY) {
 		super(caseX, caseY);
 		super.setSprite(sprite);
 		this.activated = false;
 		this.deleted = false;
 	}
-	
+
 	public void activate(Player player) {
 		if (!isActivated()) {
 			this.activated = true;
 
 			player.setSpeed(player.getSpeed()*1.10f);
-			
+
 			this.deleted = true;
-			
+
 			sound.play(1, (float) 0.4);
 		}
 	}
-	
+
 	public boolean isDeleted() {
 		return deleted;
 	}
-	
+
 	public boolean isActivated() {
 		return this.activated;
 	}
-	
+
 	public void update (GameContainer container, StateBasedGame game, int delta) {
-		
-	}	
-	
+
+	}
+
 	public void render (GameContainer container, StateBasedGame game, Graphics context) {
 		super.render(container, game, context);
 	}

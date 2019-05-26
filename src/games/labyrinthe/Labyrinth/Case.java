@@ -11,12 +11,12 @@ public abstract class Case {
 		protected int posY;
 		protected int i;
 		protected int j;
-		
+
 		private int size;
-		
+
 		protected boolean passable;
 		protected Image img;
-		
+
 		public Case(int i,int j, int size, Image img, boolean passable) {
 			this.i=i;
 			this.j=j;
@@ -24,11 +24,11 @@ public abstract class Case {
 			this.size = size;
 			this.passable = passable;
 		}
-		
+
 		public boolean isPassable() {
 			return passable;
 		}
-		
+
 		public boolean isEquals(Case c) {
 			return (c.i==this.i && c.j == this.j);
 		}
@@ -37,7 +37,7 @@ public abstract class Case {
 		public void render (GameContainer container, StateBasedGame game, Graphics context) {
 			context.drawImage(img, j*size, i*size,(j+1)*size,(i+1)*size,0,0,img.getWidth()-1,img.getHeight()-1);
 		}
-		
+
 		public int getSize() {
 			return size;
 		}
@@ -46,7 +46,7 @@ public abstract class Case {
 			int temp[] = new int[2];
 			temp[0] = img.getWidth();
 			temp[1] = img.getHeight();
-			
+
 			return temp;
 		}
 
@@ -61,7 +61,7 @@ public abstract class Case {
 		public int getPosX() {
 			return posX;
 		}
-		
+
 		public int getPosY() {
 			return posY;
 		}
@@ -73,8 +73,8 @@ public abstract class Case {
 
 		public void setPlayerId(int indexOf) {
 			// TODO Auto-generated method stub
-			
+
 		}
-		
-	
+
+
 }

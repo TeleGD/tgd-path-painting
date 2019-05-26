@@ -17,7 +17,7 @@ public class Slow extends Bonus {
 	private static Sound sound;
 	private static Image sprite;
 	private World w;
-	
+
 	static {
 		try {
 			sprite = new Image(World.DIRECTORY_IMAGES+"bonus_slow.png");

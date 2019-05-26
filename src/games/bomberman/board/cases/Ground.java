@@ -6,9 +6,9 @@ import org.newdawn.slick.SlickException;
 import games.bomberman.World;
 
 public class Ground extends Case{
-	
+
 	private static Image img;
-	
+
 	static {
 		try {
 			img = new Image(World.DIRECTORY_IMAGES+"Ground.png");
