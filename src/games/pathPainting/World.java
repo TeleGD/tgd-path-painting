@@ -1,17 +1,13 @@
 package games.pathPainting;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Music;
-import org.newdawn.slick.SlickException;
+import org.newdawn.slick.openal.Audio;
 import org.newdawn.slick.state.StateBasedGame;
 
-import app.AppFont;
 import app.AppGame;
 import app.AppInput;
 import app.AppLoader;
@@ -19,25 +15,20 @@ import app.AppWorld;
 
 public class World extends AppWorld {
 
-	public final static String GAME_FOLDER_NAME = "pathPainting";
-	public final static String DIRECTORY_SOUNDS = "musics" + File.separator + GAME_FOLDER_NAME + File.separator;
-	public final static String DIRECTORY_MUSICS = "musics" + File.separator + GAME_FOLDER_NAME + File.separator;
-	public final static String DIRECTORY_IMAGES = "images" + File.separator + GAME_FOLDER_NAME + File.separator;
-	public final static Font Font = AppLoader.loadFont("Kalinga", AppFont.BOLD, 20);
+	public final static String DIRECTORY_SOUNDS = "/sounds/pathPainting/";
+	public final static String DIRECTORY_MUSICS = "/musics/pathPainting/";
+	public final static String DIRECTORY_IMAGES = "/images/pathPainting/";
 
 	public Board board;
 	private int width;
 	private int height;
 	private ArrayList<Player> players;
 
-	private static Music music;
+	private static Audio music;
+	private float musicPos;
 
 	static {
-		try {
-			music = new Music(DIRECTORY_MUSICS + "Akira_vs_Konono.ogg");
-		} catch (SlickException e) {
-			e.printStackTrace();
-		}
+		music = AppLoader.loadAudio(DIRECTORY_MUSICS + "Akira_vs_Konono.ogg");
 	}
 
 	public World(int ID) {
@@ -92,17 +83,24 @@ public class World extends AppWorld {
 		for (int i = 0; i < appGame.appPlayers.size(); i++) {
 			this.players.add(new Player(this, (-i >> 1 & 1) * (w - 1), (i & 1) * (h - 1), appGame.appPlayers.get(i)));
 		}
-		music.loop(1, .5f);
+		music.playAsMusic(1f, .5f, true);
 	}
 
 	@Override
 	public void pause(GameContainer container, StateBasedGame game) {
-		music.pause();
+		this.musicPos = music.getPosition();
+		music.stop();
 	}
 
 	@Override
 	public void resume(GameContainer container, StateBasedGame game) {
-		music.resume();
+		music.playAsMusic(1f, .5f, true);
+		music.setPosition(this.musicPos);
+	}
+
+	@Override
+	public void stop(GameContainer container, StateBasedGame game) {
+		music.stop();
 	}
 
 	public int getWidth() {
